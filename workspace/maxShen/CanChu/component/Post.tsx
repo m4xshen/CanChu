@@ -1,33 +1,35 @@
+import styles from './styles.module.scss';
+
 const Post = () => {
   return (
-    <div className="feed">
-      <div className="content">
-        <div className="feed-top">
-          <div className="avatar"></div>
-          <div className="info">
-            <div className="name">你的朋友</div>
-            <div className="time">一小時前</div>
+    <div className={styles.feed}>
+      <div className={styles.content}>
+        <div className={styles["feed-top"]}>
+          <div className={`${styles.avatar} ${styles.gray}`}></div>
+          <div className={styles.info}>
+            <div className={styles.name}>你的朋友</div>
+            <div className={styles.time}>一小時前</div>
           </div>
         </div>
-        <p className="text">
+        <article className={styles.text}>
           動態動態動態動態動態動態，動態動態動態動態。
-        </p>
-        <div className="viewers">
-          <div className="avatar viewer red"></div>
-          <div className="avatar viewer"></div>
+        </article>
+        <div className={styles.viewers}>
+          <div className={`${styles.avatar} ${styles.viewer} ${styles.red}`}></div>
+          <div className={`${styles.avatar} ${styles.viewer} ${styles.gray}`}></div>
         </div>
-        <div className="viewers-info">
-          <div className="likes-count">
+        <div className={styles["viewers-info"]}>
+          <div className={styles["likes-count"]}>
             7 人喜歡這則貼文
           </div>
-          <div className="comments-count">
+          <div className={styles["comments-count"]}>
             1 則留言
           </div>
         </div>
       </div>
-      <div className="comment">
+      <div className={styles.comment}>
         <img src="avatar.png" />
-        <button className="comment-button">
+        <button className={styles["comment-button"]}>
           留個言吧
         </button>
       </div>

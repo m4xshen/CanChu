@@ -1,0 +1,104 @@
+$split: #bfbfbf;
+$gray: #cccccc;
+$red: #f85c53;
+
+.feed {
+  width: 700px;
+  margin: auto;
+  border: 1px #d3d3d3;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+
+.content {
+  padding: 20px 40px 0 40px;
+}
+
+.feed-top {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.avatar {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.info {
+  display: block;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.time {
+  font-size: 13px;
+  font-weight: 400;
+  color: #909090;
+}
+
+.text {
+  height: 59px;
+  margin: 17px 0 41px 0;
+}
+
+.viewers {
+  display: flex;
+  padding: 10px 0;
+  gap: 10px;
+  border-top: 1px solid $split;
+  border-bottom: 1px solid $split;
+}
+
+.viewer {
+  width: 30px;
+  height: 30px;
+}
+
+.red {
+  background-color: $red;
+}
+
+.gray {
+  background-color: $gray;
+}
+
+.viewers-info {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 400;
+  color: #5c5c5c;
+}
+
+.comments-count {
+  cursor: pointer;
+}
+
+.comment {
+  border-top: 1px solid $split;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+  height: 90px;
+}
+
+.comment-button {
+  width: 550px;
+  height: 50px;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  font-weight: 400;
+  color: #777777;
+  background-color: #f0f0f0;
+}
