@@ -1,4 +1,4 @@
-import Post from '../component/Post';
+import Post from '../components/Post';
 
 const Root = () => {
   return (
