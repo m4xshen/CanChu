@@ -1,7 +1,9 @@
 import Post from '../component/Post';
 
-export default function Home() {
+const Root = () => {
   return (
     <Post />
   );
 };
+
+export default Root;

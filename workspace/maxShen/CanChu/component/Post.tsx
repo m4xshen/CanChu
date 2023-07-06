@@ -28,7 +28,7 @@ const Post = () => {
         </div>
       </div>
       <div className={styles.comment}>
-        <img src="avatar.png" />
+        <img className={styles["comment-avatar"]} src="avatar.png" />
         <button className={styles["comment-button"]}>
           留個言吧
         </button>
