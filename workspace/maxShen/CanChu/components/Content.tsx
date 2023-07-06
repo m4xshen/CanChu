@@ -1,11 +1,5 @@
 import CommentIcon from './CommentIcon';
 import Image from 'next/image';
-import { Outfit } from 'next/font/google';
-
-const outfit = Outfit({
-  weight: '500',
-  subsets: ['latin']
-});
 
 const Content = () => {
   return (
@@ -23,7 +17,7 @@ const Content = () => {
           <div className="text-[14px] font-normal text-[#909090]">一小時前</div>
         </div>
       </div>
-      <article className={`h-[59px] text-[18px] mt-[17px] min-h-[83px] ${outfit.className}`}>
+      <article className={`h-[59px] text-[18px] mt-[17px] min-h-[83px]`}>
         動態動態動態動態動態動態，動態動態動態動態。
       </article>
       <div className="flex items-center h-[52px] gap-[10px] border-t border-[#bfbfbf] border-b">
@@ -44,7 +38,7 @@ const Content = () => {
           7 人喜歡這則貼文
         </div>
         <div className="mr-2">
-          1 則留言
+          68 則留言
         </div>
       </div>
     </div>
