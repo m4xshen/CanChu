@@ -9,15 +9,15 @@ const pattaya = Pattaya({
 
 const Navbar = () => {
   return (
-    <div className="h-[100px] bg-white flex items-center border-b border-[#d9d9d9]">
+    <div className="h-24 bg-white flex items-center border-b border-[#d9d9d9]">
       <Link href="/">
-        <h1 className={`text-[#7763FB] text-[37px] ml-[147px] ${pattaya.className}`}>
+        <h1 className={`text-[#7763FB] text-4xl ml-36 ${pattaya.className}`}>
           CanChu
         </h1>
       </Link>
       <div
-        className="w-[330px] h-[48px] ml-[23px] px-[18px] flex items-center
-        bg-[#f0f2f5] rounded-[10px] border border-[#d9d9d9]"
+        className="w-80 h-12 ml-6 px-4 flex items-center
+          bg-[#f0f2f5] rounded-lg border border-[#d9d9d9]"
       >
         <Image
           src="/search.png"
@@ -28,10 +28,10 @@ const Navbar = () => {
         <input
           type="text"
           placeholder="搜尋"
-          className="ml-[7px] w-full bg-[#f0f2f5] text-[#566470] outline-0"
+          className="ml-2 w-full bg-[#f0f2f5] text-[#566470] outline-0"
         />
       </div>
-      <Link href="/" className="ml-auto mr-[141px]">
+      <Link href="/" className="ml-auto mr-36">
         <Image
           src="/avatar.png"
           width={36}

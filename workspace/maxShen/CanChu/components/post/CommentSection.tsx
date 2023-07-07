@@ -28,23 +28,23 @@ const CommentSection: React.FC<Props> = ({ comments }) => {
           comment={comment}
         />
       )) }
-      <div className="flex gap-[18px] items-center mt-[38px] mb-[35px]">
+      <div className="flex gap-4 items-center my-9">
         <Image
           src="/avatar.png"
           width={50}
           height={50}
           alt="user avatar"
-          className="ml-[26px]"
+          className="ml-6"
         />
         <div
-          className="w-[639px] h-[50px] pl-[24px] pr-[13px] rounded-[10px]
-            flex justify-between items-center text-[20px] leading-[50px]
+          className="w-[639px] h-12 pl-6 pr-3 rounded-lg
+            flex justify-between items-center text-xl leading-10
             font-normal text-[#777777] bg-[#f0f2f5] border border-[#d9d9d9]"
         >
           <input
             type="text"
             placeholder="留個言吧"
-            className="w-full h-[24px] pr-2 bg-[#f0f2f5] text-[#777777] text-[20px] outline-0"
+            className="w-full h-6 pr-2 bg-[#f0f2f5] text-[#777777] text-xl outline-0"
           />
           <button>
             <SendIcon />
