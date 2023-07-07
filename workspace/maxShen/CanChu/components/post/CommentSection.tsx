@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import SendIcon from './SendIcon';
+import SendIcon from '../icons/SendIcon';
 import Comment from './Comment';
 
 interface User {

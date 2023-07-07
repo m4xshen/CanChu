@@ -1,5 +1,5 @@
-import Navbar from '../components/Navbar';
-import Post from '../components/Post';
+import Navbar from '@/components/navbar';
+import Post from '@/components/post';
 
 const Root = () => {
   return (

@@ -1,6 +1,6 @@
-import CommentIcon from './CommentIcon';
+import CommentIcon from '../icons/CommentIcon';
+import HeartIcon from '../icons/HeartIcon';
 import Image from 'next/image';
-import HeartIcon from './HeartIcon';
 
 interface Props {
   name: string;
@@ -28,7 +28,7 @@ const Content: React.FC<Props> = ({ name, url, created_at, context, is_liked, li
           <div className="text-[14px] font-normal text-[#909090]">{created_at}</div>
         </div>
       </div>
-      <pre className={`h-[59px] text-[18px] my-[17px] mx-[28px] min-h-[83px]`}>{context}</pre>
+      <pre className={`h-[59px] leading-[24px] text-[18px] my-[17px] mx-[28px] min-h-[83px]`}>{context}</pre>
       <div className="flex items-center h-[52px] mx-[34px] gap-[10px] border-t border-[#B7B7B7] border-b">
         { is_liked ?
           <button className="ml-[9px]">
