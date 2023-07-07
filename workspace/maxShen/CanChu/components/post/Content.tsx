@@ -1,3 +1,4 @@
+import { getDisplayTime } from '@/utils';
 import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
 import Image from 'next/image';
@@ -26,7 +27,11 @@ const Content: React.FC<Props> = ({ name, url, created_at, context, is_liked, li
         </div>
         <div>
           <div className="text-lg font-bold cursor-pointer">{name}</div>
-          <div className="text-sm font-normal text-[#909090]">{created_at}</div>
+          <div
+            className="text-sm font-normal text-[#909090]"
+          >
+            {getDisplayTime(created_at)}
+          </div>
         </div>
       </div>
       <pre
@@ -40,7 +45,7 @@ const Content: React.FC<Props> = ({ name, url, created_at, context, is_liked, li
           border-t border-[#B7B7B7] border-b"
       >
         <button className="ml-2">
-          { is_liked ?
+          {is_liked ?
             <Image
               src="/heart.png"
               width={28}

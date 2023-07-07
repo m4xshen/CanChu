@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
+import { getDisplayTime } from '@/utils';
 
 interface User {
   id: number;
@@ -40,7 +41,7 @@ const Comment:React.FC<Props> = ({ comment }) => {
           </p>
         </div>
         <div className="text-sm text-[#525252]">
-          {comment.created_at}
+          {getDisplayTime(comment.created_at)}
         </div>
       </div>
     </div>
