@@ -21,7 +21,7 @@ interface Props {
 const Comment:React.FC<Props> = ({ comment }) => {
   return (
     <div className="flex mt-[24px] ml-[26px] gap-[10px] mr-[34px]">
-      <div className="rounded-full w-[32px] h-[32px] overflow-hidden relative">
+      <div className="rounded-full w-[32px] h-[32px] overflow-hidden relative shrink-0">
         <Image
           src={comment.user.picture}
           fill={true}

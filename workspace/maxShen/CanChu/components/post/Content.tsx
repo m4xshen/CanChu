@@ -16,7 +16,7 @@ const Content: React.FC<Props> = ({ name, url, created_at, context, is_liked, li
   return (
     <div className="pt-[30px]">
       <div className="w-full flex gap-[13px] items-center">
-        <div className="rounded-full w-[75px] h-[75px] ml-[26px] overflow-hidden relative">
+        <div className="rounded-full w-[75px] h-[75px] ml-[26px] overflow-hidden relative shrink-0">
           <Image
             src={url}
             fill={true}
@@ -48,7 +48,7 @@ const Content: React.FC<Props> = ({ name, url, created_at, context, is_liked, li
               alt="heart icon"
             />
           </button> :
-          <button className="ml-[9px] w-[24px] h-[24px]">
+          <button className="ml-[9px]">
             <HeartIcon />
           </button>
         }
