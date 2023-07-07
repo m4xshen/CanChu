@@ -37,8 +37,8 @@ const data = {
 
 const Post = () => {
   return (
-    <div className="flex justify-center my-14">
-      <div className="w-[770px] border border-[#d3d3d3] rounded-2xl bg-white">
+    <div className="flex justify-center mb-14">
+      <div className="w-[770px] border border-[#0000001A] rounded-2xl bg-white">
         <Content
           name={data.name}
           url={data.picture}
