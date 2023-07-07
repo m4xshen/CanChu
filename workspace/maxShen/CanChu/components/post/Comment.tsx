@@ -26,6 +26,7 @@ const Comment:React.FC<Props> = ({ comment }) => {
           src={comment.user.picture}
           fill={true}
           alt="user avatar"
+          className="object-cover"
         />
       </div>
       <div>
