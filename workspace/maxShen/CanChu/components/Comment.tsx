@@ -1,26 +1,45 @@
 import React from 'react'
+import Image from 'next/image';
 
-interface Props {
-  text: string,
-  time: number
+interface User {
+  id: number;
+  name: string;
+  picture: string;
 }
 
-const Comment:React.FC<Props> = ({ text, time }) => {
+interface CommentObj {
+  id: number;
+  content: string;
+  created_at: string;
+  user: User;
+}
+
+interface Props {
+  comment: CommentObj;
+}
+
+const Comment:React.FC<Props> = ({ comment }) => {
   return (
     <div className="flex mt-[24px] ml-[26px] gap-[10px] mr-[34px]">
-      <div className="w-[32px] h-[32px] rounded-full bg-[#d9d9d9] shrink-0" />
+      <div className="rounded-full w-[32px] h-[32px] overflow-hidden relative">
+        <Image
+          src={comment.user.picture}
+          fill={true}
+          alt="user avatar"
+        />
+      </div>
       <div>
         <div className="flex flex-col gap-[3px] pt-[8px] pb-[14px] pl-[16px] pr-[12px] mb-[6px]
           rounded-[20px] bg-opacity-[0.32] bg-[#d9d9d9] text-[#525252]">
           <div className="font-semibold">
-            朋友
+            {comment.user.name}
           </div>
           <p>
-            {text}
+            {comment.content}
           </p>
         </div>
         <div className="text-[14px] text-[#525252]">
-          {time} 小時前
+          {comment.created_at}
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ const pattaya = Pattaya({
 
 const Navbar = () => {
   return (
-    <div className="h-[100px] bg-white flex items-center border-b border-[#d9d9d9] mb-[56px]">
+    <div className="h-[100px] bg-white flex items-center border-b border-[#d9d9d9]">
       <Link href="/">
         <h1 className={`text-[#7763FB] text-[37px] ml-[147px] ${pattaya.className}`}>
           CanChu
