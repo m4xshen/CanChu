@@ -35,7 +35,7 @@ const Navbar = () => {
         />
       </div>
       <div
-        className="ml-auto mr-[141px] relative"
+        className="ml-auto mr-36 relative"
         onMouseLeave={() => setDisplay(false)}
       >
         <Link
@@ -51,15 +51,15 @@ const Navbar = () => {
         </Link>
         {
           display && 
-            <div className="absolute right-0 top-[36px]">
-              <div className="h-[39px] bg-transparent"></div>
+            <div className="absolute right-0 top-9">
+              <div className="h-10 bg-transparent" />
               <nav
                 className="flex flex-col border border-[#0000001A]
-                w-[261px] rounded-[20px] bg-[#f6f6f6] overflow-hidden drop-shadow-lg"
+                  w-64 rounded-2xl bg-[#f6f6f6] overflow-hidden drop-shadow-lg"
               >
-                <div className="flex items-center h-[64px] bg-[#5458F7] text-white">
+                <div className="flex items-center h-16 bg-[#5458F7] text-white">
                   <div className="flex items-center justify-center
-                    w-[38px] h-[38px] ml-[18px] bg-white rounded-full">
+                    w-9 h-9 ml-4 bg-white rounded-full">
                     <Image
                       src="/purpleAvatar.png"
                       width={29}
@@ -68,19 +68,19 @@ const Navbar = () => {
                     />
                   </div>
                   <div
-                    className="text-[20px] ml-[18px] font-bold">
+                    className="text-xl ml-4 font-bold">
                     你的名字
                   </div>
                 </div>
                 <Link
                   href="/"
-                  className="flex items-center h-[64px] pl-[24px] text-[22px]"
+                  className="flex items-center h-16 pl-6 text-xl"
                 >
                   查看個人檔案
                 </Link>
-                <div className="w-[234px] self-center border-t border-[#D1CACE]" />
+                <div className="w-60 self-center border-t border-[#D1CACE]" />
                 <button
-                  className="flex items-center h-[64px] pl-[24px] text-[22px]"
+                  className="flex items-center h-16 pl-6 text-xl"
                 >
                   登出
                 </button>
