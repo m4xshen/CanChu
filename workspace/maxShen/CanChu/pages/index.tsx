@@ -1,6 +1,7 @@
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
+import PostCreator from '@/components/postCreator';
 import Sidebar from '@/components/sidebar';
 
 const Root = () => {
@@ -12,7 +13,10 @@ const Root = () => {
           <Sidebar />
           <Footer />
         </div>
-        <Post />
+        <div className="flex flex-col gap-5 items-center">
+          <PostCreator />
+          <Post />
+        </div>
       </div>
     </>
   );
