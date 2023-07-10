@@ -8,7 +8,7 @@ const Root = () => {
   return (
     <>
       <Navbar />
-      <div className="mt-6 flex justify-center gap-8">
+      <div className="flex justify-center gap-8">
         <div className="flex flex-col gap-3 items-center">
           <Sidebar />
           <Footer />

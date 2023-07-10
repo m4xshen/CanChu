@@ -1,5 +1,32 @@
+import Navbar from '@/components/navbar';
 import Post from '@/components/post';
-import LoadingIcon from '../icons/LoadingIcon';
+
+interface PostObject {
+  user_id: number;
+  name: string;
+  picture: string;
+  id: number;
+  context: string;
+  created_at: string;
+  like_count: number;
+  comment_count: number;
+  is_like: number;
+};
+
+const DetailPage = ({ post }: { post: PostObject }) => {
+  return (
+    <>
+      <Navbar />
+      <Post
+        key={post.id}
+        post={post}
+        detail={true}
+      />
+    </>
+  );
+};
+
+export default DetailPage;
 
 const posts = [
   {
@@ -37,21 +64,29 @@ const posts = [
   },
 ];
 
-const Feed = () => {
-  return (
-    <>
+
+export const getStaticPaths = async () => {
+  return {
+    paths: posts.map(post => (
       {
-        posts.map(post => (
-          <Post
-            key={post.id}
-            post={post}
-            detail={false}
-          />
-        ))
+        params: {
+          id: post.id.toString()
+        }
       }
-      <LoadingIcon />
-    </>
-  );
+    )),
+    fallback: false
+  };
 };
 
-export default Feed;
+interface Params {
+  id: string;
+};
+
+export const getStaticProps = async ({ params }: { params: Params }) => {
+  const post = posts.find(post => post.id.toString() === params.id);
+  return {
+    props: {
+      post
+    }
+  };
+};

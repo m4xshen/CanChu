@@ -53,21 +53,19 @@ interface Props {
 };
 
 const Post: React.FC<Props> = ({ post, detail }) => {
+  const url = `/posts/${post.id}`;
+
   return (
     <div className="flex justify-center">
       <div className="w-[48rem] border border-[#0000001A] rounded-2xl bg-white">
         <Content
-          name={post.name}
-          url={post.picture}
-          created_at={post.created_at}
-          context={post.context}
-          is_liked={post.is_like === 1}
-          like_count={post.like_count}
-          comment_count={post.comment_count}
+          post={post}
+          url={url}
         />
         <CommentSection
           comments={data.comments}
           detail={detail}
+          url={url}
         />
       </div>
     </div>

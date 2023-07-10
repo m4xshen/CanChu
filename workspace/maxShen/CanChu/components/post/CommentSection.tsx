@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import SendIcon from '../icons/SendIcon';
 import Comment from './Comment';
 
@@ -18,11 +19,15 @@ interface CommentObj {
 interface Props {
   comments: CommentObj[];
   detail: boolean;
+  url: string;
 }
 
-const CommentSection: React.FC<Props> = ({ comments, detail }) => {
+const CommentSection: React.FC<Props> = ({ comments, detail, url }) => {
   return (
-    <div className="border-t border-t-[#b7b7b7]">
+    <Link
+      href={url}
+      className="border-t border-t-[#b7b7b7]"
+    >
       { detail && comments.map(comment => (
         <Comment
           key={comment.id}
@@ -54,7 +59,7 @@ const CommentSection: React.FC<Props> = ({ comments, detail }) => {
           }
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
