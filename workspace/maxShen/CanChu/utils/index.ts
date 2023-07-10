@@ -1,4 +1,8 @@
-export const getDisplayTime = (date: string) => {
+export const getDisplayTime = (date: string | null) => {
+  if (date === null) {
+    return '日期錯誤';
+  }
+
   // get rounded delta time in seconds
   const delta = (new Date().getTime() - new Date(date).getTime()) / 1000;
 

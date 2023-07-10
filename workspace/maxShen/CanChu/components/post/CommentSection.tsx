@@ -26,7 +26,7 @@ const CommentSection: React.FC<Props> = ({ comments, detail, url }) => {
   return (
     <Link
       href={url}
-      className="border-t border-t-[#b7b7b7]"
+      className={`border-t border-t-[#b7b7b7] ${detail && 'pointer-events-none'}`}
     >
       { detail && comments.map(comment => (
         <Comment
@@ -50,10 +50,10 @@ const CommentSection: React.FC<Props> = ({ comments, detail, url }) => {
           <input
             type="text"
             placeholder="留個言吧"
-            className="w-full h-6 pr-2 bg-[#f0f2f5] text-[#777777] text-xl outline-0"
+            className="w-full h-6 pr-2 bg-[#f0f2f5] text-[#777777] text-xl outline-0 pointer-events-auto"
           />
           { detail && 
-            <button>
+            <button className="pointer-events-auto">
               <SendIcon />
             </button>
           }
