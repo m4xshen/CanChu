@@ -1,23 +1,14 @@
 import { getDisplayTime } from '@/utils';
+import { PostType } from '@/types';
+
 import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface Post {
-  user_id: number;
-  name: string;
-  picture: string;
-  id: number;
-  context: string;
-  created_at: string | null;
-  like_count: number;
-  comment_count: number;
-  is_like: number;
-};
-
 interface Props {
-  post: Post;
+  post: PostType;
   url: string;
   detail: boolean;
 }
@@ -28,14 +19,19 @@ const Content: React.FC<Props> = ({ post, url, detail }) => {
       <div className="w-full flex gap-3 items-center">
         <div className="rounded-full w-20 h-20 ml-7 overflow-hidden relative shrink-0">
           <Image
-            src={post.picture}
+            src={post.picture ? post.picture : ""}
             fill={true}
+            sizes="5rem"
             alt="user avatar"
             className="object-cover"
           />
         </div>
         <div>
-          <div className="text-lg font-bold cursor-pointer">{post.name}</div>
+          <div
+            className="text-lg font-bold cursor-pointer"
+          >
+            {post.name}
+          </div>
           <Link
             href={url}
             className={`text-sm font-normal text-[#909090] ${detail && 'pointer-events-none'}`}
@@ -74,10 +70,10 @@ const Content: React.FC<Props> = ({ post, url, detail }) => {
           text-base font-normal text-[#5c5c5c]"
       >
         <Link href={url} className={`${detail && 'pointer-events-none'}`}>
-          {post.like_count} 人喜歡這則貼文
+          {post.like_count ?? 0} 人喜歡這則貼文
         </Link>
         <Link href={url} className={`mr-2 ${detail && 'pointer-events-none'}`}>
-          {post.comment_count} 則留言
+          {post.comment_count ?? 0} 則留言
         </Link>
       </div>
     </div>

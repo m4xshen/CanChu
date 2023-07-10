@@ -2,17 +2,7 @@ import Content from './Content';
 import CommentSection from './CommentSection';
 import comments from '@/data/comments';
 
-interface PostType {
-  user_id: number;
-  name: string;
-  picture: string;
-  id: number;
-  context: string;
-  created_at: string | null;
-  like_count: number;
-  comment_count: number;
-  is_like: number;
-};
+import { PostType } from '@/types';
 
 interface Props {
   post: PostType;

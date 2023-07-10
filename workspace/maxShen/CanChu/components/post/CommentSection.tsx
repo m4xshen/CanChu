@@ -2,22 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SendIcon from '../icons/SendIcon';
 import Comment from './Comment';
-
-interface User {
-  id: number;
-  name: string;
-  picture: string;
-}
-
-interface CommentObj {
-  id: number;
-  content: string;
-  created_at: string;
-  user: User;
-}
+import { CommentType } from '@/types';
 
 interface Props {
-  comments: CommentObj[];
+  comments: CommentType[];
   detail: boolean;
   url: string;
 }

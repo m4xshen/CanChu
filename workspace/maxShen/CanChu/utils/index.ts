@@ -1,6 +1,7 @@
 export const getDisplayTime = (date: string | null) => {
-  if (date === null) {
-    return '日期錯誤';
+  // return an empty string if the date is invalid
+  if (date === null || isNaN(new Date(date).getTime())) {
+    return '';
   }
 
   // get rounded delta time in seconds

@@ -1,22 +1,10 @@
 import React from 'react'
 import Image from 'next/image';
 import { getDisplayTime } from '@/utils';
-
-interface User {
-  id: number;
-  name: string;
-  picture: string;
-}
-
-interface CommentObj {
-  id: number;
-  content: string;
-  created_at: string;
-  user: User;
-}
+import { CommentType } from '@/types';
 
 interface Props {
-  comment: CommentObj;
+  comment: CommentType;
 }
 
 const Comment:React.FC<Props> = ({ comment }) => {
@@ -24,8 +12,9 @@ const Comment:React.FC<Props> = ({ comment }) => {
     <div className="flex m-6 gap-2">
       <div className="rounded-full w-8 h-8 overflow-hidden relative shrink-0">
         <Image
-          src={comment.user.picture}
+          src={comment.user.picture ?? ""}
           fill={true}
+          sizes="2rem"
           alt="user avatar"
           className="object-cover"
         />

@@ -1,12 +1,13 @@
-const posts = [
+import { PostType } from "@/types";
+
+const posts: PostType[] = [
   {
     "user_id": 1,
     "name": "大原所長",
     "picture": "https://i.imgur.com/rVRCiZC.png",
     "id": 55,
     "context": "兩津！你這個大笨蛋！！！",
-    // "created_at": "2023-06-17 12:44:21",
-    "created_at": null, // simulate date error
+    "created_at": "2023-06-17 12:44:21",
     "like_count": 0,
     "comment_count": 0,
     "is_like": 0
@@ -34,18 +35,6 @@ const posts = [
     "is_like": 0
   },
 ];
-
-interface PostType {
-  user_id: number;
-  name: string;
-  picture: string;
-  id: number;
-  context: string;
-  created_at: string;
-  like_count: number;
-  comment_count: number;
-  is_like: number;
-};
 
 // simulate situation with no post
 // const posts: PostType[] = [];
