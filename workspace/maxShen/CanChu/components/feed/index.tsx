@@ -1,11 +1,13 @@
 import Post from '@/components/post';
+import LoadingIcon from '../icons/LoadingIcon';
 
 const Feed = () => {
   return (
     <>
-      <Post />
-      <Post />
-      <Post />
+      <Post detail={false}/>
+      <Post detail={false}/>
+      <Post detail={false}/>
+      <LoadingIcon />
     </>
   );
 };

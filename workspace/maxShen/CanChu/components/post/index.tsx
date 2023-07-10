@@ -35,7 +35,11 @@ const data = {
   "comment_count": 2
 };
 
-const Post = () => {
+interface Props {
+  detail: boolean;
+};
+
+const Post: React.FC<Props> = ({ detail }) => {
   return (
     <div className="flex justify-center">
       <div className="w-[48rem] border border-[#0000001A] rounded-2xl bg-white">
@@ -48,7 +52,10 @@ const Post = () => {
           like_count={data.like_count}
           comment_count={data.comment_count}
         />
-        <CommentSection comments={data.comments} />
+        <CommentSection
+          comments={data.comments}
+          detail={detail}
+        />
       </div>
     </div>
   );

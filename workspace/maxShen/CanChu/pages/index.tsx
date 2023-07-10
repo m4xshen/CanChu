@@ -13,7 +13,7 @@ const Root = () => {
           <Sidebar />
           <Footer />
         </div>
-        <div className="flex flex-col gap-5 items-center">
+        <div className="flex flex-col gap-5 items-center pb-5">
           <PostCreator />
           <Feed />
         </div>
