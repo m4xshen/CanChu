@@ -35,22 +35,35 @@ const data = {
   "comment_count": 2
 };
 
+interface Post {
+  user_id: number;
+  name: string;
+  picture: string;
+  id: number;
+  context: string;
+  created_at: string;
+  like_count: number;
+  comment_count: number;
+  is_like: number;
+};
+
 interface Props {
+  post: Post;
   detail: boolean;
 };
 
-const Post: React.FC<Props> = ({ detail }) => {
+const Post: React.FC<Props> = ({ post, detail }) => {
   return (
     <div className="flex justify-center">
       <div className="w-[48rem] border border-[#0000001A] rounded-2xl bg-white">
         <Content
-          name={data.name}
-          url={data.picture}
-          created_at={data.created_at}
-          context={data.context}
-          is_liked={data.is_liked}
-          like_count={data.like_count}
-          comment_count={data.comment_count}
+          name={post.name}
+          url={post.picture}
+          created_at={post.created_at}
+          context={post.context}
+          is_liked={post.is_like === 1}
+          like_count={post.like_count}
+          comment_count={post.comment_count}
         />
         <CommentSection
           comments={data.comments}
