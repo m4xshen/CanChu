@@ -35,7 +35,7 @@ const data = {
   "comment_count": 2
 };
 
-interface Post {
+interface PostType {
   user_id: number;
   name: string;
   picture: string;
@@ -48,7 +48,7 @@ interface Post {
 };
 
 interface Props {
-  post: Post;
+  post: PostType;
   detail: boolean;
 };
 

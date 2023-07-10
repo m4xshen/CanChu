@@ -37,17 +37,34 @@ const posts = [
   },
 ];
 
+interface PostType {
+  user_id: number;
+  name: string;
+  picture: string;
+  id: number;
+  context: string;
+  created_at: string;
+  like_count: number;
+  comment_count: number;
+  is_like: number;
+};
+
+// simulate situation with no post
+// const posts: PostType[] = [];
+
 const Feed = () => {
   return (
     <>
       {
-        posts.map(post => (
-          <Post
-            key={post.id}
-            post={post}
-            detail={false}
-          />
-        ))
+        posts.length === 0 ?
+          <div>沒有新的貼文</div> :
+          posts.map(post => (
+            <Post
+              key={post.id}
+              post={post}
+              detail={false}
+            />
+          ))
       }
       <LoadingIcon />
     </>
