@@ -1,4 +1,9 @@
-export const getDisplayTime = (date: string) => {
+export const getDisplayTime = (date: string | null) => {
+  // return an empty string if the date is invalid
+  if (date === null || isNaN(new Date(date).getTime())) {
+    return '';
+  }
+
   // get rounded delta time in seconds
   const delta = (new Date().getTime() - new Date(date).getTime()) / 1000;
 
