@@ -26,8 +26,8 @@ function Content({ post, url, detail }: Props) {
 
   return (
     <div className="pt-7">
-      <div className="w-full flex gap-3 items-center">
-        <div className="rounded-full w-20 h-20 ml-7 overflow-hidden relative shrink-0">
+      <div className="flex w-full items-center gap-3">
+        <div className="relative ml-7 h-20 w-20 shrink-0 overflow-hidden rounded-full">
           <Image
             src={post.picture ? post.picture : ''}
             fill
@@ -37,7 +37,7 @@ function Content({ post, url, detail }: Props) {
           />
         </div>
         <div>
-          <div className="text-lg font-bold cursor-pointer">{post.name}</div>
+          <div className="cursor-pointer text-lg font-bold">{post.name}</div>
           <Link
             href={url}
             className={`text-sm font-normal text-[#909090] ${
@@ -55,8 +55,8 @@ function Content({ post, url, detail }: Props) {
         {post.context}
       </pre>
       <div
-        className="flex items-center h-14 mx-9 gap-2
-          border-t border-[#B7B7B7] border-b"
+        className="mx-9 flex h-14 items-center gap-2
+          border-b border-t border-[#B7B7B7]"
       >
         {detail ? (
           <>
@@ -79,7 +79,7 @@ function Content({ post, url, detail }: Props) {
         )}
       </div>
       <div
-        className="h-12 mx-9 flex items-center justify-between
+        className="mx-9 flex h-12 items-center justify-between
           text-base font-normal text-[#5c5c5c]"
       >
         <Link href={url} className={`${detail && 'pointer-events-none'}`}>

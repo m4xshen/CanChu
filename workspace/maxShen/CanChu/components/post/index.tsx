@@ -16,16 +16,16 @@ function Post({ post, detail, edit }: Props) {
   const url = `/posts/${post.id}`;
 
   return (
-    <div className="flex justify-center relative group">
+    <div className="group relative flex justify-center">
       {edit && (
         <button
           type="button"
-          className="absolute top-4 right-4 hidden group-hover:block"
+          className="absolute right-4 top-4 hidden group-hover:block"
         >
           <EditIcon />
         </button>
       )}
-      <div className="w-[48rem] border border-[#0000001A] rounded-2xl bg-white">
+      <div className="w-[48rem] rounded-2xl border border-[#0000001A] bg-white">
         <Content post={post} url={url} detail={detail} />
         <CommentSection comments={comments} detail={detail} url={url} />
       </div>

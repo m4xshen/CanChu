@@ -10,8 +10,8 @@ function Login() {
   const [login, setLogin] = useState(true);
 
   return (
-    <div className="w-max h-screen mx-auto flex flex-col gap-3 items-center justify-center">
-      <div className="w-[56rem] flex rounded-3xl border border-[#0000001A] bg-white overflow-hidden">
+    <div className="mx-auto flex h-screen w-max flex-col items-center justify-center gap-3">
+      <div className="flex w-[56rem] overflow-hidden rounded-3xl border border-[#0000001A] bg-white">
         <div
           className={`w-2/3 ${
             login ? 'pb-28' : 'pb-11'
@@ -25,10 +25,10 @@ function Login() {
           </div>
           <form className="flex flex-col items-center">
             {!login && (
-              <label className="flex flex-col gap-2 mt-8">
+              <label className="mt-8 flex flex-col gap-2">
                 使用者名稱
                 <input
-                  className="w-80 h-10 px-3 border border-[#5458F7] rounded-md"
+                  className="h-10 w-80 rounded-md border border-[#5458F7] px-3"
                   placeholder="例: Chou Chou Hu"
                   type="text"
                   name="username"
@@ -36,30 +36,30 @@ function Login() {
                 />
               </label>
             )}
-            <label className="flex flex-col gap-2 mt-8">
+            <label className="mt-8 flex flex-col gap-2">
               電子郵件
               <input
-                className="w-80 h-10 px-3 border border-[#5458F7] rounded-md"
+                className="h-10 w-80 rounded-md border border-[#5458F7] px-3"
                 placeholder="例: shirney@appworks.tw"
                 type="email"
                 name="email"
                 required
               />
             </label>
-            <label className="flex flex-col gap-2 mt-8">
+            <label className="mt-8 flex flex-col gap-2">
               密碼
               <input
-                className="w-80 h-10 px-3 border border-[#5458F7] rounded-md"
+                className="h-10 w-80 rounded-md border border-[#5458F7] px-3"
                 type="password"
                 name="password"
                 required
               />
             </label>
             {!login && (
-              <label className="flex flex-col gap-2 mt-8">
+              <label className="mt-8 flex flex-col gap-2">
                 再次輸入密碼
                 <input
-                  className="w-80 h-10 px-3 border border-[#5458F7] rounded-md"
+                  className="h-10 w-80 rounded-md border border-[#5458F7] px-3"
                   type="password"
                   name="password-check"
                   required
@@ -68,7 +68,7 @@ function Login() {
             )}
             <button
               type="submit"
-              className="w-36 h-10 mt-6 bg-[#7763FB] text-white rounded-md"
+              className="mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white"
             >
               {login ? '登入' : '註冊'}
             </button>
@@ -84,7 +84,7 @@ function Login() {
             </button>
           </div>
         </div>
-        <div className="w-1/3 h-full bg-[#7763FB]" />
+        <div className="h-full w-1/3 bg-[#7763FB]" />
       </div>
       <div className="self-end">
         <footer className="text-[#525252]">

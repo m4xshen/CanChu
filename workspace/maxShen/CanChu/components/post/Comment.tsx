@@ -9,8 +9,8 @@ interface Props {
 
 function Comment({ comment }: Props) {
   return (
-    <div className="flex m-6 gap-2">
-      <div className="rounded-full w-8 h-8 overflow-hidden relative shrink-0">
+    <div className="m-6 flex gap-2">
+      <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full">
         <Image
           src={comment.user.picture ?? ''}
           fill
@@ -21,8 +21,8 @@ function Comment({ comment }: Props) {
       </div>
       <div>
         <div
-          className="flex flex-col gap-1 p-3 mb-1
-            rounded-2xl bg-opacity-30 bg-[#d9d9d9] text-[#525252]"
+          className="mb-1 flex flex-col gap-1 rounded-2xl
+            bg-[#d9d9d9] bg-opacity-30 p-3 text-[#525252]"
         >
           <div className="font-semibold">{comment.user.name}</div>
           <p>{comment.content}</p>

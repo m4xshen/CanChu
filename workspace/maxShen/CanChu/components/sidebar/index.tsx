@@ -6,16 +6,16 @@ import User from './User';
 function Sidebar() {
   return (
     <nav
-      className="flex flex-col gap-3 w-96 h-max p-5 bg-white
-    rounded-2xl border border-[#0000001A]"
+      className="flex h-max w-96 flex-col gap-3 rounded-2xl border
+        border-[#0000001A] bg-white p-5"
     >
       <User text="你的名字" />
-      <div className="border-t border-t-[#D9D9D9] my-2" />
+      <div className="my-2 border-t border-t-[#D9D9D9]" />
       <div className="flex items-center gap-3">
-        <div className="w-11 h-11 flex justify-center items-center">
+        <div className="flex h-11 w-11 items-center justify-center">
           <FriendsIcon />
         </div>
-        <div className="font-bold text-[#767676] text-lg leading-6">
+        <div className="text-lg font-bold leading-6 text-[#767676]">
           我的好友
         </div>
       </div>
@@ -26,10 +26,10 @@ function Sidebar() {
       <User text="好朋友" />
       <User text="好朋友" />
       <div className="flex items-center gap-3">
-        <div className="w-11 h-11 flex justify-center items-center">
+        <div className="flex h-11 w-11 items-center justify-center">
           <Image width="39" height="39" src="/bar.png" alt="bar" />
         </div>
-        <Link href="/" className="font-medium text-lg underline">
+        <Link href="/" className="text-lg font-medium underline">
           查看全部
         </Link>
       </div>

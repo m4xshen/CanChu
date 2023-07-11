@@ -17,7 +17,7 @@ function CommentSection({ comments, detail, url }: Props) {
         comments.map((comment) => (
           <Comment key={comment.id} comment={comment} />
         ))}
-      <div className="flex gap-4 items-center mt-3 mb-5">
+      <div className="mb-5 mt-3 flex items-center gap-4">
         <Image
           src="/avatar.png"
           width={50}
@@ -26,14 +26,14 @@ function CommentSection({ comments, detail, url }: Props) {
           className="ml-10"
         />
         <div
-          className="w-full h-12 mr-12 pl-6 pr-3 rounded-lg
-          flex justify-between items-center text-xl leading-10
-          font-normal text-[#777777] bg-[#f0f2f5] border border-[#d9d9d9]"
+          className="mr-12 flex h-12 w-full items-center justify-between
+          rounded-lg border border-[#d9d9d9] bg-[#f0f2f5] pl-6
+          pr-3 text-xl font-normal leading-10 text-[#777777]"
         >
           <input
             type="text"
             placeholder="留個言吧"
-            className="w-full h-6 pr-2 bg-[#f0f2f5] text-[#777777] text-xl outline-0 pointer-events-auto"
+            className="pointer-events-auto h-6 w-full bg-[#f0f2f5] pr-2 text-xl text-[#777777] outline-0"
           />
           {detail && (
             <button type="button" className="pointer-events-auto">

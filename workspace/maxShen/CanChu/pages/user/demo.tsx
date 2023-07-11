@@ -25,11 +25,11 @@ function Demo() {
       <Navbar />
       <Profilebar />
       <div className="flex justify-center gap-8">
-        <div className="flex flex-col gap-3 items-center">
+        <div className="flex flex-col items-center gap-3">
           <ProfileEditor />
           <Footer />
         </div>
-        <div className="flex flex-col gap-5 items-center pb-5">
+        <div className="flex flex-col items-center gap-5 pb-5">
           <PostCreator />
           <Post post={post} detail={false} edit />
           <Post post={post} detail={false} edit />

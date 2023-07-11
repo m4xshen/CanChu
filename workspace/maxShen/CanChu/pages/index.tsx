@@ -8,12 +8,12 @@ function Home() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center gap-8 mt-6">
-        <div className="flex flex-col gap-3 items-center">
+      <div className="mt-6 flex justify-center gap-8">
+        <div className="flex flex-col items-center gap-3">
           <Sidebar />
           <Footer />
         </div>
-        <div className="flex flex-col gap-5 items-center pb-5">
+        <div className="flex flex-col items-center gap-5 pb-5">
           <PostCreator />
           <Feed />
         </div>

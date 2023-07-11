@@ -12,15 +12,15 @@ function Navbar() {
   const [display, setDisplay] = useState(false);
 
   return (
-    <div className="h-24 bg-white flex items-center border-b border-[#d9d9d9]">
+    <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">
       <Link href="/">
         <h1 className={`text-[#7763FB] text-4xl ml-36 ${pattaya.className}`}>
           CanChu
         </h1>
       </Link>
       <div
-        className="w-80 h-12 ml-6 px-4 flex items-center
-          bg-[#f0f2f5] rounded-lg border border-[#d9d9d9]"
+        className="ml-6 flex h-12 w-80 items-center rounded-lg
+          border border-[#d9d9d9] bg-[#f0f2f5] px-4"
       >
         <Image src="/search.png" width={17} height={17} alt="search icon" />
         <input
@@ -30,7 +30,7 @@ function Navbar() {
         />
       </div>
       <div
-        className="ml-auto mr-36 relative"
+        className="relative ml-auto mr-36"
         onMouseLeave={() => setDisplay(false)}
       >
         <Link href="/user/demo" onMouseEnter={() => setDisplay(true)}>
@@ -40,13 +40,13 @@ function Navbar() {
           <div className="absolute right-0 top-9">
             <div className="h-10 bg-transparent" />
             <nav
-              className="flex flex-col border border-[#0000001A]
-                  w-64 rounded-2xl bg-[#f6f6f6] overflow-hidden drop-shadow-lg"
+              className="flex w-64 flex-col overflow-hidden
+                  rounded-2xl border border-[#0000001A] bg-[#f6f6f6] drop-shadow-lg"
             >
-              <div className="flex items-center h-16 bg-[#5458F7] text-white">
+              <div className="flex h-16 items-center bg-[#5458F7] text-white">
                 <div
-                  className="flex items-center justify-center
-                    w-9 h-9 ml-4 bg-white rounded-full"
+                  className="ml-4 flex h-9
+                    w-9 items-center justify-center rounded-full bg-white"
                 >
                   <Image
                     src="/purpleAvatar.png"
@@ -55,15 +55,18 @@ function Navbar() {
                     alt="purple avatar"
                   />
                 </div>
-                <div className="text-xl ml-4 font-bold">你的名字</div>
+                <div className="ml-4 text-xl font-bold">你的名字</div>
               </div>
-              <Link href="/user/demo" className="flex items-center h-16 pl-6 text-xl">
+              <Link
+                href="/user/demo"
+                className="flex h-16 items-center pl-6 text-xl"
+              >
                 查看個人檔案
               </Link>
               <div className="w-60 self-center border-t border-[#D1CACE]" />
               <button
                 type="button"
-                className="flex items-center h-16 pl-6 text-xl"
+                className="flex h-16 items-center pl-6 text-xl"
               >
                 登出
               </button>
