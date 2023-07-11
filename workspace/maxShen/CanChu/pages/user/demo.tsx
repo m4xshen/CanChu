@@ -17,7 +17,7 @@ const post = {
   like_count: 0,
   comment_count: 68,
   is_like: 0,
-}
+};
 
 function Demo() {
   return (
@@ -31,9 +31,9 @@ function Demo() {
         </div>
         <div className="flex flex-col gap-5 items-center pb-5">
           <PostCreator />
-          <Post post={post} detail={false} />
-          <Post post={post} detail={false} />
-          <Post post={post} detail={false} />
+          <Post post={post} detail={false} edit />
+          <Post post={post} detail={false} edit />
+          <Post post={post} detail={false} edit />
           <LoadingIcon />
         </div>
       </div>
