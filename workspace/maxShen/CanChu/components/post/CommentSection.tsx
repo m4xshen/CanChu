@@ -11,13 +11,8 @@ interface Props {
 }
 
 function CommentSection({ comments, detail, url }: Props) {
-  return (
-    <Link
-      href={url}
-      className={`border-t border-t-[#b7b7b7] ${
-        detail && 'pointer-events-none'
-      }`}
-    >
+  const content = (
+    <>
       {detail &&
         comments.map((comment) => (
           <Comment key={comment.id} comment={comment} />
@@ -32,8 +27,8 @@ function CommentSection({ comments, detail, url }: Props) {
         />
         <div
           className="w-full h-12 mr-12 pl-6 pr-3 rounded-lg
-            flex justify-between items-center text-xl leading-10
-            font-normal text-[#777777] bg-[#f0f2f5] border border-[#d9d9d9]"
+          flex justify-between items-center text-xl leading-10
+          font-normal text-[#777777] bg-[#f0f2f5] border border-[#d9d9d9]"
         >
           <input
             type="text"
@@ -41,13 +36,25 @@ function CommentSection({ comments, detail, url }: Props) {
             className="w-full h-6 pr-2 bg-[#f0f2f5] text-[#777777] text-xl outline-0 pointer-events-auto"
           />
           {detail && (
-            <button type="submit" className="pointer-events-auto">
+            <button className="pointer-events-auto">
               <SendIcon />
             </button>
           )}
         </div>
       </div>
-    </Link>
+    </>
+  );
+
+  return (
+    <>
+      {detail ? (
+        <div className="border-t border-t-[#b7b7b7]">{content}</div>
+      ) : (
+        <Link href={url}>
+          <div className="border-t border-t-[#b7b7b7]">{content}</div>
+        </Link>
+      )}
+    </>
   );
 }
 

@@ -10,7 +10,6 @@ function Sidebar() {
     rounded-2xl border border-[#0000001A]"
     >
       <User text="你的名字" />
-      <User text="好友邀請" />
       <div className="border-t border-t-[#D9D9D9] my-2" />
       <div className="flex items-center gap-3">
         <div className="w-11 h-11 flex justify-center items-center">
