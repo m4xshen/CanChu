@@ -15,13 +15,13 @@ interface Props {
 
 function Content({ post, url, detail }: Props) {
   const heart = (
-    <>
+    <div>
       {post.is_like ? (
         <Image src="/heart.png" width={28} height={28} alt="heart icon" />
       ) : (
         <HeartIcon />
       )}
-    </>
+    </div>
   );
 
   return (
@@ -60,8 +60,10 @@ function Content({ post, url, detail }: Props) {
       >
         {detail ? (
           <>
-            <button className="ml-2">{heart}</button>
-            <button>
+            <button type="button" className="ml-2">
+              {heart}
+            </button>
+            <button type="button">
               <CommentIcon />
             </button>
           </>
