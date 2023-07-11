@@ -14,6 +14,16 @@ interface Props {
 }
 
 function Content({ post, url, detail }: Props) {
+  const heart = (
+    <>
+      {post.is_like ? (
+        <Image src="/heart.png" width={28} height={28} alt="heart icon" />
+      ) : (
+        <HeartIcon />
+      )}
+    </>
+  );
+
   return (
     <div className="pt-7">
       <div className="w-full flex gap-3 items-center">
@@ -48,16 +58,23 @@ function Content({ post, url, detail }: Props) {
         className="flex items-center h-14 mx-9 gap-2
           border-t border-[#B7B7B7] border-b"
       >
-        <Link href={url} className={`ml-2 ${detail && 'pointer-events-none'}`}>
-          {post.is_like ? (
-            <Image src="/heart.png" width={28} height={28} alt="heart icon" />
-          ) : (
-            <HeartIcon />
-          )}
-        </Link>
-        <Link href={url} className={`${detail && 'pointer-events-none'}`}>
-          <CommentIcon />
-        </Link>
+        {detail ? (
+          <>
+            <button className="ml-2">{heart}</button>
+            <button>
+              <CommentIcon />
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href={url} className="ml-2">
+              {heart}
+            </Link>
+            <Link href={url}>
+              <CommentIcon />
+            </Link>
+          </>
+        )}
       </div>
       <div
         className="h-12 mx-9 flex items-center justify-between
