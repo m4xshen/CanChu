@@ -18,7 +18,10 @@ function Post({ post, detail, edit }: Props) {
   return (
     <div className="flex justify-center relative group">
       {edit && (
-        <button className="absolute top-4 right-4 hidden group-hover:block">
+        <button
+          type="button"
+          className="absolute top-4 right-4 hidden group-hover:block"
+        >
           <EditIcon />
         </button>
       )}
