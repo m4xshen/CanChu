@@ -1,11 +1,12 @@
 import Image from 'next/image';
+import profile from '@/data/profile';
 
 function PostCreator() {
   return (
     <div className="flex gap-6 w-[48rem] p-5 border border-[#0000001A] rounded-2xl bg-white">
       <div className="rounded-full w-20 h-20 overflow-hidden relative shrink-0">
         <Image
-          src="https://i.imgur.com/5NAGJfl.png"
+          src={profile.picture}
           fill
           alt="user avatar"
           className="object-cover"

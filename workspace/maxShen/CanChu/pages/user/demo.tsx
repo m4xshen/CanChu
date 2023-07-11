@@ -1,16 +1,16 @@
-import Navbar from '@/components/navbar';
-import Sidebar from '@/components/sidebar';
-import PostCreator from '@/components/postCreator';
 import Feed from '@/components/feed';
+import Navbar from '@/components/navbar';
+import PostCreator from '@/components/postCreator';
 import Footer from '@/components/footer';
+import Profilebar from '@/components/profilebar';
 
-function Home() {
+function Demo() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center gap-8 mt-6">
+      <Profilebar />
+      <div className="flex justify-center gap-8">
         <div className="flex flex-col gap-3 items-center">
-          <Sidebar />
           <Footer />
         </div>
         <div className="flex flex-col gap-5 items-center pb-5">
@@ -22,4 +22,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Demo;

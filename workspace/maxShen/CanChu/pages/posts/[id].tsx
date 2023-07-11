@@ -8,6 +8,7 @@ function DetailPage({ post }: { post: PostType }) {
   return (
     <>
       <Navbar />
+      <div className="mt-6" />
       <Post key={post.id} post={post} detail />
     </>
   );
