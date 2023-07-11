@@ -12,7 +12,7 @@ function Navbar() {
   const [display, setDisplay] = useState(false);
 
   return (
-    <div className="h-24 bg-white flex items-center border-b border-[#d9d9d9]">
+    <div className="h-24 mb-6 bg-white flex items-center border-b border-[#d9d9d9]">
       <Link href="/">
         <h1 className={`text-[#7763FB] text-4xl ml-36 ${pattaya.className}`}>
           CanChu

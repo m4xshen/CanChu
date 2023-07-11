@@ -8,7 +8,7 @@ function Home() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center gap-8 mt-6">
+      <div className="flex justify-center gap-8">
         <div className="flex flex-col gap-3 items-center">
           <Sidebar />
           <Footer />
