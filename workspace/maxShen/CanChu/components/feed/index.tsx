@@ -8,7 +8,9 @@ function Feed() {
       {posts.length === 0 ? (
         <div>沒有新的貼文</div>
       ) : (
-        posts.map((post) => <Post key={post.id} post={post} detail={false} />)
+        posts.map((post) => (
+          <Post key={post.id} post={post} detail={false} edit={false} />
+        ))
       )}
       <LoadingIcon />
     </>

@@ -9,7 +9,7 @@ function DetailPage({ post }: { post: PostType }) {
     <>
       <Navbar />
       <div className="mt-6" />
-      <Post key={post.id} post={post} detail />
+      <Post key={post.id} post={post} detail edit={false} />
     </>
   );
 }
