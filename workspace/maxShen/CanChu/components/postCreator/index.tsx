@@ -1,12 +1,12 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-const PostCreator = () => {
+function PostCreator() {
   return (
     <div className="flex gap-6 w-[48rem] p-5 border border-[#0000001A] rounded-2xl bg-white">
       <div className="rounded-full w-20 h-20 overflow-hidden relative shrink-0">
         <Image
           src="https://i.imgur.com/5NAGJfl.png"
-          fill={true}
+          fill
           alt="user avatar"
           className="object-cover"
         />
@@ -18,6 +18,7 @@ const PostCreator = () => {
             text-xl rounded-lg outline-0 resize-none"
         />
         <button
+          type="submit"
           className="flex items-center self-end justify-center w-36 h-10 rounded-md
             bg-[#5458F7] text-white"
         >
@@ -26,6 +27,6 @@ const PostCreator = () => {
       </div>
     </div>
   );
-};
+}
 
 export default PostCreator;

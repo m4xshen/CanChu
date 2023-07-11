@@ -1,11 +1,11 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
 import { getDisplayTime } from '@/utils';
 import { PostType } from '@/types';
 
 import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
-
-import Image from 'next/image';
-import Link from 'next/link';
 
 interface Props {
   post: PostType;
@@ -13,28 +13,26 @@ interface Props {
   detail: boolean;
 }
 
-const Content: React.FC<Props> = ({ post, url, detail }) => {
+function Content({ post, url, detail }: Props) {
   return (
     <div className="pt-7">
       <div className="w-full flex gap-3 items-center">
         <div className="rounded-full w-20 h-20 ml-7 overflow-hidden relative shrink-0">
           <Image
-            src={post.picture ? post.picture : ""}
-            fill={true}
+            src={post.picture ? post.picture : ''}
+            fill
             sizes="5rem"
             alt="user avatar"
             className="object-cover"
           />
         </div>
         <div>
-          <div
-            className="text-lg font-bold cursor-pointer"
-          >
-            {post.name}
-          </div>
+          <div className="text-lg font-bold cursor-pointer">{post.name}</div>
           <Link
             href={url}
-            className={`text-sm font-normal text-[#909090] ${detail && 'pointer-events-none'}`}
+            className={`text-sm font-normal text-[#909090] ${
+              detail && 'pointer-events-none'
+            }`}
           >
             {getDisplayTime(post.created_at)}
           </Link>
@@ -51,15 +49,11 @@ const Content: React.FC<Props> = ({ post, url, detail }) => {
           border-t border-[#B7B7B7] border-b"
       >
         <Link href={url} className={`ml-2 ${detail && 'pointer-events-none'}`}>
-          {post.is_like ?
-            <Image
-              src="/heart.png"
-              width={28}
-              height={28}
-              alt="heart icon"
-            /> :
+          {post.is_like ? (
+            <Image src="/heart.png" width={28} height={28} alt="heart icon" />
+          ) : (
             <HeartIcon />
-          }
+          )}
         </Link>
         <Link href={url} className={`${detail && 'pointer-events-none'}`}>
           <CommentIcon />
@@ -78,6 +72,6 @@ const Content: React.FC<Props> = ({ post, url, detail }) => {
       </div>
     </div>
   );
-};
+}
 
 export default Content;

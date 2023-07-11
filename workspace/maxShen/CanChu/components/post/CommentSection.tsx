@@ -10,18 +10,18 @@ interface Props {
   url: string;
 }
 
-const CommentSection: React.FC<Props> = ({ comments, detail, url }) => {
+function CommentSection({ comments, detail, url }: Props) {
   return (
     <Link
       href={url}
-      className={`border-t border-t-[#b7b7b7] ${detail && 'pointer-events-none'}`}
+      className={`border-t border-t-[#b7b7b7] ${
+        detail && 'pointer-events-none'
+      }`}
     >
-      { detail && comments.map(comment => (
-        <Comment
-          key={comment.id}
-          comment={comment}
-        />
-      )) }
+      {detail &&
+        comments.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
       <div className="flex gap-4 items-center mt-3 mb-5">
         <Image
           src="/avatar.png"
@@ -40,15 +40,15 @@ const CommentSection: React.FC<Props> = ({ comments, detail, url }) => {
             placeholder="留個言吧"
             className="w-full h-6 pr-2 bg-[#f0f2f5] text-[#777777] text-xl outline-0 pointer-events-auto"
           />
-          { detail && 
-            <button className="pointer-events-auto">
+          {detail && (
+            <button type="submit" className="pointer-events-auto">
               <SendIcon />
             </button>
-          }
+          )}
         </div>
       </div>
     </Link>
   );
-};
+}
 
 export default CommentSection;

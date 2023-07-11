@@ -17,4 +17,4 @@ export const getDisplayTime = (date: string | null) => {
     return Math.trunc(delta / 60).toString() + ' 分鐘前';
   }
   return Math.trunc(delta).toString() + ' 秒前';
-}
+};

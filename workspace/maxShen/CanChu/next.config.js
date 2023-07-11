@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   webpack: (config) => {
     config.infrastructureLogging = {
-      level: "error",
+      level: 'error',
     };
 
     return config;
@@ -16,6 +16,6 @@ const nextConfig = {
       },
     ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

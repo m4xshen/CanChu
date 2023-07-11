@@ -8,7 +8,7 @@ export interface PostType {
   like_count: number | null;
   comment_count: number | null;
   is_like: number | null;
-};
+}
 
 export interface CommentType {
   id: number;

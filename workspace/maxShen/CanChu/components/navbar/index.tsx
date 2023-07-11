@@ -5,10 +5,10 @@ import { useState } from 'react';
 
 const pattaya = Pattaya({
   weight: '400',
-  subsets: ['cyrillic']
+  subsets: ['cyrillic'],
 });
 
-const Navbar = () => {
+function Navbar() {
   const [display, setDisplay] = useState(false);
 
   return (
@@ -22,12 +22,7 @@ const Navbar = () => {
         className="w-80 h-12 ml-6 px-4 flex items-center
           bg-[#f0f2f5] rounded-lg border border-[#d9d9d9]"
       >
-        <Image
-          src="/search.png"
-          width={17}
-          height={17}
-          alt="search icon"
-        />
+        <Image src="/search.png" width={17} height={17} alt="search icon" />
         <input
           type="text"
           placeholder="搜尋"
@@ -38,58 +33,46 @@ const Navbar = () => {
         className="ml-auto mr-36 relative"
         onMouseLeave={() => setDisplay(false)}
       >
-        <Link
-          href="/"
-          onMouseEnter={() => setDisplay(true)}
-        >
-          <Image
-            src="/avatar.png"
-            width={36}
-            height={36}
-            alt="user avatar"
-          />
+        <Link href="/" onMouseEnter={() => setDisplay(true)}>
+          <Image src="/avatar.png" width={36} height={36} alt="user avatar" />
         </Link>
-        {
-          display && 
-            <div className="absolute right-0 top-9">
-              <div className="h-10 bg-transparent" />
-              <nav
-                className="flex flex-col border border-[#0000001A]
+        {display && (
+          <div className="absolute right-0 top-9">
+            <div className="h-10 bg-transparent" />
+            <nav
+              className="flex flex-col border border-[#0000001A]
                   w-64 rounded-2xl bg-[#f6f6f6] overflow-hidden drop-shadow-lg"
-              >
-                <div className="flex items-center h-16 bg-[#5458F7] text-white">
-                  <div className="flex items-center justify-center
-                    w-9 h-9 ml-4 bg-white rounded-full">
-                    <Image
-                      src="/purpleAvatar.png"
-                      width={29}
-                      height={24}
-                      alt="purple avatar"
-                    />
-                  </div>
-                  <div
-                    className="text-xl ml-4 font-bold">
-                    你的名字
-                  </div>
+            >
+              <div className="flex items-center h-16 bg-[#5458F7] text-white">
+                <div
+                  className="flex items-center justify-center
+                    w-9 h-9 ml-4 bg-white rounded-full"
+                >
+                  <Image
+                    src="/purpleAvatar.png"
+                    width={29}
+                    height={24}
+                    alt="purple avatar"
+                  />
                 </div>
-                <Link
-                  href="/"
-                  className="flex items-center h-16 pl-6 text-xl"
-                >
-                  查看個人檔案
-                </Link>
-                <div className="w-60 self-center border-t border-[#D1CACE]" />
-                <button
-                  className="flex items-center h-16 pl-6 text-xl"
-                >
-                  登出
-                </button>
-              </nav>
-            </div>
-        }
+                <div className="text-xl ml-4 font-bold">你的名字</div>
+              </div>
+              <Link href="/" className="flex items-center h-16 pl-6 text-xl">
+                查看個人檔案
+              </Link>
+              <div className="w-60 self-center border-t border-[#D1CACE]" />
+              <button
+                type="button"
+                className="flex items-center h-16 pl-6 text-xl"
+              >
+                登出
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
     </div>
   );
-};
+}
 
 export default Navbar;
