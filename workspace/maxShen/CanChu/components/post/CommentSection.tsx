@@ -36,7 +36,7 @@ function CommentSection({ comments, detail, url }: Props) {
             className="w-full h-6 pr-2 bg-[#f0f2f5] text-[#777777] text-xl outline-0 pointer-events-auto"
           />
           {detail && (
-            <button className="pointer-events-auto">
+            <button type="button" className="pointer-events-auto">
               <SendIcon />
             </button>
           )}
@@ -46,7 +46,7 @@ function CommentSection({ comments, detail, url }: Props) {
   );
 
   return (
-    <>
+    <div>
       {detail ? (
         <div className="border-t border-t-[#b7b7b7]">{content}</div>
       ) : (
@@ -54,7 +54,7 @@ function CommentSection({ comments, detail, url }: Props) {
           <div className="border-t border-t-[#b7b7b7]">{content}</div>
         </Link>
       )}
-    </>
+    </div>
   );
 }
 
