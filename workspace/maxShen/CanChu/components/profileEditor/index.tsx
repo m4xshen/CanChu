@@ -1,4 +1,4 @@
-import profile from "@/data/profile";
+import profile from '@/data/profile';
 
 function ProfileEditor() {
   return (
@@ -10,13 +10,17 @@ function ProfileEditor() {
         編輯個人檔案
       </button>
       <div className="flex flex-col gap-4 my-4 px-3">
-        <div>
+        <div className="flex flex-col gap-2">
           <div className="text-lg font-bold">自我介紹</div>
           <p>{profile.introduction}</p>
         </div>
-        <div>
+        <div className="flex flex-col gap-2">
           <div className="text-lg font-bold">興趣</div>
-          <p>{profile.tags}</p>
+          <div className="flex gap-1">
+            {profile.tags.split(',').map((tag) => (
+              <div className="border border-black rounded-xl px-3">{tag}</div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
