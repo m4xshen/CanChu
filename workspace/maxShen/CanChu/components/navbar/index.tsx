@@ -33,7 +33,7 @@ function Navbar() {
         className="ml-auto mr-36 relative"
         onMouseLeave={() => setDisplay(false)}
       >
-        <Link href="/" onMouseEnter={() => setDisplay(true)}>
+        <Link href="/user/demo" onMouseEnter={() => setDisplay(true)}>
           <Image src="/avatar.png" width={36} height={36} alt="user avatar" />
         </Link>
         {display && (
@@ -57,7 +57,7 @@ function Navbar() {
                 </div>
                 <div className="text-xl ml-4 font-bold">你的名字</div>
               </div>
-              <Link href="/" className="flex items-center h-16 pl-6 text-xl">
+              <Link href="/user/demo" className="flex items-center h-16 pl-6 text-xl">
                 查看個人檔案
               </Link>
               <div className="w-60 self-center border-t border-[#D1CACE]" />
