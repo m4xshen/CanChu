@@ -1,13 +1,23 @@
+'use client';
+
 import { Pattaya } from 'next/font/google';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const pattaya = Pattaya({
   weight: '400',
   subsets: ['cyrillic'],
 });
 
-function Login() {
+interface Props {
+  apiDomain: string;
+}
+
+function Login({ apiDomain }: Props) {
   const [login, setLogin] = useState(true);
+
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="mx-auto flex h-screen w-max flex-col items-center justify-center gap-3">
@@ -23,15 +33,44 @@ function Login() {
           <div className="mt-10 text-4xl font-extralight">
             {login ? '會員登入' : '會員註冊'}
           </div>
-          <form className="flex flex-col items-center">
+          <form
+            className="flex flex-col items-center"
+            onSubmit={(e) => {
+              if (!login) {
+                // sign up
+                fetch(`${apiDomain}/users/signup`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    name: nameRef.current?.value,
+                    email: emailRef.current?.value,
+                    password: passwordRef.current?.value,
+                  }),
+                }).then(() => {
+                  // go back to login page
+                  setLogin(true);
+                  if (emailRef.current) {
+                    emailRef.current.value = '';
+                  }
+                  if (passwordRef.current) {
+                    passwordRef.current.value = '';
+                  }
+                });
+              }
+              e.preventDefault();
+            }}
+          >
             {!login && (
               <label className="mt-8 flex flex-col gap-2">
                 使用者名稱
                 <input
+                  ref={nameRef}
                   className="h-10 w-80 rounded-md border border-[#5458F7] px-3"
                   placeholder="例: Chou Chou Hu"
                   type="text"
-                  name="username"
+                  name="name"
                   required
                 />
               </label>
@@ -39,6 +78,7 @@ function Login() {
             <label className="mt-8 flex flex-col gap-2">
               電子郵件
               <input
+                ref={emailRef}
                 className="h-10 w-80 rounded-md border border-[#5458F7] px-3"
                 placeholder="例: shirney@appworks.tw"
                 type="email"
@@ -49,6 +89,7 @@ function Login() {
             <label className="mt-8 flex flex-col gap-2">
               密碼
               <input
+                ref={passwordRef}
                 className="h-10 w-80 rounded-md border border-[#5458F7] px-3"
                 type="password"
                 name="password"
@@ -96,3 +137,11 @@ function Login() {
 }
 
 export default Login;
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      apiDomain: process.env.API_DOMAIN || '',
+    },
+  };
+}
