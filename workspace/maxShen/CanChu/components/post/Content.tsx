@@ -6,6 +6,7 @@ import { PostType } from '@/types';
 
 import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
+import profile from '@/data/profile';
 
 interface Props {
   post: PostType;
@@ -16,7 +17,7 @@ interface Props {
 function Content({ post, url, detail }: Props) {
   const heart = (
     <div>
-      {post.is_like ? (
+      {post.is_liked ? (
         <Image src="/heart.png" width={28} height={28} alt="heart icon" />
       ) : (
         <HeartIcon />
@@ -30,7 +31,7 @@ function Content({ post, url, detail }: Props) {
         <Link href="/">
           <div className="relative ml-7 h-20 w-20 shrink-0 overflow-hidden rounded-full">
             <Image
-              src={post.picture ?? ''}
+              src={post.picture ? post.picture : profile.picture}
               fill
               alt="user avatar"
               className="object-cover"

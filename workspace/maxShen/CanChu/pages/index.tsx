@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 
@@ -8,8 +8,9 @@ import PostCreator from '@/components/postCreator';
 import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 
-function Home() {
+function Home({ apiDomain }: { apiDomain: string }) {
   const router = useRouter();
+  const [postIds, setPostIds] = useState<number[]>([]);
 
   useEffect(() => {
     if (getCookie('access_token') === undefined) {
@@ -26,8 +27,15 @@ function Home() {
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator />
-          <Feed />
+          <PostCreator
+            apiDomain={apiDomain}
+            postIds={postIds}
+            setPostIds={setPostIds}
+          />
+          <Feed
+            apiDomain={apiDomain}
+            postIds={postIds}
+          />
         </div>
       </div>
     </>
@@ -35,3 +43,11 @@ function Home() {
 }
 
 export default Home;
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      apiDomain: process.env.API_DOMAIN || '',
+    },
+  };
+}
