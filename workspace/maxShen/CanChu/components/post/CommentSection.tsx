@@ -3,6 +3,7 @@ import Link from 'next/link';
 import SendIcon from '../icons/SendIcon';
 import Comment from './Comment';
 import { CommentType } from '@/types';
+import profile from '@/data/profile';
 
 interface Props {
   comments: CommentType[];
@@ -18,13 +19,14 @@ function CommentSection({ comments, detail, url }: Props) {
           <Comment key={comment.id} comment={comment} />
         ))}
       <div className="mb-5 mt-3 flex items-center gap-4">
-        <Image
-          src="/avatar.png"
-          width={50}
-          height={50}
-          alt="user avatar"
-          className="ml-10"
-        />
+        <div className="relative ml-10 h-[50px] w-[50px] shrink-0 overflow-hidden rounded-full">
+          <Image
+            src={profile.picture}
+            fill
+            alt="user avatar"
+            className="object-cover"
+          />
+        </div>
         <div
           className="mr-12 flex h-12 w-full items-center justify-between
           rounded-lg border border-[#d9d9d9] bg-[#f0f2f5] pl-6

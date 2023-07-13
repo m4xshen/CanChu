@@ -4,6 +4,7 @@ import { Pattaya } from 'next/font/google';
 import { useState } from 'react';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+import profile from '@/data/profile';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -37,7 +38,14 @@ function Navbar() {
         onMouseLeave={() => setDisplay(false)}
       >
         <Link href="/user/demo" onMouseEnter={() => setDisplay(true)}>
-          <Image src="/avatar.png" width={36} height={36} alt="user avatar" />
+          <div className="relative h-9 w-9 overflow-hidden rounded-full">
+            <Image
+              src={profile.picture}
+              fill
+              alt="user avatar"
+              className="object-cover"
+            />
+          </div>
         </Link>
         {display && (
           <div className="absolute right-0 top-9 z-10">
@@ -58,7 +66,7 @@ function Navbar() {
                     alt="purple avatar"
                   />
                 </div>
-                <div className="ml-4 text-xl font-bold">你的名字</div>
+                <div className="ml-4 text-xl font-bold">{profile.name}</div>
               </div>
               <Link
                 href="/user/demo"
@@ -70,10 +78,10 @@ function Navbar() {
               <button
                 type="button"
                 className="flex h-16 items-center pl-6 text-xl"
-                onClick={(() => {
+                onClick={() => {
                   deleteCookie('access_token');
                   router.push('/login');
-                })}
+                }}
               >
                 登出
               </button>
