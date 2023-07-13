@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
+
 import Navbar from '@/components/navbar';
 import PostCreator from '@/components/postCreator';
 import Footer from '@/components/footer';
@@ -20,6 +24,14 @@ const post = {
 };
 
 function Demo() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (getCookie('access_token') === undefined) {
+      router.push('/login');
+    }
+  }, []);
+
   return (
     <>
       <Navbar />

@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
+
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
 import posts from '@/data/post';
@@ -5,6 +9,14 @@ import posts from '@/data/post';
 import { PostType } from '@/types';
 
 function DetailPage({ post }: { post: PostType }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (getCookie('access_token') === undefined) {
+      router.push('/login');
+    }
+  }, []);
+
   return (
     <>
       <Navbar />

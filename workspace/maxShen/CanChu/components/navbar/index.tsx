@@ -2,6 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Pattaya } from 'next/font/google';
 import { useState } from 'react';
+import { deleteCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -10,6 +12,7 @@ const pattaya = Pattaya({
 
 function Navbar() {
   const [display, setDisplay] = useState(false);
+  const router = useRouter();
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">
@@ -67,6 +70,10 @@ function Navbar() {
               <button
                 type="button"
                 className="flex h-16 items-center pl-6 text-xl"
+                onClick={(() => {
+                  deleteCookie('access_token');
+                  router.push('/login');
+                })}
               >
                 登出
               </button>
