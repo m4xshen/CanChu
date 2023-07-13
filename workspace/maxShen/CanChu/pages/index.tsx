@@ -10,7 +10,6 @@ import Footer from '@/components/footer';
 
 function Home({ apiDomain }: { apiDomain: string }) {
   const router = useRouter();
-  const [postIds, setPostIds] = useState<number[]>([]);
 
   useEffect(() => {
     if (getCookie('access_token') === undefined) {
@@ -27,15 +26,8 @@ function Home({ apiDomain }: { apiDomain: string }) {
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator
-            apiDomain={apiDomain}
-            postIds={postIds}
-            setPostIds={setPostIds}
-          />
-          <Feed
-            apiDomain={apiDomain}
-            postIds={postIds}
-          />
+          <PostCreator apiDomain={apiDomain} />
+          <Feed apiDomain={apiDomain} />
         </div>
       </div>
     </>

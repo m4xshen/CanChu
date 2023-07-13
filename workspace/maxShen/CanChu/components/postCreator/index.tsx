@@ -7,15 +7,13 @@ import profile from '@/data/profile';
 
 interface Props {
   apiDomain: string;
-  postIds: number[];
-  setPostIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-function PostCreator({ apiDomain, postIds, setPostIds }: Props) {
+function PostCreator({ apiDomain }: Props) {
   const textRef = useRef<HTMLTextAreaElement>(null);
 
-  async function createPost() {
-    const res = await fetch(`${apiDomain}/posts`, {
+  function createPost() {
+    fetch(`${apiDomain}/posts`, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -25,12 +23,6 @@ function PostCreator({ apiDomain, postIds, setPostIds }: Props) {
         context: textRef.current?.value,
       }),
     });
-
-    if (res.ok) {
-      const data = await res.json();
-      setPostIds([...postIds, data.data.post.id]);
-      console.log(data.data.post.id);
-    }
   }
 
   return (

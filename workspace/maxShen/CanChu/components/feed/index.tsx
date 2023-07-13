@@ -4,33 +4,22 @@ import Post from '@/components/post';
 import LoadingIcon from '../icons/LoadingIcon';
 import { PostType } from '@/types';
 
-function Feed({
-  apiDomain,
-  postIds,
-}: {
-  apiDomain: string;
-  postIds: number[];
-}) {
+function Feed({ apiDomain }: { apiDomain: string }) {
   const [posts, setPosts] = useState<PostType[]>([]);
 
   useEffect(() => {
-    const newPosts: PostType[] = [];
-
-    postIds.forEach(async (id, index) => {
-      const res = await fetch(`${apiDomain}/posts/${id}`, {
+    (async () => {
+      const res = await fetch(`${apiDomain}/posts/search`, {
         method: 'GET',
         headers: new Headers({
-          Authorization: `Bearer ${getCookie('access_token')}`,
+          'Authorization': `Bearer ${getCookie('access_token')}`,
         }),
       });
-      const data = await res.json();
-      newPosts.unshift(data.data.post);
 
-      if (index === postIds.length - 1) {
-        setPosts(newPosts);
-      }
-    });
-  }, [postIds]);
+      const data = await res.json();
+      setPosts(data.data.posts);
+    })();
+  }, []);
 
   return (
     <>
