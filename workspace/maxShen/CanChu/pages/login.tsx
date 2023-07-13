@@ -18,6 +18,7 @@ function Login({ apiDomain }: Props) {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordCheckRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="mx-auto flex h-screen w-max flex-col items-center justify-center gap-3">
@@ -36,7 +37,16 @@ function Login({ apiDomain }: Props) {
           <form
             className="flex flex-col items-center"
             onSubmit={(e) => {
+              e.preventDefault();
+
               if (!login) {
+                if (
+                  passwordRef.current?.value !== passwordCheckRef.current?.value
+                ) {
+                  alert('密碼不一致');
+                  return;
+                }
+
                 // sign up
                 fetch(`${apiDomain}/users/signup`, {
                   method: 'POST',
@@ -48,18 +58,25 @@ function Login({ apiDomain }: Props) {
                     email: emailRef.current?.value,
                     password: passwordRef.current?.value,
                   }),
-                }).then(() => {
-                  // go back to login page
-                  setLogin(true);
-                  if (emailRef.current) {
-                    emailRef.current.value = '';
-                  }
-                  if (passwordRef.current) {
-                    passwordRef.current.value = '';
+                }).then((res) => {
+                  if (res.ok) {
+                    // go back to login page
+                    setLogin(true);
+                    if (emailRef.current) {
+                      emailRef.current.value = '';
+                    }
+                    if (passwordRef.current) {
+                      passwordRef.current.value = '';
+                    }
+                  } else if (res.status === 403) {
+                    alert('email已經使用過');
+                  } else if (res.status === 400) {
+                    alert('client error');
+                  } else if (res.status === 500) {
+                    alert('server error');
                   }
                 });
               }
-              e.preventDefault();
             }}
           >
             {!login && (
@@ -100,6 +117,7 @@ function Login({ apiDomain }: Props) {
               <label className="mt-8 flex flex-col gap-2">
                 再次輸入密碼
                 <input
+                  ref={passwordCheckRef}
                   className="h-10 w-80 rounded-md border border-[#5458F7] px-3"
                   type="password"
                   name="password-check"
