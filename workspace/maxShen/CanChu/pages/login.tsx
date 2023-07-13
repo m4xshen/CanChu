@@ -1,7 +1,9 @@
 'use client';
 
+import { getCookie, setCookie } from 'cookies-next';
 import { Pattaya } from 'next/font/google';
-import { useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -18,6 +20,14 @@ function Login({ apiDomain }: Props) {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (getCookie('access_token')) {
+      router.push('/');
+    }
+  }, []);
 
   return (
     <div className="mx-auto flex h-screen w-max flex-col items-center justify-center gap-3">
@@ -58,6 +68,24 @@ function Login({ apiDomain }: Props) {
                     passwordRef.current.value = '';
                   }
                 });
+              } else {
+                // login
+                fetch(`${apiDomain}/users/signin`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    provider: 'native',
+                    email: emailRef.current?.value,
+                    password: passwordRef.current?.value,
+                  }),
+                })
+                  .then((res) => res.json())
+                  .then((data) => {
+                    setCookie('access_token', data.data.access_token);
+                    router.push('/');
+                  });
               }
               e.preventDefault();
             }}
