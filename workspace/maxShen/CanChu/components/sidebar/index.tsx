@@ -2,6 +2,28 @@ import Image from 'next/image';
 import Link from 'next/link';
 import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
+import profile from '@/data/profile';
+
+const friends = [
+  {
+    id: 1,
+    name: '大原所長',
+    picture: 'https://i.imgur.com/rVRCiZC.png',
+    friendship: {
+      id: 32,
+      status: 'friend',
+    },
+  },
+  {
+    id: 14,
+    name: 'Joseph Joestar',
+    picture: 'https://i.imgur.com/JSZhpVj.jpg',
+    friendship: {
+      id: 2,
+      status: 'friend',
+    },
+  },
+];
 
 function Sidebar() {
   return (
@@ -9,7 +31,7 @@ function Sidebar() {
       className="flex h-max w-96 flex-col gap-3 rounded-2xl border
         border-[#0000001A] bg-white p-5"
     >
-      <User text="你的名字" />
+      <User picture={profile.picture} text={profile.name} />
       <div className="my-2 border-t border-t-[#D9D9D9]" />
       <div className="flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center">
@@ -19,12 +41,9 @@ function Sidebar() {
           我的好友
         </div>
       </div>
-      <User text="好朋友" />
-      <User text="好朋友" />
-      <User text="好朋友" />
-      <User text="好朋友" />
-      <User text="好朋友" />
-      <User text="好朋友" />
+      {friends.map((friend) => (
+        <User key={friend.id} picture={friend.picture} text={friend.name} />
+      ))}
       <div className="flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center">
           <Image width="39" height="39" src="/bar.png" alt="bar" />
