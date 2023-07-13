@@ -58,17 +58,19 @@ function Login({ apiDomain }: Props) {
                 }
 
                 // sign up
-                fetch(`${apiDomain}/users/signup`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    name: nameRef.current?.value,
-                    email: emailRef.current?.value,
-                    password: passwordRef.current?.value,
-                  }),
-                }).then((res) => {
+                (async () => {
+                  const res = await fetch(`${apiDomain}/users/signup`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      name: nameRef.current?.value,
+                      email: emailRef.current?.value,
+                      password: passwordRef.current?.value,
+                    }),
+                  });
+
                   if (res.ok) {
                     // go back to login page
                     setLogin(true);
@@ -81,29 +83,38 @@ function Login({ apiDomain }: Props) {
                   } else if (res.status === 403) {
                     alert('email已經使用過');
                   } else if (res.status === 400) {
-                    alert('client error');
+                    console.error('client error');
                   } else if (res.status === 500) {
-                    alert('server error');
+                    console.error('server error');
                   }
-                });
+                })();
               } else {
                 // login
-                fetch(`${apiDomain}/users/signin`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    provider: 'native',
-                    email: emailRef.current?.value,
-                    password: passwordRef.current?.value,
-                  }),
-                })
-                  .then((res) => res.json())
-                  .then((data) => {
+                (async () => {
+                  const res = await fetch(`${apiDomain}/users/signin`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      provider: 'native',
+                      email: emailRef.current?.value,
+                      password: passwordRef.current?.value,
+                    }),
+                  });
+
+                  if (res.ok) {
+                    const data = await res.json();
                     setCookie('access_token', data.data.access_token);
                     router.push('/');
-                  });
+                  } else if (res.status === 403) {
+                    alert('電子郵件或密碼錯誤');
+                  } else if (res.status === 400) {
+                    console.error('client error');
+                  } else if (res.status === 500) {
+                    console.error('server error');
+                  }
+                })();
               }
             }}
           >
