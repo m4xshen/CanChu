@@ -83,9 +83,9 @@ function Login({ apiDomain }: Props) {
                   } else if (res.status === 403) {
                     alert('email已經使用過');
                   } else if (res.status === 400) {
-                    console.error('client error');
+                    alert('client error');
                   } else if (res.status === 500) {
-                    console.error('server error');
+                    alert('server error');
                   }
                 })();
               } else {
@@ -110,9 +110,9 @@ function Login({ apiDomain }: Props) {
                   } else if (res.status === 403) {
                     alert('電子郵件或密碼錯誤');
                   } else if (res.status === 400) {
-                    console.error('client error');
+                    alert('client error');
                   } else if (res.status === 500) {
-                    console.error('server error');
+                    alert('server error');
                   }
                 })();
               }
