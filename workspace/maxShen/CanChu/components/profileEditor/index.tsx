@@ -18,7 +18,9 @@ function ProfileEditor() {
           <div className="text-lg font-bold">興趣</div>
           <div className="flex gap-1">
             {profile.tags.split(',').map((tag) => (
-              <div className="rounded-xl border border-black px-3">{tag}</div>
+              <div key={tag} className="rounded-xl border border-black px-3">
+                {tag}
+              </div>
             ))}
           </div>
         </div>
