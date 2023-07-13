@@ -27,15 +27,16 @@ function Content({ post, url, detail }: Props) {
   return (
     <div className="pt-7">
       <div className="flex w-full items-center gap-3">
-        <div className="relative ml-7 h-20 w-20 shrink-0 overflow-hidden rounded-full">
-          <Image
-            src={post.picture ? post.picture : ''}
-            fill
-            sizes="5rem"
-            alt="user avatar"
-            className="object-cover"
-          />
-        </div>
+        <Link href="/">
+          <div className="relative ml-7 h-20 w-20 shrink-0 overflow-hidden rounded-full">
+            <Image
+              src={post.picture ?? ''}
+              fill
+              alt="user avatar"
+              className="object-cover"
+            />
+          </div>
+        </Link>
         <div>
           <div className="cursor-pointer text-lg font-bold">{post.name}</div>
           <Link

@@ -5,12 +5,11 @@ function Profilebar() {
   return (
     <div className="mb-6 flex h-[23rem] flex-col bg-white px-32">
       <div className="flex h-72 items-center gap-11 border-b border-[#C8C8C8]">
-        <div className="relative ml-7 h-44 w-44 shrink-0 overflow-hidden rounded-full">
-          <button type="button" className="group">
+        <button type="button" className="group">
+          <div className="relative ml-7 h-44 w-44 shrink-0 overflow-hidden rounded-full">
             <Image
-              src={profile.picture ? profile.picture : ''}
+              src={profile.picture ?? ''}
               fill
-              sizes="5rem"
               alt="user avatar"
               className="object-cover hover:brightness-50 group-hover:brightness-50"
             />
@@ -21,8 +20,8 @@ function Profilebar() {
             >
               編輯大頭貼
             </div>
-          </button>
-        </div>
+          </div>
+        </button>
         <div className="flex flex-col justify-around">
           <div>
             <div className="text-4xl font-bold">{profile.name}</div>
