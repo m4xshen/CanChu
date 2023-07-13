@@ -3,7 +3,7 @@
 import { getCookie, setCookie } from 'cookies-next';
 import { Pattaya } from 'next/font/google';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -14,8 +14,8 @@ interface Props {
   apiDomain: string;
 }
 
-function Login({ apiDomain }: Props) {
-  const [login, setLogin] = useState(true);
+function LoginSignupPage({ apiDomain }: Props) {
+  const [logginIn, setLogginIn] = useState(true);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -30,95 +30,94 @@ function Login({ apiDomain }: Props) {
     }
   }, []);
 
+  async function signup() {
+    const res = await fetch(`${apiDomain}/users/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: nameRef.current?.value,
+        email: emailRef.current?.value,
+        password: passwordRef.current?.value,
+      }),
+    });
+
+    if (res.ok) {
+      // go back to login page
+      setLogginIn(true);
+      if (emailRef.current) {
+        emailRef.current.value = '';
+      }
+      if (passwordRef.current) {
+        passwordRef.current.value = '';
+      }
+    } else if (res.status === 403) {
+      alert('email已經使用過');
+    } else if (res.status === 400) {
+      alert('client error');
+    } else if (res.status === 500) {
+      alert('server error');
+    }
+  }
+
+  async function login() {
+    const res = await fetch(`${apiDomain}/users/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        provider: 'native',
+        email: emailRef.current?.value,
+        password: passwordRef.current?.value,
+      }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      setCookie('access_token', data.data.access_token);
+      router.push('/');
+    } else if (res.status === 403) {
+      alert('電子郵件或密碼錯誤');
+    } else if (res.status === 400) {
+      alert('client error');
+    } else if (res.status === 500) {
+      alert('server error');
+    }
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (logginIn) {
+      login();
+    } else if (passwordRef.current?.value !== passwordCheckRef.current?.value) {
+      alert('密碼不一致');
+    } else {
+      signup();
+    }
+  }
+
   return (
     <div className="mx-auto flex h-screen w-max flex-col items-center justify-center gap-3">
       <div className="flex w-[56rem] overflow-hidden rounded-3xl border border-[#0000001A] bg-white">
         <div
           className={`w-2/3 ${
-            login ? 'pb-28' : 'pb-11'
+            logginIn ? 'pb-28' : 'pb-11'
           } flex flex-col items-center`}
         >
           <h1 className={`mt-20 text-[#7763FB] text-6xl ${pattaya.className}`}>
             CanChu
           </h1>
           <div className="mt-10 text-4xl font-extralight">
-            {login ? '會員登入' : '會員註冊'}
+            {logginIn ? '會員登入' : '會員註冊'}
           </div>
           <form
             className="flex flex-col items-center"
-            onSubmit={(e) => {
-              e.preventDefault();
-
-              if (!login) {
-                if (
-                  passwordRef.current?.value !== passwordCheckRef.current?.value
-                ) {
-                  alert('密碼不一致');
-                  return;
-                }
-
-                // sign up
-                (async () => {
-                  const res = await fetch(`${apiDomain}/users/signup`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      name: nameRef.current?.value,
-                      email: emailRef.current?.value,
-                      password: passwordRef.current?.value,
-                    }),
-                  });
-
-                  if (res.ok) {
-                    // go back to login page
-                    setLogin(true);
-                    if (emailRef.current) {
-                      emailRef.current.value = '';
-                    }
-                    if (passwordRef.current) {
-                      passwordRef.current.value = '';
-                    }
-                  } else if (res.status === 403) {
-                    alert('email已經使用過');
-                  } else if (res.status === 400) {
-                    alert('client error');
-                  } else if (res.status === 500) {
-                    alert('server error');
-                  }
-                })();
-              } else {
-                // login
-                (async () => {
-                  const res = await fetch(`${apiDomain}/users/signin`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      provider: 'native',
-                      email: emailRef.current?.value,
-                      password: passwordRef.current?.value,
-                    }),
-                  });
-
-                  if (res.ok) {
-                    const data = await res.json();
-                    setCookie('access_token', data.data.access_token);
-                    router.push('/');
-                  } else if (res.status === 403) {
-                    alert('電子郵件或密碼錯誤');
-                  } else if (res.status === 400) {
-                    alert('client error');
-                  } else if (res.status === 500) {
-                    alert('server error');
-                  }
-                })();
-              }
-            }}
+            onSubmit={(e) => handleSubmit(e)}
           >
-            {!login && (
+            {!logginIn && (
               <label className="mt-8 flex flex-col gap-2">
                 使用者名稱
                 <input
@@ -152,7 +151,7 @@ function Login({ apiDomain }: Props) {
                 required
               />
             </label>
-            {!login && (
+            {!logginIn && (
               <label className="mt-8 flex flex-col gap-2">
                 再次輸入密碼
                 <input
@@ -168,17 +167,17 @@ function Login({ apiDomain }: Props) {
               type="submit"
               className="mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white"
             >
-              {login ? '登入' : '註冊'}
+              {logginIn ? '登入' : '註冊'}
             </button>
           </form>
           <div className="mt-2">
-            {login ? '尚未成為會員？' : '已經是會員了? '}
+            {logginIn ? '尚未成為會員？' : '已經是會員了? '}
             <button
               type="button"
               className="text-[#5458F7]"
-              onClick={() => setLogin(!login)}
+              onClick={() => setLogginIn(!logginIn)}
             >
-              {login ? '會員註冊 ' : '會員登入'}
+              {logginIn ? '會員註冊 ' : '會員登入'}
             </button>
           </div>
         </div>
@@ -193,7 +192,7 @@ function Login({ apiDomain }: Props) {
   );
 }
 
-export default Login;
+export default LoginSignupPage;
 
 export async function getServerSideProps() {
   return {
