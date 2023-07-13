@@ -40,7 +40,7 @@ function Navbar() {
           <Image src="/avatar.png" width={36} height={36} alt="user avatar" />
         </Link>
         {display && (
-          <div className="absolute right-0 top-9">
+          <div className="absolute right-0 top-9 z-10">
             <div className="h-10 bg-transparent" />
             <nav
               className="flex w-64 flex-col overflow-hidden
