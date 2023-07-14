@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { getCookie } from 'cookies-next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { usePicture } from '@/utils';
 
 interface Props {
@@ -12,18 +13,25 @@ interface Props {
 function PostCreator({ apiDomain }: Props) {
   const textRef = useRef<HTMLTextAreaElement>(null);
   const picture = usePicture(apiDomain);
+  const router = useRouter();
 
   function createPost() {
-    fetch(`${apiDomain}/posts`, {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie('access_token')}`,
-      }),
-      body: JSON.stringify({
-        context: textRef.current?.value,
-      }),
-    });
+    (async () => {
+      await fetch(`${apiDomain}/posts`, {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getCookie('access_token')}`,
+        }),
+        body: JSON.stringify({
+          context: textRef.current?.value,
+        }),
+      });
+      if (textRef.current) {
+        textRef.current.value = '';
+      }
+      router.reload();
+    })();
   }
 
   return (
@@ -42,12 +50,7 @@ function PostCreator({ apiDomain }: Props) {
           type="submit"
           className="flex h-10 w-36 items-center justify-center self-end rounded-md
             bg-[#5458F7] text-white"
-          onClick={() => {
-            createPost();
-            if (textRef.current) {
-              textRef.current.value = '';
-            }
-          }}
+          onClick={createPost}
         >
           發佈貼文
         </button>
