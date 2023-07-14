@@ -8,7 +8,7 @@ import posts from '@/data/post';
 
 import { PostType } from '@/types';
 
-function DetailPage({ post }: { post: PostType }) {
+export default function DetailPage({ post }: { post: PostType }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -26,26 +26,22 @@ function DetailPage({ post }: { post: PostType }) {
   );
 }
 
-export default DetailPage;
+export async function getStaticPaths() {
+  return {
+    paths: posts.map((post) => ({
+      params: {
+        id: post.id.toString(),
+      },
+    })),
+    fallback: false,
+  };
+}
 
-export const getStaticPaths = async () => ({
-  paths: posts.map((post) => ({
-    params: {
-      id: post.id.toString(),
-    },
-  })),
-  fallback: false,
-});
-
-export const getStaticProps = async ({
-  params,
-}: {
-  params: { id: string };
-}) => {
+export async function getStaticProps({ params }: { params: { id: string } }) {
   const post = posts.find((p) => p.id.toString() === params.id);
   return {
     props: {
       post,
     },
   };
-};
+}
