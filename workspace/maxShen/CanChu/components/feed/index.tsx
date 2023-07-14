@@ -1,25 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import Post from '@/components/post';
 import LoadingIcon from '../icons/LoadingIcon';
 import { PostType } from '@/types';
 
-function Feed({ apiDomain }: { apiDomain: string }) {
+interface Props {
+  apiDomain: string;
+  update: boolean;
+  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function Feed({ apiDomain, update, setUpdate }: Props) {
   const [posts, setPosts] = useState<PostType[]>([]);
 
-  (async () => {
-    const res = await fetch(`${apiDomain}/posts/search`, {
-      method: 'GET',
-      headers: new Headers({
-        Authorization: `Bearer ${getCookie('access_token')}`,
-      }),
-    });
+  useEffect(() => {
+    (async () => {
+      if (getCookie('access_token') === undefined) {
+        return;
+      }
 
-    if (res.ok) {
-      const data = await res.json();
-      setPosts(data.data.posts);
-    }
-  })();
+      const res = await fetch(`${apiDomain}/posts/search`, {
+        method: 'GET',
+        headers: new Headers({
+          Authorization: `Bearer ${getCookie('access_token')}`,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setPosts(data.data.posts);
+      }
+    })();
+    setUpdate(false);
+  }, [update]);
 
   return (
     <>

@@ -7,9 +7,10 @@ import profile from '@/data/profile';
 
 interface Props {
   apiDomain: string;
+  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function PostCreator({ apiDomain }: Props) {
+function PostCreator({ apiDomain, setUpdate }: Props) {
   const textRef = useRef<HTMLTextAreaElement>(null);
 
   function createPost() {
@@ -17,7 +18,7 @@ function PostCreator({ apiDomain }: Props) {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getCookie('access_token')}`,
+        Authorization: `Bearer ${getCookie('access_token')}`,
       }),
       body: JSON.stringify({
         context: textRef.current?.value,
@@ -47,6 +48,7 @@ function PostCreator({ apiDomain }: Props) {
           className="flex h-10 w-36 items-center justify-center self-end rounded-md
             bg-[#5458F7] text-white"
           onClick={() => {
+            setUpdate(true);
             createPost();
             if (textRef.current) {
               textRef.current.value = '';

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 
@@ -10,6 +10,7 @@ import Footer from '@/components/footer';
 
 function Home({ apiDomain }: { apiDomain: string }) {
   const router = useRouter();
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     if (getCookie('access_token') === undefined) {
@@ -26,8 +27,8 @@ function Home({ apiDomain }: { apiDomain: string }) {
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator apiDomain={apiDomain} />
-          <Feed apiDomain={apiDomain} />
+          <PostCreator apiDomain={apiDomain} setUpdate={setUpdate} />
+          <Feed apiDomain={apiDomain} update={update} setUpdate={setUpdate} />
         </div>
       </div>
     </>
