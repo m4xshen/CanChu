@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 
@@ -7,45 +7,63 @@ import PostCreator from '@/components/postCreator';
 import Footer from '@/components/footer';
 import Profilebar from '@/components/profilebar';
 import ProfileEditor from '@/components/profileEditor';
-import profile from '@/data/profile';
 import Post from '@/components/post';
 import LoadingIcon from '@/components/icons/LoadingIcon';
+import { PostType, ProfileType } from '@/types';
 
-const post = {
-  user_id: 1,
-  name: profile.name,
-  picture: profile.picture,
-  id: 55,
-  context: '動態動態動態動態動態動態，動態動態動態動態。',
-  created_at: '2023-06-17 12:44:21',
-  like_count: 0,
-  comment_count: 68,
-  is_like: 0,
-};
-
-function Demo() {
+function Demo({ apiDomain }: { apiDomain: string }) {
+  const [profile, setProfile] = useState<ProfileType>();
+  const [posts, setPosts] = useState<PostType[]>();
   const router = useRouter();
 
   useEffect(() => {
     if (getCookie('access_token') === undefined) {
       router.push('/login');
     }
+
+    const userCookie = getCookie('user');
+    if (userCookie?.toString() !== undefined && profile === undefined) {
+      const user = JSON.parse(userCookie.toString());
+      (async () => {
+        let res = await fetch(`${apiDomain}/users/${user.id}/profile`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getCookie('access_token')}`,
+          },
+        });
+        let data = await res.json();
+        setProfile(data.data.user);
+
+        res = await fetch(`${apiDomain}/posts/search?user_id=${user.id}`, {
+          method: 'GET',
+          headers: new Headers({
+            Authorization: `Bearer ${getCookie('access_token')}`,
+          }),
+        });
+
+        if (res.ok) {
+          data = await res.json();
+          setPosts(data.data.posts);
+        }
+      })();
+    }
   }, []);
 
   return (
     <>
-      <Navbar />
-      <Profilebar />
+      <Navbar apiDomain={apiDomain}/>
+      <Profilebar profile={profile} apiDomain={apiDomain} />
       <div className="flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <ProfileEditor />
+          <ProfileEditor user={profile} />
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator />
-          <Post post={post} detail={false} edit />
-          <Post post={post} detail={false} edit />
-          <Post post={post} detail={false} edit />
+          <PostCreator apiDomain={apiDomain} />
+          {posts &&
+            posts.map((post) => (
+              <Post key={post.id} post={post} detail={false} edit />
+            ))}
           <LoadingIcon />
         </div>
       </div>
@@ -54,3 +72,11 @@ function Demo() {
 }
 
 export default Demo;
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      apiDomain: process.env.API_DOMAIN || '',
+    },
+  };
+}

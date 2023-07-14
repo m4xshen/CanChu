@@ -3,15 +3,15 @@
 import { useRef } from 'react';
 import { getCookie } from 'cookies-next';
 import Image from 'next/image';
-import profile from '@/data/profile';
+import { usePicture } from '@/utils';
 
 interface Props {
   apiDomain: string;
-  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function PostCreator({ apiDomain, setUpdate }: Props) {
+function PostCreator({ apiDomain }: Props) {
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const picture = usePicture(apiDomain);
 
   function createPost() {
     fetch(`${apiDomain}/posts`, {
@@ -29,12 +29,7 @@ function PostCreator({ apiDomain, setUpdate }: Props) {
   return (
     <div className="flex w-[48rem] gap-6 rounded-2xl border border-[#0000001A] bg-white p-5">
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full">
-        <Image
-          src={profile.picture}
-          fill
-          alt="user avatar"
-          className="object-cover"
-        />
+        <Image src={picture} fill alt="user avatar" className="object-cover" />
       </div>
       <div className="flex w-full flex-col gap-3">
         <textarea
@@ -48,7 +43,6 @@ function PostCreator({ apiDomain, setUpdate }: Props) {
           className="flex h-10 w-36 items-center justify-center self-end rounded-md
             bg-[#5458F7] text-white"
           onClick={() => {
-            setUpdate(true);
             createPost();
             if (textRef.current) {
               textRef.current.value = '';

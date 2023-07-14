@@ -1,6 +1,6 @@
-import profile from '@/data/profile';
+import { ProfileType } from '@/types';
 
-function ProfileEditor() {
+function ProfileEditor({ user }: { user: ProfileType | undefined }) {
   return (
     <div className="w-96 rounded-2xl border border-[#0000001A] bg-white px-4 py-6">
       <button
@@ -12,16 +12,19 @@ function ProfileEditor() {
       <div className="my-4 flex flex-col gap-4 px-3">
         <div className="flex flex-col gap-2">
           <div className="text-lg font-bold">自我介紹</div>
-          <p>{profile.introduction}</p>
+          <p>{user?.introduction ? user.introduction : ''}</p>
         </div>
         <div className="flex flex-col gap-2">
           <div className="text-lg font-bold">興趣</div>
           <div className="flex gap-1">
-            {profile.tags.split(',').map((tag) => (
-              <div key={tag} className="rounded-xl border border-black px-3">
-                {tag}
-              </div>
-            ))}
+            {
+              user?.tags !== '' &&
+              user?.tags?.split(',').map((tag) => (
+                <div key={tag} className="rounded-xl border border-black px-3">
+                  {tag}
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>

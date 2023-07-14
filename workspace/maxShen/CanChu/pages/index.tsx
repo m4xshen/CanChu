@@ -10,7 +10,6 @@ import Footer from '@/components/footer';
 
 function Home({ apiDomain }: { apiDomain: string }) {
   const router = useRouter();
-  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     if (getCookie('access_token') === undefined) {
@@ -20,15 +19,15 @@ function Home({ apiDomain }: { apiDomain: string }) {
 
   return (
     <>
-      <Navbar />
+      <Navbar apiDomain={apiDomain} />
       <div className="mt-6 flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
           <Sidebar />
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator apiDomain={apiDomain} setUpdate={setUpdate} />
-          <Feed apiDomain={apiDomain} update={update} setUpdate={setUpdate} />
+          <PostCreator apiDomain={apiDomain} />
+          <Feed apiDomain={apiDomain} />
         </div>
       </div>
     </>

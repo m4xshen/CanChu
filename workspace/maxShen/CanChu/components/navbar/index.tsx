@@ -5,15 +5,17 @@ import { useState } from 'react';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import profile from '@/data/profile';
+import { usePicture } from '@/utils';
 
 const pattaya = Pattaya({
   weight: '400',
   subsets: ['cyrillic'],
 });
 
-function Navbar() {
+function Navbar({ apiDomain }: { apiDomain: string }) {
   const [display, setDisplay] = useState(false);
   const router = useRouter();
+  const picture = usePicture(apiDomain);
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">
@@ -40,7 +42,7 @@ function Navbar() {
         <Link href="/user/demo" onMouseEnter={() => setDisplay(true)}>
           <div className="relative h-9 w-9 overflow-hidden rounded-full">
             <Image
-              src={profile.picture}
+              src={picture}
               fill
               alt="user avatar"
               className="object-cover"

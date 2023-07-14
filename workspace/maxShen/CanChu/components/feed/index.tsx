@@ -6,11 +6,9 @@ import { PostType } from '@/types';
 
 interface Props {
   apiDomain: string;
-  update: boolean;
-  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Feed({ apiDomain, update, setUpdate }: Props) {
+function Feed({ apiDomain }: Props) {
   const [posts, setPosts] = useState<PostType[]>([]);
 
   useEffect(() => {
@@ -31,8 +29,7 @@ function Feed({ apiDomain, update, setUpdate }: Props) {
         setPosts(data.data.posts);
       }
     })();
-    setUpdate(false);
-  }, [update]);
+  }, []);
 
   return (
     <>

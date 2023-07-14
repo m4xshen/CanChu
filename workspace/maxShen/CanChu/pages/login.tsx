@@ -15,7 +15,7 @@ interface Props {
 }
 
 function LoginSignupPage({ apiDomain }: Props) {
-  const [logginIn, setLogginIn] = useState(true);
+  const [loggingIn, setLoggingIn] = useState(true);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -45,7 +45,7 @@ function LoginSignupPage({ apiDomain }: Props) {
 
     if (res.ok) {
       // go back to login page
-      setLogginIn(true);
+      setLoggingIn(true);
       if (emailRef.current) {
         emailRef.current.value = '';
       }
@@ -77,6 +77,7 @@ function LoginSignupPage({ apiDomain }: Props) {
     if (res.ok) {
       const data = await res.json();
       setCookie('access_token', data.data.access_token);
+      setCookie('user', data.data.user);
       router.push('/');
     } else if (res.status === 403) {
       alert('電子郵件或密碼錯誤');
@@ -90,7 +91,7 @@ function LoginSignupPage({ apiDomain }: Props) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (logginIn) {
+    if (loggingIn) {
       login();
     } else if (passwordRef.current?.value !== passwordCheckRef.current?.value) {
       alert('密碼不一致');
@@ -104,20 +105,20 @@ function LoginSignupPage({ apiDomain }: Props) {
       <div className="flex w-[56rem] overflow-hidden rounded-3xl border border-[#0000001A] bg-white">
         <div
           className={`w-2/3 ${
-            logginIn ? 'pb-28' : 'pb-11'
+            loggingIn ? 'pb-28' : 'pb-11'
           } flex flex-col items-center`}
         >
           <h1 className={`mt-20 text-[#7763FB] text-6xl ${pattaya.className}`}>
             CanChu
           </h1>
           <div className="mt-10 text-4xl font-extralight">
-            {logginIn ? '會員登入' : '會員註冊'}
+            {loggingIn ? '會員登入' : '會員註冊'}
           </div>
           <form
             className="flex flex-col items-center"
             onSubmit={(e) => handleSubmit(e)}
           >
-            {!logginIn && (
+            {!loggingIn && (
               <label className="mt-8 flex flex-col gap-2">
                 使用者名稱
                 <input
@@ -151,7 +152,7 @@ function LoginSignupPage({ apiDomain }: Props) {
                 required
               />
             </label>
-            {!logginIn && (
+            {!loggingIn && (
               <label className="mt-8 flex flex-col gap-2">
                 再次輸入密碼
                 <input
@@ -167,17 +168,17 @@ function LoginSignupPage({ apiDomain }: Props) {
               type="submit"
               className="mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white"
             >
-              {logginIn ? '登入' : '註冊'}
+              {loggingIn ? '登入' : '註冊'}
             </button>
           </form>
           <div className="mt-2">
-            {logginIn ? '尚未成為會員？' : '已經是會員了? '}
+            {loggingIn ? '尚未成為會員？' : '已經是會員了? '}
             <button
               type="button"
               className="text-[#5458F7]"
-              onClick={() => setLogginIn(!logginIn)}
+              onClick={() => setLoggingIn(!loggingIn)}
             >
-              {logginIn ? '會員註冊 ' : '會員登入'}
+              {loggingIn ? '會員註冊 ' : '會員登入'}
             </button>
           </div>
         </div>

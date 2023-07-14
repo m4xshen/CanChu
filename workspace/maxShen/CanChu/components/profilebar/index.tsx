@@ -1,14 +1,22 @@
 import Image from 'next/image';
-import profile from '@/data/profile';
+import { ProfileType } from '@/types';
+import { usePicture } from '@/utils';
 
-function Profilebar() {
+interface Props {
+  profile: ProfileType | undefined;
+  apiDomain: string;
+}
+
+function Profilebar({ profile, apiDomain }: Props) {
+  const picture = usePicture(apiDomain);
+
   return (
     <div className="mb-6 flex h-[23rem] flex-col bg-white px-32">
       <div className="flex h-72 items-center gap-11 border-b border-[#C8C8C8]">
         <button type="button" className="group">
           <div className="relative ml-7 h-44 w-44 shrink-0 overflow-hidden rounded-full">
             <Image
-              src={profile.picture ?? ''}
+              src={picture}
               fill
               alt="user avatar"
               className="object-cover hover:brightness-50 group-hover:brightness-50"
@@ -24,9 +32,11 @@ function Profilebar() {
         </button>
         <div className="flex flex-col justify-around">
           <div>
-            <div className="text-4xl font-bold">{profile.name}</div>
+            <div className="text-4xl font-bold">
+              {profile?.name ? profile.name : ''}
+            </div>
             <div className="text-xl font-medium text-[#484848]">
-              {profile.friend_count}位朋友
+              {profile?.friend_count ? profile.friend_count : 0}位朋友
             </div>
           </div>
         </div>
