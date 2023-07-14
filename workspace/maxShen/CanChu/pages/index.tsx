@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 

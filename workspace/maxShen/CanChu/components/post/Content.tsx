@@ -6,7 +6,6 @@ import { PostType } from '@/types';
 
 import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
-import profile from '@/data/profile';
 
 interface Props {
   post: PostType;
@@ -31,7 +30,7 @@ function Content({ post, url, detail }: Props) {
         <Link href="/">
           <div className="relative ml-7 h-20 w-20 shrink-0 overflow-hidden rounded-full">
             <Image
-              src={post.picture ? post.picture : profile.picture}
+              src={post.picture ? post.picture : '/avatar.png'}
               fill
               alt="user avatar"
               className="object-cover"
