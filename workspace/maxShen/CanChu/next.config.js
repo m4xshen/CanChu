@@ -17,7 +17,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'max-shen-canchu-api.octave.vip',
-      }
+      },
     ],
   },
 };

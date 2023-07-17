@@ -3,15 +3,17 @@ import Link from 'next/link';
 import SendIcon from '../icons/SendIcon';
 import Comment from './Comment';
 import { CommentType } from '@/types';
-import profile from '@/data/profile';
+import { usePicture } from '@/utils';
 
 interface Props {
   comments: CommentType[];
   detail: boolean;
   url: string;
+  apiDomain: string;
 }
 
-function CommentSection({ comments, detail, url }: Props) {
+function CommentSection({ comments, detail, url, apiDomain }: Props) {
+  const picture = usePicture(apiDomain);
   const content = (
     <>
       {detail &&
@@ -21,7 +23,7 @@ function CommentSection({ comments, detail, url }: Props) {
       <div className="mb-5 mt-3 flex items-center gap-4">
         <div className="relative ml-10 h-[50px] w-[50px] shrink-0 overflow-hidden rounded-full">
           <Image
-            src={profile.picture}
+            src={picture}
             fill
             alt="user avatar"
             className="object-cover"

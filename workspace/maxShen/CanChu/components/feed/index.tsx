@@ -37,7 +37,13 @@ function Feed({ apiDomain }: Props) {
         <div>沒有新的貼文</div>
       ) : (
         posts.map((post) => (
-          <Post key={post.id} post={post} detail={false} edit={false} />
+          <Post
+            key={post.id}
+            post={post}
+            detail={false}
+            edit={false}
+            apiDomain={apiDomain}
+          />
         ))
       )}
       <LoadingIcon />

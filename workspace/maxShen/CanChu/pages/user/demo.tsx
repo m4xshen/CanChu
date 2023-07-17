@@ -57,7 +57,13 @@ function Demo({ apiDomain }: { apiDomain: string }) {
           <PostCreator apiDomain={apiDomain} />
           {posts &&
             posts.map((post) => (
-              <Post key={post.id} post={post} detail={false} edit />
+              <Post
+                key={post.id}
+                post={post}
+                detail={false}
+                edit
+                apiDomain={apiDomain}
+              />
             ))}
           <LoadingIcon />
         </div>

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
-import profile from '@/data/profile';
+import { usePicture, useProfile } from '@/utils';
 
 const friends = [
   {
@@ -25,13 +25,16 @@ const friends = [
   },
 ];
 
-function Sidebar() {
+function Sidebar({ apiDomain }: { apiDomain: string }) {
+  const profile = useProfile(apiDomain);
+  const picture = usePicture(apiDomain);
+
   return (
     <nav
       className="flex h-max w-96 flex-col gap-3 rounded-2xl border
         border-[#0000001A] bg-white p-5"
     >
-      <User picture={profile.picture} text={profile.name} />
+      <User picture={picture} text={profile?.name ? profile.name : ''} />
       <div className="my-2 border-t border-t-[#D9D9D9]" />
       <div className="flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center">

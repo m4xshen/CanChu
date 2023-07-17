@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 
@@ -22,7 +22,7 @@ function Home({ apiDomain }: { apiDomain: string }) {
       <Navbar apiDomain={apiDomain} />
       <div className="mt-6 flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <Sidebar />
+          <Sidebar apiDomain={apiDomain} />
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
