@@ -40,7 +40,10 @@ async function getPicture(apiDomain: string) {
     const profile = data.data.user;
 
     if (profile.picture !== '') {
-      return profile.picture;
+      const pictureRes = await fetch(profile.picture);
+      if (pictureRes.ok) {
+        return profile.picture;
+      }
     }
   }
   return '/avatar.png';
