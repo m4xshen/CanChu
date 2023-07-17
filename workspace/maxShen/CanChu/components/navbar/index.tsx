@@ -82,7 +82,7 @@ function Navbar({ apiDomain }: { apiDomain: string }) {
                 className="flex h-16 items-center pl-6 text-xl"
                 onClick={() => {
                   deleteCookie('access_token');
-                  router.push('/login');
+                  router.reload();
                 }}
               >
                 登出

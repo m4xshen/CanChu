@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
+import nookies from 'nookies';
 
+import { NextPageContext } from 'next';
 import Navbar from '@/components/navbar';
 import PostCreator from '@/components/postCreator';
 import Footer from '@/components/footer';
@@ -15,13 +16,8 @@ import useProfile from '@/hooks/useProfile';
 function Demo({ apiDomain }: { apiDomain: string }) {
   const profile = useProfile(apiDomain);
   const [posts, setPosts] = useState<PostType[]>();
-  const router = useRouter();
 
   useEffect(() => {
-    if (getCookie('access_token') === undefined) {
-      router.push('/login');
-    }
-
     const userCookie = getCookie('user');
     if (userCookie?.toString() !== undefined) {
       const user = JSON.parse(userCookie.toString());
@@ -74,7 +70,16 @@ function Demo({ apiDomain }: { apiDomain: string }) {
 
 export default Demo;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: NextPageContext) {
+  if (nookies.get(ctx).access_token === undefined) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       apiDomain: process.env.API_DOMAIN || '',

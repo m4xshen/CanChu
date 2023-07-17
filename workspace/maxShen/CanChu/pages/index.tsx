@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
+'use client';
 
+import nookies from 'nookies';
+import { NextPageContext } from 'next';
 import Navbar from '@/components/navbar';
 import Sidebar from '@/components/sidebar';
 import PostCreator from '@/components/postCreator';
@@ -9,14 +9,6 @@ import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 
 function Home({ apiDomain }: { apiDomain: string }) {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (getCookie('access_token') === undefined) {
-      router.push('/login');
-    }
-  }, []);
-
   return (
     <>
       <Navbar apiDomain={apiDomain} />
@@ -36,7 +28,16 @@ function Home({ apiDomain }: { apiDomain: string }) {
 
 export default Home;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: NextPageContext) {
+  if (nookies.get(ctx).access_token === undefined) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       apiDomain: process.env.API_DOMAIN || '',

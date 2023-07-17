@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
-import { getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
+import nookies from 'nookies';
+import { NextPageContext } from 'next';
 
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
@@ -22,14 +21,6 @@ const post: PostType = {
 };
 
 function DetailPage({ apiDomain }: { apiDomain: string }) {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (getCookie('access_token') === undefined) {
-      router.push('/login');
-    }
-  }, []);
-
   return (
     <>
       <Navbar apiDomain={apiDomain} />
@@ -41,7 +32,16 @@ function DetailPage({ apiDomain }: { apiDomain: string }) {
 
 export default DetailPage;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: NextPageContext) {
+  if (nookies.get(ctx).access_token === undefined) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       apiDomain: process.env.API_DOMAIN || '',

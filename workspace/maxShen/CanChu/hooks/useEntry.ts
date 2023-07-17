@@ -56,7 +56,7 @@ async function login(
     const data = await res.json();
     setCookie('access_token', data.data.access_token);
     setCookie('user', data.data.user);
-    router.push('/');
+    router.reload();
   } else if (res.status === 403) {
     alert('電子郵件或密碼錯誤');
   } else if (res.status === 400) {

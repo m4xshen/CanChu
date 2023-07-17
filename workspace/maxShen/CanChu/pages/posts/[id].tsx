@@ -15,6 +15,7 @@ export default function DetailPage({ post }: { post: PostType }) {
     if (getCookie('access_token') === undefined) {
       router.push('/login');
     }
+    // FIX
   }, []);
 
   return (

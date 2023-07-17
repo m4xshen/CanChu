@@ -1,9 +1,8 @@
 'use client';
 
-import { getCookie } from 'cookies-next';
 import { Pattaya } from 'next/font/google';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import nookies from 'nookies';
 import useEntry from '@/hooks/useEntry';
 
 const pattaya = Pattaya({
@@ -27,12 +26,6 @@ function LoginSignupPage({ apiDomain }: Props) {
     login,
     signup,
   ] = useEntry(router, apiDomain);
-
-  useEffect(() => {
-    if (getCookie('access_token')) {
-      router.push('/');
-    }
-  }, []);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -144,7 +137,16 @@ function LoginSignupPage({ apiDomain }: Props) {
 
 export default LoginSignupPage;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: any) {
+  if (nookies.get(ctx).access_token !== undefined) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       apiDomain: process.env.API_DOMAIN || '',
