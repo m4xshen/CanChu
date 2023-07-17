@@ -1,23 +1,11 @@
-import { useEffect } from 'react';
-import { getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
+import { GetServerSidePropsContext } from 'next';
+import nookies from 'nookies';
 
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
-import posts from '@/data/post';
-
 import { PostType } from '@/types';
 
 export default function DetailPage({ post }: { post: PostType }) {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (getCookie('access_token') === undefined) {
-      router.push('/login');
-    }
-    // FIX
-  }, []);
-
   return (
     <>
       <Navbar apiDomain="" />
@@ -27,19 +15,28 @@ export default function DetailPage({ post }: { post: PostType }) {
   );
 }
 
-export async function getStaticPaths() {
-  return {
-    paths: posts.map((post) => ({
-      params: {
-        id: post.id.toString(),
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const accessToken = nookies.get(ctx).access_token;
+  if (accessToken === undefined) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
       },
-    })),
-    fallback: false,
-  };
-}
+    };
+  }
 
-export async function getStaticProps({ params }: { params: { id: string } }) {
-  const post = posts.find((p) => p.id.toString() === params.id);
+  const res = await fetch(`${process.env.API_DOMAIN}/posts/search`, {
+    method: 'GET',
+    headers: new Headers({
+      Authorization: `Bearer ${accessToken}`,
+    }),
+  });
+  const data = await res.json();
+  const post = data.data.posts.find(
+    (p: PostType) => p.id.toString() === ctx?.params?.id,
+  );
+
   return {
     props: {
       post,
