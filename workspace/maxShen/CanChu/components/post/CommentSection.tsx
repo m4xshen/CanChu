@@ -3,7 +3,7 @@ import Link from 'next/link';
 import SendIcon from '../icons/SendIcon';
 import Comment from './Comment';
 import { CommentType } from '@/types';
-import { usePicture } from '@/utils';
+import usePicture from '@/hooks/usePicture';
 
 interface Props {
   comments: CommentType[];

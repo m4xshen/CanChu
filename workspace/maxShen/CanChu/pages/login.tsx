@@ -1,9 +1,10 @@
 'use client';
 
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 import { Pattaya } from 'next/font/google';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
+import useEntry from '@/hooks/useEntry';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -15,78 +16,23 @@ interface Props {
 }
 
 function LoginSignupPage({ apiDomain }: Props) {
-  const [loggingIn, setLoggingIn] = useState(true);
-
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const passwordCheckRef = useRef<HTMLInputElement>(null);
-
   const router = useRouter();
+  const [
+    loggingIn,
+    setLoggingIn,
+    nameRef,
+    emailRef,
+    passwordRef,
+    passwordCheckRef,
+    login,
+    signup,
+  ] = useEntry(router, apiDomain);
 
   useEffect(() => {
     if (getCookie('access_token')) {
       router.push('/');
     }
   }, []);
-
-  async function signup() {
-    const res = await fetch(`${apiDomain}/users/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: nameRef.current?.value,
-        email: emailRef.current?.value,
-        password: passwordRef.current?.value,
-      }),
-    });
-
-    if (res.ok) {
-      // go back to login page
-      setLoggingIn(true);
-      if (emailRef.current) {
-        emailRef.current.value = '';
-      }
-      if (passwordRef.current) {
-        passwordRef.current.value = '';
-      }
-    } else if (res.status === 403) {
-      alert('email已經使用過');
-    } else if (res.status === 400) {
-      alert('client error');
-    } else if (res.status === 500) {
-      alert('server error');
-    }
-  }
-
-  async function login() {
-    const res = await fetch(`${apiDomain}/users/signin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        provider: 'native',
-        email: emailRef.current?.value,
-        password: passwordRef.current?.value,
-      }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      setCookie('access_token', data.data.access_token);
-      setCookie('user', data.data.user);
-      router.push('/');
-    } else if (res.status === 403) {
-      alert('電子郵件或密碼錯誤');
-    } else if (res.status === 400) {
-      alert('client error');
-    } else if (res.status === 500) {
-      alert('server error');
-    }
-  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -176,7 +122,10 @@ function LoginSignupPage({ apiDomain }: Props) {
             <button
               type="button"
               className="text-[#5458F7]"
-              onClick={() => setLoggingIn(!loggingIn)}
+              onClick={() => {
+                setLoggingIn(!loggingIn);
+                emailRef.current?.form?.reset();
+              }}
             >
               {loggingIn ? '會員註冊 ' : '會員登入'}
             </button>

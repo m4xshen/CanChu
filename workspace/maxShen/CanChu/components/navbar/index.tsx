@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import profile from '@/data/profile';
-import { usePicture } from '@/utils';
+import usePicture from '@/hooks/usePicture';
 
 const pattaya = Pattaya({
   weight: '400',

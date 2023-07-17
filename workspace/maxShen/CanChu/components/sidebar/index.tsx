@@ -2,7 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
-import { usePicture, useProfile } from '@/utils';
+import useProfile from '@/hooks/useProfile';
+import usePicture from '@/hooks/usePicture';
 
 const friends = [
   {

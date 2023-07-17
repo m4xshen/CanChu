@@ -3,7 +3,7 @@ import { getCookie } from 'cookies-next';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import { ProfileType } from '@/types';
-import { usePicture } from '@/utils';
+import usePicture from '@/hooks/usePicture';
 
 interface Props {
   profile: ProfileType | undefined;

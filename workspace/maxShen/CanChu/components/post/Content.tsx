@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { getDisplayTime } from '@/utils';
+import getDisplayTime from '@/utils';
 import { PostType } from '@/types';
 
 import CommentIcon from '../icons/CommentIcon';

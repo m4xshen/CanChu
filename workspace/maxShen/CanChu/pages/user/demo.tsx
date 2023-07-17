@@ -10,7 +10,7 @@ import ProfileEditor from '@/components/profileEditor';
 import Post from '@/components/post';
 import LoadingIcon from '@/components/icons/LoadingIcon';
 import { PostType } from '@/types';
-import { useProfile } from '@/utils';
+import useProfile from '@/hooks/useProfile';
 
 function Demo({ apiDomain }: { apiDomain: string }) {
   const profile = useProfile(apiDomain);

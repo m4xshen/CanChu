@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { getDisplayTime } from '@/utils';
+import getDisplayTime from '@/utils';
 import { CommentType } from '@/types';
 
 interface Props {

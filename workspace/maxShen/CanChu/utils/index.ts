@@ -1,8 +1,4 @@
-import { getCookie } from 'cookies-next';
-import { useEffect, useState } from 'react';
-import { ProfileType } from '@/types';
-
-export const getDisplayTime = (date: string | null) => {
+export default function getDisplayTime(date: string | null) {
   // return an empty string if the date is invalid
   if (date === null || Number.isNaN(new Date(date).getTime())) {
     return '';
@@ -24,62 +20,4 @@ export const getDisplayTime = (date: string | null) => {
     return `${Math.trunc(delta / 60).toString()} 分鐘前`;
   }
   return `${Math.trunc(delta).toString()} 秒前`;
-};
-
-async function getPicture(apiDomain: string) {
-  const userCookie = getCookie('user');
-  if (userCookie?.toString() !== undefined) {
-    const user = JSON.parse(userCookie.toString());
-    const res = await fetch(`${apiDomain}/users/${user.id}/profile`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${getCookie('access_token')}`,
-      },
-    });
-    const data = await res.json();
-    const profile = data.data.user;
-
-    if (profile.picture !== '') {
-      const pictureRes = await fetch(profile.picture);
-      if (pictureRes.ok) {
-        return profile.picture;
-      }
-    }
-  }
-  return '/avatar.png';
-}
-
-export function usePicture(apiDomain: string) {
-  const [picture, setPicture] = useState('/avatar.png');
-  useEffect(() => {
-    (async () => {
-      const pic = await getPicture(apiDomain);
-      setPicture(pic);
-    })();
-  }, []);
-
-  return picture;
-}
-
-export function useProfile(apiDomain: string) {
-  const [profile, setProfile] = useState<ProfileType>();
-
-  useEffect(() => {
-    const userCookie = getCookie('user');
-    if (userCookie?.toString() !== undefined && profile === undefined) {
-      const user = JSON.parse(userCookie.toString());
-      (async () => {
-        const res = await fetch(`${apiDomain}/users/${user.id}/profile`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${getCookie('access_token')}`,
-          },
-        });
-        const data = await res.json();
-        setProfile(data.data.user);
-      })();
-    }
-  }, []);
-
-  return profile;
 }

@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { ProfileType } from '@/types';
-import { useProfile } from '@/utils';
+import useProfile from '@/hooks/useProfile';
 
 interface Props {
   user: ProfileType | undefined;
