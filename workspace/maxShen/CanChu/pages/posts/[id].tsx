@@ -19,9 +19,9 @@ export default function DetailPage({ post }: { post: PostType }) {
 
   return (
     <>
-      <Navbar />
+      <Navbar apiDomain="" />
       <div className="mt-6" />
-      <Post key={post.id} post={post} detail edit={false} />
+      <Post key={post.id} post={post} detail edit={false} apiDomain="" />
     </>
   );
 }
