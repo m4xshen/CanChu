@@ -30,7 +30,7 @@ async function getPicture(apiDomain: string) {
   const userCookie = getCookie('user');
   if (userCookie?.toString() !== undefined) {
     const user = JSON.parse(userCookie.toString());
-    let res = await fetch(`${apiDomain}/users/${user.id}/profile`, {
+    const res = await fetch(`${apiDomain}/users/${user.id}/profile`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${getCookie('access_token')}`,
@@ -39,8 +39,7 @@ async function getPicture(apiDomain: string) {
     const data = await res.json();
     const profile = data.data.user;
 
-    res = await fetch(profile.picture);
-    if (res.ok) {
+    if (profile.picture !== '') {
       return profile.picture;
     }
   }
