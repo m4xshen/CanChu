@@ -2,40 +2,82 @@
 
 import { Pattaya } from 'next/font/google';
 import { useRouter } from 'next/router';
+import { GetServerSidePropsContext } from 'next';
+import { useRef, useState } from 'react';
+import { setCookie } from 'cookies-next';
 import nookies from 'nookies';
-import useEntry from '@/hooks/useEntry';
+
+import useSignup from '@/hooks/useSignup';
+import useLogin from '@/hooks/useLogin';
 
 const pattaya = Pattaya({
   weight: '400',
   subsets: ['cyrillic'],
 });
 
-interface Props {
-  apiDomain: string;
-}
-
-function LoginSignupPage({ apiDomain }: Props) {
+function LoginSignupPage({ apiDomain }: { apiDomain: string }) {
   const router = useRouter();
-  const [
-    loggingIn,
-    setLoggingIn,
-    nameRef,
-    emailRef,
-    passwordRef,
-    passwordCheckRef,
-    login,
-    signup,
-  ] = useEntry(router, apiDomain);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const [loggingIn, setLoggingIn] = useState(true);
+
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordCheckRef = useRef<HTMLInputElement>(null);
+
+  const login = useLogin(apiDomain);
+  const signup = useSignup(apiDomain);
+
+  async function handleLogin() {
+    if (!emailRef?.current?.value || !passwordRef?.current?.value) {
+      return;
+    }
+
+    const res = await login(emailRef.current.value, passwordRef.current.value);
+
+    if (res.ok) {
+      const data = await res.json();
+      setCookie('access_token', data.data.access_token);
+      setCookie('user', data.data.user);
+      router.reload();
+    } else if (res.status === 403) {
+      alert('電子郵件或密碼錯誤');
+    }
+  }
+
+  async function handleSignup() {
+    if (
+      !nameRef?.current?.value ||
+      !emailRef?.current?.value ||
+      !passwordRef?.current?.value
+    ) {
+      return;
+    }
+
+    const res = await signup(
+      nameRef?.current?.value,
+      emailRef?.current?.value,
+      passwordRef?.current?.value,
+    );
+
+    if (res.ok) {
+      // go back to login page
+      setLoggingIn(true);
+      emailRef.current?.form?.reset();
+    } else if (res.status === 403) {
+      alert('email已經使用過');
+    }
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (loggingIn) {
-      login();
+      handleLogin();
     } else if (passwordRef.current?.value !== passwordCheckRef.current?.value) {
       alert('密碼不一致');
     } else {
-      signup();
+      handleSignup();
     }
   }
 
@@ -137,7 +179,7 @@ function LoginSignupPage({ apiDomain }: Props) {
 
 export default LoginSignupPage;
 
-export async function getServerSideProps(ctx: any) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (nookies.get(ctx).access_token !== undefined) {
     return {
       redirect: {
