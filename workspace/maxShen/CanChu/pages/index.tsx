@@ -1,5 +1,3 @@
-'use client';
-
 import nookies from 'nookies';
 import { NextPageContext } from 'next';
 import Navbar from '@/components/navbar';

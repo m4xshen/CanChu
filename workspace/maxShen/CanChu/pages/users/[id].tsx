@@ -39,8 +39,14 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
+  if (!ctx?.params?.id) {
+    return {
+      props: {},
+    };
+  }
+
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${ctx?.params?.id}/profile`,
+    `${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${ctx.params.id}/profile`,
     {
       method: 'GET',
       headers: {

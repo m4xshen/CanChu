@@ -43,24 +43,18 @@ function Demo() {
 
   return (
     <>
-      <Navbar apiDomain={apiDomain} />
-      <Profilebar profile={profile} apiDomain={apiDomain} />
+      <Navbar />
+      <Profilebar profile={profile} />
       <div className="flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <ProfileEditor user={profile} apiDomain={apiDomain} />
+          <ProfileEditor user={profile} />
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator apiDomain={apiDomain} />
+          <PostCreator />
           {posts &&
             posts.map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-                detail={false}
-                edit
-                apiDomain={apiDomain}
-              />
+              <Post key={post.id} post={post} detail={false} edit />
             ))}
           <LoadingIcon />
         </div>
