@@ -73,7 +73,7 @@ function ProfileEditor({ user, apiDomain }: Props) {
               defaultValue={user?.tags ? user.tags : ''}
             />
           ) : (
-            <div className="flex gap-1">
+            <div className="flex flex-wrap gap-1">
               {user?.tags !== '' &&
                 user?.tags?.split(',').map((tag) => (
                   <div
