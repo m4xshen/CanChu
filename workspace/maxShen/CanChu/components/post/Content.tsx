@@ -6,6 +6,7 @@ import { PostType } from '@/types';
 
 import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
+import useProfile from '@/hooks/useProfile';
 
 interface Props {
   post: PostType;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 function Content({ post, url, detail }: Props) {
+  const profile = useProfile();
   const heart = (
     <div>
       {post.is_liked ? (
@@ -27,7 +29,7 @@ function Content({ post, url, detail }: Props) {
   return (
     <div className="pt-7">
       <div className="flex w-full items-center gap-3">
-        <Link href="/">
+        <Link href={`/users/${profile?.id ? profile.id : '/'}`}>
           <div className="relative ml-7 h-20 w-20 shrink-0 overflow-hidden rounded-full">
             <Image
               src={post.picture ? post.picture : '/avatar.png'}

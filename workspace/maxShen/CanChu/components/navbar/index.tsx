@@ -41,7 +41,7 @@ function Navbar() {
         onMouseLeave={() => setDisplay(false)}
       >
         <Link
-          href={`/users/${profile?.id ? profile.id : ''}`}
+          href={`/users/${profile?.id ? profile.id : '/'}`}
           onMouseEnter={() => setDisplay(true)}
         >
           <div className="relative h-9 w-9 overflow-hidden rounded-full">
@@ -77,7 +77,7 @@ function Navbar() {
                 </div>
               </div>
               <Link
-                href={`/users/${profile?.id ? profile.id : ''}`}
+                href={`/users/${profile?.id ? profile.id : '/'}`}
                 className="flex h-16 items-center pl-6 text-xl"
               >
                 查看個人檔案
