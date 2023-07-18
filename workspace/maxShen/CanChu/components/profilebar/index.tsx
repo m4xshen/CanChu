@@ -47,7 +47,7 @@ function Profilebar({ profile }: Props) {
             inputRef.current?.click();
           }}
         >
-          <input ref={inputRef} type="file" className="hidden" />
+          <input ref={inputRef} type="file" accept="image/png, image/jpeg, image/jpg" className="hidden" />
           <button type="submit" className="group">
             <div className="relative ml-7 h-44 w-44 shrink-0 overflow-hidden rounded-full">
               <Image
