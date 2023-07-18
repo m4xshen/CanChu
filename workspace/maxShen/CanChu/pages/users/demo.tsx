@@ -13,8 +13,9 @@ import LoadingIcon from '@/components/icons/LoadingIcon';
 import { PostType } from '@/types';
 import useProfile from '@/hooks/useProfile';
 
-function Demo({ apiDomain }: { apiDomain: string }) {
-  const profile = useProfile(apiDomain);
+function Demo() {
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+  const profile = useProfile();
   const [posts, setPosts] = useState<PostType[]>();
 
   useEffect(() => {
@@ -81,8 +82,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
   }
 
   return {
-    props: {
-      apiDomain: process.env.API_DOMAIN || '',
-    },
+    props: {},
   };
 }

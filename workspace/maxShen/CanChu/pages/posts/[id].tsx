@@ -8,9 +8,9 @@ import { PostType } from '@/types';
 export default function DetailPage({ post }: { post: PostType }) {
   return (
     <>
-      <Navbar apiDomain="" />
+      <Navbar />
       <div className="mt-6" />
-      <Post key={post.id} post={post} detail edit={false} apiDomain="" />
+      <Post key={post.id} post={post} detail edit={false} />
     </>
   );
 }
@@ -26,12 +26,15 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
-  const res = await fetch(`${process.env.API_DOMAIN}/posts/search`, {
-    method: 'GET',
-    headers: new Headers({
-      Authorization: `Bearer ${accessToken}`,
-    }),
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`,
+    {
+      method: 'GET',
+      headers: new Headers({
+        Authorization: `Bearer ${accessToken}`,
+      }),
+    },
+  );
   const data = await res.json();
   const post = data.data.posts.find(
     (p: PostType) => p.id.toString() === ctx?.params?.id,

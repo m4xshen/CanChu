@@ -6,14 +6,14 @@ import useProfile from '@/hooks/useProfile';
 
 interface Props {
   user: ProfileType | undefined;
-  apiDomain: string;
 }
 
-function ProfileEditor({ user, apiDomain }: Props) {
+function ProfileEditor({ user }: Props) {
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [edit, setEdit] = useState(false);
   const introductionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLTextAreaElement>(null);
-  const profile = useProfile(apiDomain);
+  const profile = useProfile();
   const router = useRouter();
 
   function handleSubmit() {

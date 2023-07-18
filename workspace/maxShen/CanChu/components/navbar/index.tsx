@@ -12,11 +12,11 @@ const pattaya = Pattaya({
   subsets: ['cyrillic'],
 });
 
-function Navbar({ apiDomain }: { apiDomain: string }) {
+function Navbar() {
   const [display, setDisplay] = useState(false);
   const router = useRouter();
-  const picture = usePicture(apiDomain);
-  const profile = useProfile(apiDomain);
+  const picture = usePicture();
+  const profile = useProfile();
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">

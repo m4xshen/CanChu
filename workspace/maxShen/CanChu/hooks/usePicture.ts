@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { getCookie } from 'cookies-next';
 
-async function getPicture(apiDomain: string) {
+async function getPicture() {
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+
   const userCookie = getCookie('user');
   if (userCookie?.toString() !== undefined) {
     const user = JSON.parse(userCookie.toString());
@@ -23,11 +25,11 @@ async function getPicture(apiDomain: string) {
   }
   return '/avatar.png';
 }
-export default function usePicture(apiDomain: string) {
+export default function usePicture() {
   const [picture, setPicture] = useState('/avatar.png');
   useEffect(() => {
     (async () => {
-      const pic = await getPicture(apiDomain);
+      const pic = await getPicture();
       setPicture(pic);
     })();
   }, []);

@@ -6,13 +6,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import usePicture from '@/hooks/usePicture';
 
-interface Props {
-  apiDomain: string;
-}
-
-function PostCreator({ apiDomain }: Props) {
+function PostCreator() {
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const picture = usePicture(apiDomain);
+  const picture = usePicture();
   const router = useRouter();
 
   function createPost() {

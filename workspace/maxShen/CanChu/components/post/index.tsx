@@ -10,10 +10,9 @@ interface Props {
   post: PostType;
   detail: boolean;
   edit: boolean;
-  apiDomain: string;
 }
 
-function Post({ post, detail, edit, apiDomain }: Props) {
+function Post({ post, detail, edit }: Props) {
   const url = `/posts/${post.id}`;
 
   return (
@@ -28,12 +27,7 @@ function Post({ post, detail, edit, apiDomain }: Props) {
       )}
       <div className="w-[48rem] rounded-2xl border border-[#0000001A] bg-white">
         <Content post={post} url={url} detail={detail} />
-        <CommentSection
-          comments={comments}
-          detail={detail}
-          url={url}
-          apiDomain={apiDomain}
-        />
+        <CommentSection comments={comments} detail={detail} url={url} />
       </div>
     </div>
   );

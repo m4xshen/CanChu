@@ -26,9 +26,9 @@ const friends = [
   },
 ];
 
-function Sidebar({ apiDomain }: { apiDomain: string }) {
-  const profile = useProfile(apiDomain);
-  const picture = usePicture(apiDomain);
+function Sidebar() {
+  const profile = useProfile();
+  const picture = usePicture();
 
   return (
     <nav

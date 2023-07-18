@@ -8,18 +8,18 @@ import PostCreator from '@/components/postCreator';
 import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 
-function Home({ apiDomain }: { apiDomain: string }) {
+function Home() {
   return (
     <>
-      <Navbar apiDomain={apiDomain} />
+      <Navbar />
       <div className="mt-6 flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <Sidebar apiDomain={apiDomain} />
+          <Sidebar />
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator apiDomain={apiDomain} />
-          <Feed apiDomain={apiDomain} userId={undefined}/>
+          <PostCreator />
+          <Feed userId={null} />
         </div>
       </div>
     </>
@@ -39,8 +39,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
   }
 
   return {
-    props: {
-      apiDomain: process.env.API_DOMAIN || '',
-    },
+    props: {},
   };
 }

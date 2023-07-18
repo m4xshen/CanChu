@@ -20,12 +20,12 @@ const post: PostType = {
   summary: '',
 };
 
-function DetailPage({ apiDomain }: { apiDomain: string }) {
+function DetailPage() {
   return (
     <>
-      <Navbar apiDomain={apiDomain} />
+      <Navbar />
       <div className="mt-6" />
-      <Post post={post} detail edit={false} apiDomain={apiDomain} />
+      <Post post={post} detail edit={false} />
     </>
   );
 }
@@ -43,8 +43,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
   }
 
   return {
-    props: {
-      apiDomain: process.env.API_DOMAIN || '',
-    },
+    props: {},
   };
 }

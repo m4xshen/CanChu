@@ -9,25 +9,19 @@ import Footer from '@/components/footer';
 import PostCreator from '@/components/postCreator';
 import Feed from '@/components/feed';
 
-export default function ProfilePage({
-  profile,
-  apiDomain,
-}: {
-  profile: ProfileType;
-  apiDomain: string;
-}) {
+export default function ProfilePage({ profile }: { profile: ProfileType }) {
   return (
     <>
-      <Navbar apiDomain={apiDomain} />
-      <Profilebar profile={profile} apiDomain={apiDomain} />
+      <Navbar />
+      <Profilebar profile={profile} />
       <div className="flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <ProfileEditor user={profile} apiDomain={apiDomain} />
+          <ProfileEditor user={profile} />
           <Footer />
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator apiDomain={apiDomain} />
-          <Feed apiDomain={apiDomain} userId={profile.id} />
+          <PostCreator />
+          <Feed userId={profile.id} />
         </div>
       </div>
     </>
@@ -46,7 +40,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   }
 
   const res = await fetch(
-    `${process.env.API_DOMAIN}/users/${ctx?.params?.id}/profile`,
+    `${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${ctx?.params?.id}/profile`,
     {
       method: 'GET',
       headers: {
@@ -59,7 +53,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   return {
     props: {
       profile: data.data.user,
-      apiDomain: process.env.API_DOMAIN,
     },
   };
 }

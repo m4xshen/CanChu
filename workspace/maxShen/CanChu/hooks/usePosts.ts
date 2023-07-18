@@ -2,8 +2,9 @@ import { getCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { PostType } from '@/types';
 
-export default function usePosts(apiDomain: string, userId: number | null) {
+export default function usePosts(userId: number | null) {
   const [posts, setPosts] = useState<PostType[]>([]);
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
 
   useEffect(() => {
     (async () => {

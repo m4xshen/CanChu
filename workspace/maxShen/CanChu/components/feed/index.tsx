@@ -3,12 +3,11 @@ import LoadingIcon from '../icons/LoadingIcon';
 import usePosts from '@/hooks/usePosts';
 
 interface Props {
-  apiDomain: string;
   userId: number | null;
 }
 
-function Feed({ apiDomain, userId }: Props) {
-  const posts = usePosts(apiDomain, userId);
+function Feed({ userId }: Props) {
+  const posts = usePosts(userId);
 
   return (
     <>
@@ -16,13 +15,7 @@ function Feed({ apiDomain, userId }: Props) {
         <div>沒有新的貼文</div>
       ) : (
         posts.map((post) => (
-          <Post
-            key={post.id}
-            post={post}
-            detail={false}
-            edit={false}
-            apiDomain={apiDomain}
-          />
+          <Post key={post.id} post={post} detail={false} edit={false} />
         ))
       )}
       <LoadingIcon />

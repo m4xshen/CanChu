@@ -2,7 +2,8 @@ import { getCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { ProfileType } from '@/types';
 
-export default function useProfile(apiDomain: string) {
+export default function useProfile() {
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [profile, setProfile] = useState<ProfileType>();
 
   useEffect(() => {

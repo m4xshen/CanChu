@@ -7,11 +7,11 @@ import usePicture from '@/hooks/usePicture';
 
 interface Props {
   profile: ProfileType | undefined;
-  apiDomain: string;
 }
 
-function Profilebar({ profile, apiDomain }: Props) {
-  const picture = usePicture(apiDomain);
+function Profilebar({ profile }: Props) {
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+  const picture = usePicture();
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 

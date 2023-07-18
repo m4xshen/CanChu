@@ -9,11 +9,10 @@ interface Props {
   comments: CommentType[];
   detail: boolean;
   url: string;
-  apiDomain: string;
 }
 
-function CommentSection({ comments, detail, url, apiDomain }: Props) {
-  const picture = usePicture(apiDomain);
+function CommentSection({ comments, detail, url }: Props) {
+  const picture = usePicture();
   const content = (
     <>
       {detail &&

@@ -15,7 +15,7 @@ const pattaya = Pattaya({
   subsets: ['cyrillic'],
 });
 
-function LoginSignupPage({ apiDomain }: { apiDomain: string }) {
+function LoginSignupPage() {
   const router = useRouter();
 
   const [loggingIn, setLoggingIn] = useState(true);
@@ -25,8 +25,8 @@ function LoginSignupPage({ apiDomain }: { apiDomain: string }) {
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordCheckRef = useRef<HTMLInputElement>(null);
 
-  const login = useLogin(apiDomain);
-  const signup = useSignup(apiDomain);
+  const login = useLogin();
+  const signup = useSignup();
 
   async function handleLogin() {
     if (!emailRef?.current?.value || !passwordRef?.current?.value) {
@@ -190,8 +190,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   }
 
   return {
-    props: {
-      apiDomain: process.env.API_DOMAIN || '',
-    },
+    props: {},
   };
 }
