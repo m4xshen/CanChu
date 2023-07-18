@@ -34,6 +34,7 @@ export interface ProfileType {
   id: number | null;
   name: string | null;
   picture: string | null;
+  provider: string | null;
   friend_count: number | null;
   introduction: string | null;
   tags: string | null;

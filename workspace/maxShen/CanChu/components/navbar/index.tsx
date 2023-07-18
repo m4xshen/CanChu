@@ -4,8 +4,8 @@ import { Pattaya } from 'next/font/google';
 import { useState } from 'react';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-import profile from '@/data/profile';
 import usePicture from '@/hooks/usePicture';
+import useProfile from '@/hooks/useProfile';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -16,6 +16,7 @@ function Navbar({ apiDomain }: { apiDomain: string }) {
   const [display, setDisplay] = useState(false);
   const router = useRouter();
   const picture = usePicture(apiDomain);
+  const profile = useProfile(apiDomain);
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">
@@ -39,7 +40,10 @@ function Navbar({ apiDomain }: { apiDomain: string }) {
         className="relative ml-auto mr-36"
         onMouseLeave={() => setDisplay(false)}
       >
-        <Link href="/user/demo" onMouseEnter={() => setDisplay(true)}>
+        <Link
+          href={`/users/${profile?.id ? profile.id : ''}`}
+          onMouseEnter={() => setDisplay(true)}
+        >
           <div className="relative h-9 w-9 overflow-hidden rounded-full">
             <Image
               src={picture}
@@ -68,10 +72,12 @@ function Navbar({ apiDomain }: { apiDomain: string }) {
                     alt="purple avatar"
                   />
                 </div>
-                <div className="ml-4 text-xl font-bold">{profile.name}</div>
+                <div className="ml-4 text-xl font-bold">
+                  {profile?.name ? profile.name : ''}
+                </div>
               </div>
               <Link
-                href="/user/demo"
+                href={`/users/${profile?.id ? profile.id : ''}`}
                 className="flex h-16 items-center pl-6 text-xl"
               >
                 查看個人檔案

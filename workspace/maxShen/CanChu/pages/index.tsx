@@ -19,7 +19,7 @@ function Home({ apiDomain }: { apiDomain: string }) {
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
           <PostCreator apiDomain={apiDomain} />
-          <Feed apiDomain={apiDomain} />
+          <Feed apiDomain={apiDomain} userId={undefined}/>
         </div>
       </div>
     </>

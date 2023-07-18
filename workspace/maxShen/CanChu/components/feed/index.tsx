@@ -4,10 +4,11 @@ import usePosts from '@/hooks/usePosts';
 
 interface Props {
   apiDomain: string;
+  userId: number | null;
 }
 
-function Feed({ apiDomain }: Props) {
-  const posts = usePosts(apiDomain);
+function Feed({ apiDomain, userId }: Props) {
+  const posts = usePosts(apiDomain, userId);
 
   return (
     <>
