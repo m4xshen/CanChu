@@ -39,7 +39,7 @@ function Content({ post, commentCount, url, detail }: Props) {
   return (
     <div className="pt-7">
       <div className="flex w-full items-center gap-3">
-        <Link href={`/users/${profile?.id ? profile.id : ''}`}>
+        <Link href={profile?.id ? `/users/${profile.id}` : '/'}>
           <div className="relative ml-7 h-20 w-20 shrink-0 overflow-hidden rounded-full">
             <Image
               src={post.picture ? post.picture : '/avatar.png'}
