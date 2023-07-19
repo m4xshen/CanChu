@@ -26,10 +26,15 @@ function Post({ post, detail, edit }: Props) {
         </button>
       )}
       <div className="w-[48rem] rounded-2xl border border-[#0000001A] bg-white">
-        <Content post={post} commentCount={commentCount} url={url} detail={detail} />
+        <Content
+          post={post}
+          commentCount={commentCount}
+          url={url}
+          detail={detail}
+        />
         <CommentSection
           originComments={post.comments}
-          commentCount={commentCount} 
+          commentCount={commentCount}
           setCommentCount={setCommentCount}
           postId={post.id}
           detail={detail}

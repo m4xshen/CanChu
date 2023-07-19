@@ -19,13 +19,13 @@ function Comment({ comment }: Props) {
           className="object-cover"
         />
       </div>
-      <div>
+      <div className="max-w-[91%]">
         <div
-          className="mb-1 flex flex-col gap-1 rounded-2xl
+          className="mb-1 flex max-w-full flex-col gap-1 rounded-2xl
             bg-[#d9d9d9] bg-opacity-30 p-3 text-[#525252]"
         >
           <div className="font-semibold">{comment.user.name}</div>
-          <p>{comment.content}</p>
+          <p className="max-w-full break-words">{comment.content}</p>
         </div>
         <div className="text-sm text-[#525252]">
           {getDisplayTime(comment.created_at)}

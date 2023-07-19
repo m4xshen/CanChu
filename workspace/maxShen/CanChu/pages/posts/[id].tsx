@@ -9,8 +9,9 @@ export default function DetailPage({ post }: { post: PostType }) {
   return (
     <>
       <Navbar />
-      <div className="mt-6" />
-      <Post key={post.id} post={post} detail edit={false} />
+      <div className="my-6">
+        <Post key={post.id} post={post} detail edit={false} />
+      </div>
     </>
   );
 }
@@ -43,7 +44,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   );
   const data = await res.json();
   const { post } = data.data;
-  
+
   return {
     props: {
       post,
