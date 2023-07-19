@@ -75,13 +75,20 @@ function Profilebar({ profile }: Props) {
                   const formData = new FormData();
                   formData.append('picture', blob);
 
-                  await fetch(`${apiDomain}/users/picture`, {
+                  const res = await fetch(`${apiDomain}/users/picture`, {
                     method: 'PUT',
                     headers: {
                       Authorization: `Bearer ${getCookie('access_token')}`,
                     },
                     body: formData,
                   });
+
+                  if (res.status === 413) {
+                    alert('檔案大小太大');
+                    setFile(undefined);
+                    return;
+                  }
+
                   router.reload();
                 });
               }}
