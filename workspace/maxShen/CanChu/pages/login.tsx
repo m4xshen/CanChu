@@ -9,6 +9,7 @@ import nookies from 'nookies';
 
 import useSignup from '@/hooks/useSignup';
 import useLogin from '@/hooks/useLogin';
+import Footer from '@/components/footer';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -168,10 +169,8 @@ function LoginSignupPage() {
         </div>
         <div className="h-full w-1/3 bg-[#7763FB]" />
       </div>
-      <div className="self-end">
-        <footer className="text-[#525252]">
-          關於我們 · 隱私權條款 · Cookie 條款 · © 2023 CanChu, Inc.
-        </footer>
+      <div className="self-end mr-2">
+        <Footer />
       </div>
     </div>
   );
