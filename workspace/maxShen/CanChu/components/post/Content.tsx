@@ -1,24 +1,34 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
-import getDisplayTime from '@/utils';
+import { useState } from 'react';
+import { getCookie } from 'cookies-next';
 import { PostType } from '@/types';
+import getDisplayTime from '@/utils';
+import useProfile from '@/hooks/useProfile';
 
 import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
-import useProfile from '@/hooks/useProfile';
 
 interface Props {
   post: PostType;
+  commentCount: number;
   url: string;
   detail: boolean;
 }
 
-function Content({ post, url, detail }: Props) {
+function Content({ post, commentCount, url, detail }: Props) {
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const profile = useProfile();
+
+  const [isLiked, setIsLiked] = useState(post.is_liked);
+  const [likeCount, setLikeCount] = useState(post.like_count ?? 0);
+
   const heart = (
     <div>
-      {post.is_liked ? (
+      {isLiked ? (
         <Image src="/heart.png" width={28} height={28} alt="heart icon" />
       ) : (
         <HeartIcon />
@@ -63,7 +73,26 @@ function Content({ post, url, detail }: Props) {
       >
         {detail ? (
           <>
-            <button type="button" className="ml-2">
+            <button
+              type="button"
+              className="ml-2"
+              onClick={() => {
+                const method = isLiked ? 'DELETE' : 'POST';
+                fetch(`${apiDomain}/posts/${post.id}/like`, {
+                  method,
+                  headers: {
+                    Authorization: `Bearer ${getCookie('access_token')}`,
+                  },
+                });
+
+                if (isLiked) {
+                  setLikeCount(likeCount - 1);
+                } else {
+                  setLikeCount(likeCount + 1);
+                }
+                setIsLiked(!isLiked);
+              }}
+            >
               {heart}
             </button>
             <button type="button">
@@ -86,10 +115,10 @@ function Content({ post, url, detail }: Props) {
           text-base font-normal text-[#5c5c5c]"
       >
         <Link href={url} className={`${detail && 'pointer-events-none'}`}>
-          {post.like_count ?? 0} 人喜歡這則貼文
+          {likeCount} 人喜歡這則貼文
         </Link>
         <Link href={url} className={`mr-2 ${detail && 'pointer-events-none'}`}>
-          {post.comment_count ?? 0} 則留言
+          {commentCount ?? 0} 則留言
         </Link>
       </div>
     </div>

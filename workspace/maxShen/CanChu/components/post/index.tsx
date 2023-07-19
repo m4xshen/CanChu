@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Content from './Content';
 import CommentSection from './CommentSection';
-import comments from '@/data/comments';
 
 import { PostType } from '@/types';
 import EditIcon from '../icons/EditIcon';
@@ -13,6 +12,7 @@ interface Props {
 }
 
 function Post({ post, detail, edit }: Props) {
+  const [commentCount, setCommentCount] = useState(post.comment_count ?? 0);
   const url = `/posts/${post.id}`;
 
   return (
@@ -26,8 +26,15 @@ function Post({ post, detail, edit }: Props) {
         </button>
       )}
       <div className="w-[48rem] rounded-2xl border border-[#0000001A] bg-white">
-        <Content post={post} url={url} detail={detail} />
-        <CommentSection comments={comments} detail={detail} url={url} />
+        <Content post={post} commentCount={commentCount} url={url} detail={detail} />
+        <CommentSection
+          originComments={post.comments}
+          commentCount={commentCount} 
+          setCommentCount={setCommentCount}
+          postId={post.id}
+          detail={detail}
+          url={url}
+        />
       </div>
     </div>
   );

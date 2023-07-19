@@ -26,8 +26,14 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
+  if (!ctx?.params?.id) {
+    return {
+      props: {},
+    };
+  }
+
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`,
+    `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/${ctx.params.id}`,
     {
       method: 'GET',
       headers: new Headers({
@@ -36,10 +42,8 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     },
   );
   const data = await res.json();
-  const post = data.data.posts.find(
-    (p: PostType) => p.id.toString() === ctx?.params?.id,
-  );
-
+  const { post } = data.data;
+  
   return {
     props: {
       post,

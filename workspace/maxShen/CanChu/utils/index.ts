@@ -19,5 +19,6 @@ export default function getDisplayTime(date: string | null) {
   if (delta >= 60) {
     return `${Math.trunc(delta / 60).toString()} 分鐘前`;
   }
-  return `${Math.trunc(delta).toString()} 秒前`;
+  return '剛剛';
+  // return `${Math.trunc(delta).toString()} 秒前`;
 }

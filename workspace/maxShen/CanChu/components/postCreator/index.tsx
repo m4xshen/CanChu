@@ -16,10 +16,10 @@ function PostCreator() {
     (async () => {
       await fetch(`${apiDomain}/posts`, {
         method: 'POST',
-        headers: new Headers({
+        headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getCookie('access_token')}`,
-        }),
+        },
         body: JSON.stringify({
           context: textRef.current?.value,
         }),
