@@ -2,14 +2,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Pattaya } from 'next/font/google';
+import { getCookie } from 'cookies-next';
 import { useState } from 'react';
-import { deleteCookie, getCookie } from 'cookies-next';
 
 import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
 import useUsers from '@/hooks/useUsers';
 import { UserSearchType } from '@/types';
 import User from './User';
+import DropDown from './DropDown';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -17,7 +18,7 @@ const pattaya = Pattaya({
 });
 
 function Navbar() {
-  const [display, setDisplay] = useState(false);
+  const [displayDropDown, setDisplayDropDown] = useState(false);
   const [users, setUsers] = useState<UserSearchType[]>([]);
   const router = useRouter();
 
@@ -65,11 +66,11 @@ function Navbar() {
       </div>
       <div
         className="relative ml-auto mr-36"
-        onMouseLeave={() => setDisplay(false)}
+        onMouseLeave={() => setDisplayDropDown(false)}
       >
         <Link
           href={profile?.id ? `/users/${profile.id}` : '/'}
-          onMouseEnter={() => setDisplay(true)}
+          onMouseEnter={() => setDisplayDropDown(true)}
         >
           <div className="relative h-9 w-9 overflow-hidden rounded-full">
             <Image
@@ -80,49 +81,7 @@ function Navbar() {
             />
           </div>
         </Link>
-        {display && (
-          <div className="absolute right-0 top-9 z-10">
-            <div className="h-10 bg-transparent" />
-            <nav
-              className="flex w-64 flex-col overflow-hidden
-                rounded-2xl border border-[#0000001A] bg-[#f6f6f6] drop-shadow-lg"
-            >
-              <div className="flex h-16 items-center bg-[#5458F7] text-white">
-                <div
-                  className="ml-4 flex h-9
-                    w-9 items-center justify-center rounded-full bg-white"
-                >
-                  <Image
-                    src="/purpleAvatar.png"
-                    width={29}
-                    height={24}
-                    alt="purple avatar"
-                  />
-                </div>
-                <div className="ml-4 text-xl font-bold">
-                  {profile?.name ? profile.name : ''}
-                </div>
-              </div>
-              <Link
-                href={profile?.id ? `/users/${profile.id}` : '/'}
-                className="flex h-16 items-center pl-6 text-xl"
-              >
-                查看個人檔案
-              </Link>
-              <div className="w-60 self-center border-t border-[#D1CACE]" />
-              <button
-                type="button"
-                className="flex h-16 items-center pl-6 text-xl"
-                onClick={() => {
-                  deleteCookie('access_token');
-                  router.reload();
-                }}
-              >
-                登出
-              </button>
-            </nav>
-          </div>
-        )}
+        {displayDropDown && <DropDown profile={profile} router={router} />}
       </div>
     </div>
   );
