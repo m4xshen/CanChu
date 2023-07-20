@@ -29,8 +29,12 @@ function CommentSection({
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [comments, setComments] = useState(originComments);
   const inputRef = useRef<HTMLInputElement>(null);
-  const profile = useProfile();
+
   const picture = usePicture();
+
+  const userCookie = getCookie('user')?.toString();
+  const user = JSON.parse(userCookie || '{}');
+  const profile = useProfile(user.id);
 
   const content = (
     <>

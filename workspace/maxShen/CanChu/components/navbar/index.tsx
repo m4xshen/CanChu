@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Pattaya } from 'next/font/google';
 import { useState } from 'react';
-import { deleteCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import usePicture from '@/hooks/usePicture';
 import useProfile from '@/hooks/useProfile';
@@ -16,7 +16,10 @@ function Navbar() {
   const [display, setDisplay] = useState(false);
   const router = useRouter();
   const picture = usePicture();
-  const profile = useProfile();
+
+  const userCookie = getCookie('user')?.toString();
+  const user = JSON.parse(userCookie || '{}');
+  const profile = useProfile(user.id);
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">

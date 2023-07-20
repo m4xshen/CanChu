@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { getCookie } from 'cookies-next';
+
 import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
 import useProfile from '@/hooks/useProfile';
@@ -27,7 +29,9 @@ const friends = [
 ];
 
 function Sidebar() {
-  const profile = useProfile();
+  const userCookie = getCookie('user')?.toString();
+  const user = JSON.parse(userCookie || '{}');
+  const profile = useProfile(user.id);
   const picture = usePicture();
 
   return (

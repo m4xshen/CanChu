@@ -13,8 +13,8 @@ function ProfileEditor({ user }: Props) {
   const [edit, setEdit] = useState(false);
   const introductionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLTextAreaElement>(null);
-  const profile = useProfile();
   const router = useRouter();
+  const profile = useProfile(user?.id);
 
   function handleSubmit() {
     if (introductionRef?.current) {

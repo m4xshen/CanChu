@@ -19,7 +19,7 @@ interface Props {
 
 function Content({ post, commentCount, url, detail }: Props) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-  const profile = useProfile();
+  const profile = useProfile(post.user_id);
 
   const [isLiked, setIsLiked] = useState(post.is_liked);
   const [likeCount, setLikeCount] = useState(post.like_count ?? 0);
