@@ -15,11 +15,11 @@ const pattaya = Pattaya({
 function Navbar() {
   const [display, setDisplay] = useState(false);
   const router = useRouter();
-  const picture = usePicture();
 
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
+  const picture = usePicture(user.id);
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">

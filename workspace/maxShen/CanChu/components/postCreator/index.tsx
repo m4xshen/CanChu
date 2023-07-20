@@ -7,8 +7,11 @@ import usePicture from '@/hooks/usePicture';
 function PostCreator() {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const picture = usePicture();
   const router = useRouter();
+
+  const userCookie = getCookie('user')?.toString();
+  const user = JSON.parse(userCookie || '{}');
+  const picture = usePicture(user.id);
 
   function createPost() {
     (async () => {

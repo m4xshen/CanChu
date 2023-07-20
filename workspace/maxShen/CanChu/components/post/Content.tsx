@@ -12,7 +12,7 @@ import HeartIcon from '../icons/HeartIcon';
 
 interface Props {
   post: PostType;
-  commentCount: number;
+  commentCount: number | null;
   url: string;
   detail: boolean;
 }

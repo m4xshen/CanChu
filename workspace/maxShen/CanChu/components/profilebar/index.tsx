@@ -13,7 +13,7 @@ interface Props {
 
 function Profilebar({ profile }: Props) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-  const picture = usePicture();
+  const picture = usePicture(profile?.id);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [file, setFile] = useState<File>();

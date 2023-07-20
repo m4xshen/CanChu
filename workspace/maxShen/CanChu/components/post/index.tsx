@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Content from './Content';
 import CommentSection from './CommentSection';
 
@@ -12,7 +11,6 @@ interface Props {
 }
 
 function Post({ post, detail, edit }: Props) {
-  const [commentCount, setCommentCount] = useState(post.comment_count ?? 0);
   const url = `/posts/${post.id}`;
 
   return (
@@ -28,14 +26,12 @@ function Post({ post, detail, edit }: Props) {
       <div className="w-[48rem] rounded-2xl border border-[#0000001A] bg-white">
         <Content
           post={post}
-          commentCount={commentCount}
+          commentCount={post.comment_count}
           url={url}
           detail={detail}
         />
         <CommentSection
-          originComments={post.comments}
-          commentCount={commentCount}
-          setCommentCount={setCommentCount}
+          comments={post.comments}
           postId={post.id}
           detail={detail}
           url={url}

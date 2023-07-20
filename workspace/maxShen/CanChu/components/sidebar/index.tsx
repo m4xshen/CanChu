@@ -32,7 +32,7 @@ function Sidebar() {
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
-  const picture = usePicture();
+  const picture = usePicture(user.id);
 
   return (
     <nav

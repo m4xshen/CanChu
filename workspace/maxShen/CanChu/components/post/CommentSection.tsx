@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
+import { useRef } from 'react';
 
 import SendIcon from '../icons/SendIcon';
 import Comment from './Comment';
@@ -10,31 +11,21 @@ import usePicture from '@/hooks/usePicture';
 import useProfile from '@/hooks/useProfile';
 
 interface Props {
-  originComments: CommentType[];
-  commentCount: number;
-  setCommentCount: React.Dispatch<React.SetStateAction<number>>;
+  comments: CommentType[];
   postId: number;
   detail: boolean;
   url: string;
 }
 
-function CommentSection({
-  originComments,
-  commentCount,
-  setCommentCount,
-  postId,
-  detail,
-  url,
-}: Props) {
+function CommentSection({ comments, postId, detail, url }: Props) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-  const [comments, setComments] = useState(originComments);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const picture = usePicture();
-
+  const router = useRouter();
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
+  const picture = usePicture(user.id);
 
   const content = (
     <>
@@ -61,7 +52,8 @@ function CommentSection({
             ref={inputRef}
             type="text"
             placeholder="留個言吧"
-            className="pointer-events-auto h-6 w-full bg-[#f0f2f5] pr-2 text-xl text-[#777777] outline-0"
+            className="pointer-events-auto h-6 w-full bg-[#f0f2f5]
+              pr-2 text-xl text-[#777777] outline-0"
           />
           {detail && (
             <button
@@ -76,20 +68,6 @@ function CommentSection({
                 ) {
                   return;
                 }
-
-                const comment = {
-                  id: -1,
-                  created_at: new Date().toString(),
-                  content: inputRef.current.value,
-                  user: {
-                    id: profile.id,
-                    name: profile.name,
-                    picture: profile.picture,
-                  },
-                };
-                const newComments = [...comments, comment];
-                setComments(newComments);
-                setCommentCount(commentCount + 1);
 
                 (async () => {
                   if (!inputRef?.current?.value) {
@@ -110,6 +88,7 @@ function CommentSection({
                   if (inputRef?.current?.value) {
                     inputRef.current.value = '';
                   }
+                  router.reload();
                 })();
               }}
             >
