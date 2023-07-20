@@ -1,10 +1,11 @@
-import { getCookie } from 'cookies-next';
-import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import AvatarEditor from 'react-avatar-editor';
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import AvatarEditor from 'react-avatar-editor';
+
+import useGetPicture from '@/hooks/useGetPicture';
+import useUpdatePicture from '@/hooks/useUpdatePicture';
 import { ProfileType } from '@/types';
-import usePicture from '@/hooks/usePicture';
 import CloseIcon from '../icons/CloseIcon';
 
 interface Props {
@@ -12,13 +13,14 @@ interface Props {
 }
 
 function Profilebar({ profile }: Props) {
-  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-  const picture = usePicture(profile?.id);
+  const picture = useGetPicture(profile?.id);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [file, setFile] = useState<File>();
   const editor = useRef<AvatarEditor>(null);
+  const updatePicture = useUpdatePicture();
 
+  // toggle moal
   useEffect(() => {
     if (file) {
       document.body.classList.add('modal-open');
@@ -72,16 +74,7 @@ function Profilebar({ profile }: Props) {
                     return;
                   }
 
-                  const formData = new FormData();
-                  formData.append('picture', blob);
-
-                  const res = await fetch(`${apiDomain}/users/picture`, {
-                    method: 'PUT',
-                    headers: {
-                      Authorization: `Bearer ${getCookie('access_token')}`,
-                    },
-                    body: formData,
-                  });
+                  const res = await updatePicture(blob);
 
                   if (res.status === 413) {
                     alert('檔案大小太大');

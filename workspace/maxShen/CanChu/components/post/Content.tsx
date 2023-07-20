@@ -1,14 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useState } from 'react';
-import { getCookie } from 'cookies-next';
 import { PostType } from '@/types';
 import getDisplayTime from '@/utils';
 import useProfile from '@/hooks/useProfile';
 
 import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
+import useLike from '@/hooks/useLike';
 
 interface Props {
   post: PostType;
@@ -18,11 +17,8 @@ interface Props {
 }
 
 function Content({ post, commentCount, url, detail }: Props) {
-  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const profile = useProfile(post.user_id);
-
-  const [isLiked, setIsLiked] = useState(post.is_liked);
-  const [likeCount, setLikeCount] = useState(post.like_count ?? 0);
+  const [isLiked, likeCount, toggleLike] = useLike(post);
 
   const heart = (
     <div>
@@ -71,26 +67,7 @@ function Content({ post, commentCount, url, detail }: Props) {
       >
         {detail ? (
           <>
-            <button
-              type="button"
-              className="ml-2"
-              onClick={() => {
-                const method = isLiked ? 'DELETE' : 'POST';
-                fetch(`${apiDomain}/posts/${post.id}/like`, {
-                  method,
-                  headers: {
-                    Authorization: `Bearer ${getCookie('access_token')}`,
-                  },
-                });
-
-                if (isLiked) {
-                  setLikeCount(likeCount - 1);
-                } else {
-                  setLikeCount(likeCount + 1);
-                }
-                setIsLiked(!isLiked);
-              }}
-            >
+            <button type="button" className="ml-2" onClick={toggleLike}>
               {heart}
             </button>
             <button type="button">

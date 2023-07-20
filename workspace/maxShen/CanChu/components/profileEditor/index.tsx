@@ -1,40 +1,40 @@
-import { useRef, useState } from 'react';
-import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-import { ProfileType } from '@/types';
+import { useRef, useState } from 'react';
+
 import useProfile from '@/hooks/useProfile';
+import { ProfileType } from '@/types';
+import useUpdateProfile from '@/hooks/useUpdateProfile';
 
 interface Props {
   user: ProfileType | undefined;
 }
 
 function ProfileEditor({ user }: Props) {
-  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [edit, setEdit] = useState(false);
   const introductionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
   const profile = useProfile(user?.id);
 
-  function handleSubmit() {
-    if (introductionRef?.current) {
-      (async () => {
-        await fetch(`${apiDomain}/users/profile`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${getCookie('access_token')}`,
-          },
-          body: JSON.stringify({
-            name: profile?.name,
-            introduction: introductionRef?.current?.value,
-            tags: tagsRef?.current?.value,
-          }),
-        });
-        setEdit(false);
-        router.reload();
-      })();
+  const updateProfile = useUpdateProfile();
+
+  async function handleSubmit() {
+    if (
+      !profile?.name ||
+      !introductionRef?.current ||
+      !tagsRef.current?.value
+    ) {
+      return;
     }
+
+    updateProfile(
+      profile?.name,
+      introductionRef?.current?.value,
+      tagsRef?.current?.value,
+    );
+
+    setEdit(false);
+    router.reload();
   }
 
   return (

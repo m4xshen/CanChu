@@ -4,7 +4,7 @@ import { Pattaya } from 'next/font/google';
 import { useState } from 'react';
 import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-import usePicture from '@/hooks/usePicture';
+import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
 
 const pattaya = Pattaya({
@@ -19,7 +19,7 @@ function Navbar() {
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
-  const picture = usePicture(user.id);
+  const picture = useGetPicture(user.id);
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">

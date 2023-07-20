@@ -5,7 +5,7 @@ import { getCookie } from 'cookies-next';
 import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
 import useProfile from '@/hooks/useProfile';
-import usePicture from '@/hooks/usePicture';
+import useGetPicture from '@/hooks/useGetPicture';
 
 const friends = [
   {
@@ -32,7 +32,7 @@ function Sidebar() {
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
-  const picture = usePicture(user.id);
+  const picture = useGetPicture(user.id);
 
   return (
     <nav

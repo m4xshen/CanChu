@@ -1,36 +1,20 @@
-import { useRef } from 'react';
-import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import usePicture from '@/hooks/usePicture';
+import { getCookie } from 'cookies-next';
+import { useRef } from 'react';
+
+import useGetPicture from '@/hooks/useGetPicture';
+import useCreatePost from '@/hooks/useCreatePost';
 
 function PostCreator() {
-  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const textRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
 
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
-  const picture = usePicture(user.id);
+  const picture = useGetPicture(user.id);
 
-  function createPost() {
-    (async () => {
-      await fetch(`${apiDomain}/posts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getCookie('access_token')}`,
-        },
-        body: JSON.stringify({
-          context: textRef.current?.value,
-        }),
-      });
-      if (textRef.current) {
-        textRef.current.value = '';
-      }
-      router.reload();
-    })();
-  }
+  const createPost = useCreatePost();
 
   return (
     <div className="flex w-[48rem] gap-6 rounded-2xl border border-[#0000001A] bg-white p-5">
@@ -48,7 +32,18 @@ function PostCreator() {
           type="submit"
           className="flex h-10 w-36 items-center justify-center self-end rounded-md
             bg-[#5458F7] text-white"
-          onClick={createPost}
+          onClick={async () => {
+            if (!textRef.current?.value) {
+              return;
+            }
+
+            await createPost(textRef.current.value);
+
+            if (textRef.current) {
+              textRef.current.value = '';
+            }
+            router.reload();
+          }}
         >
           發佈貼文
         </button>

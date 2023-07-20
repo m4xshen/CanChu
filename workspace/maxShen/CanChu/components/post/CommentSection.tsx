@@ -7,8 +7,9 @@ import { useRef } from 'react';
 import SendIcon from '../icons/SendIcon';
 import Comment from './Comment';
 import { CommentType } from '@/types';
-import usePicture from '@/hooks/usePicture';
+import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
+import useCreateComment from '@/hooks/useCreateComment';
 
 interface Props {
   comments: CommentType[];
@@ -18,14 +19,15 @@ interface Props {
 }
 
 function CommentSection({ comments, postId, detail, url }: Props) {
-  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const inputRef = useRef<HTMLInputElement>(null);
-
   const router = useRouter();
+
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
-  const picture = usePicture(user.id);
+  const picture = useGetPicture(user.id);
+
+  const createComment = useCreateComment();
 
   const content = (
     <>
@@ -74,16 +76,7 @@ function CommentSection({ comments, postId, detail, url }: Props) {
                     return;
                   }
 
-                  await fetch(`${apiDomain}/posts/${postId}/comment`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      Authorization: `Bearer ${getCookie('access_token')}`,
-                    },
-                    body: JSON.stringify({
-                      content: inputRef.current.value,
-                    }),
-                  });
+                  await createComment(postId, inputRef.current.value);
 
                   if (inputRef?.current?.value) {
                     inputRef.current.value = '';

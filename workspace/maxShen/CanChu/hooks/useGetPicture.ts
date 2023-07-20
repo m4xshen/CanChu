@@ -25,7 +25,7 @@ async function getPicture(userId: number | undefined | null) {
   return '/avatar.png';
 }
 
-export default function usePicture(userId: number | undefined | null) {
+export default function useGetPicture(userId: number | undefined | null) {
   const [picture, setPicture] = useState('/avatar.png');
   useEffect(() => {
     (async () => {
