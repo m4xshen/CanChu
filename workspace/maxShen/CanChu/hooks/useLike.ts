@@ -8,8 +8,15 @@ export default function useLike(
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [isLiked, setIsLiked] = useState(post.is_liked ?? false);
   const [likeCount, setLikeCount] = useState(post.like_count ?? 0);
+  const [time, setTime] = useState(0);
 
   function toggleLike() {
+    // throttling
+    if (new Date().getSeconds() - time < 1) {
+      return;
+    }
+    setTime(new Date().getSeconds());
+
     const method = isLiked ? 'DELETE' : 'POST';
     fetch(`${apiDomain}/posts/${post.id}/like`, {
       method,
