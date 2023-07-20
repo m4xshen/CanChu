@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
 
+import { getCookie } from 'cookies-next';
 import Navbar from '@/components/navbar';
 import { ProfileType } from '@/types';
 import Profilebar from '@/components/profilebar';
@@ -10,6 +11,10 @@ import PostCreator from '@/components/postCreator';
 import Feed from '@/components/feed';
 
 export default function ProfilePage({ profile }: { profile: ProfileType }) {
+  const userCookie = getCookie('user')?.toString();
+  const user = JSON.parse(userCookie || '{}');
+  const isUser = user.id === profile.id;
+
   return (
     <>
       <Navbar />
@@ -22,8 +27,8 @@ export default function ProfilePage({ profile }: { profile: ProfileType }) {
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator />
-          <Feed userId={profile.id} />
+          {isUser && <PostCreator />}
+          <Feed userId={profile.id} edit={isUser} />
         </div>
       </div>
     </>

@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { Pattaya } from 'next/font/google';
 import { useState } from 'react';
 import { deleteCookie, getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
+
 import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
+import useUsers from '@/hooks/useUsers';
+import { UserSearchType } from '@/types';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -14,12 +17,14 @@ const pattaya = Pattaya({
 
 function Navbar() {
   const [display, setDisplay] = useState(false);
+  const [users, setUsers] = useState<UserSearchType[]>([]);
   const router = useRouter();
 
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
   const picture = useGetPicture(user.id);
+  const getUsers = useUsers();
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">
@@ -29,7 +34,7 @@ function Navbar() {
         </h1>
       </Link>
       <div
-        className="ml-6 flex h-12 w-80 items-center rounded-lg
+        className="relative ml-6 flex h-12 w-80 items-center rounded-lg
           border border-[#d9d9d9] bg-[#f0f2f5] px-4"
       >
         <Image src="/search.png" width={17} height={17} alt="search icon" />
@@ -37,7 +42,40 @@ function Navbar() {
           type="text"
           placeholder="搜尋"
           className="ml-2 w-full bg-[#f0f2f5] text-[#566470] outline-0"
+          onChange={async (e) => {
+            const res = await getUsers(e.target.value);
+            const data = await res.json();
+            setUsers(data.data.users);
+            if (e.target.value === '') {
+              setUsers([]);
+            }
+          }}
         />
+        {users.length > 0 && (
+          <div
+            className="absolute left-0 top-12 z-10 max-h-[14rem] w-80
+              overflow-y-scroll rounded-2xl border border-[#00000019] bg-white"
+          >
+            {users.map((u, idx) => (
+              <Link
+                href={`/users/${u.id}`}
+                key={u.id}
+                className={`flex h-14 items-center ${
+                  idx !== users.length - 1 && 'border-b border-[#00000019]'
+                }`}
+              >
+                <Image
+                  className="ml-8 rounded-full"
+                  src={u.picture}
+                  alt="user profile"
+                  width={39}
+                  height={39}
+                />
+                <div className="ml-4 text-[#566470]">{u.name}</div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
       <div
         className="relative ml-auto mr-36"
@@ -61,7 +99,7 @@ function Navbar() {
             <div className="h-10 bg-transparent" />
             <nav
               className="flex w-64 flex-col overflow-hidden
-                  rounded-2xl border border-[#0000001A] bg-[#f6f6f6] drop-shadow-lg"
+                rounded-2xl border border-[#0000001A] bg-[#f6f6f6] drop-shadow-lg"
             >
               <div className="flex h-16 items-center bg-[#5458F7] text-white">
                 <div

@@ -4,9 +4,10 @@ import usePosts from '@/hooks/usePosts';
 
 interface Props {
   userId: number | null;
+  edit: boolean;
 }
 
-function Feed({ userId }: Props) {
+function Feed({ userId, edit }: Props) {
   const posts = usePosts(userId);
 
   return (
@@ -15,7 +16,7 @@ function Feed({ userId }: Props) {
         <div>沒有新的貼文</div>
       ) : (
         posts.map((post) => (
-          <Post key={post.id} post={post} detail={false} edit={false} />
+          <Post key={post.id} post={post} detail={false} edit={edit} />
         ))
       )}
       <LoadingIcon />

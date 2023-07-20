@@ -40,3 +40,10 @@ export interface ProfileType {
   tags: string | null;
   friendship: FriendShipType | null;
 }
+
+export interface UserSearchType {
+  id: number;
+  name: string;
+  picture: string;
+  friendship: FriendShipType | null;
+}

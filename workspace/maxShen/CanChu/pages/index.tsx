@@ -19,7 +19,7 @@ function Home() {
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
           <PostCreator />
-          <Feed userId={null} />
+          <Feed userId={null} edit={false} />
         </div>
       </div>
     </>
