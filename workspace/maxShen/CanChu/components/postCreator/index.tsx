@@ -1,5 +1,3 @@
-'use client';
-
 import { useRef } from 'react';
 import { getCookie } from 'cookies-next';
 import Image from 'next/image';

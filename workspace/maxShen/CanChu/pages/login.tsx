@@ -1,5 +1,3 @@
-'use client';
-
 import { Pattaya } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next';
@@ -38,8 +36,8 @@ function LoginSignupPage() {
 
     if (res.ok) {
       const data = await res.json();
-      setCookie('access_token', data.data.access_token);
-      setCookie('user', data.data.user);
+      setCookie('access_token', data.data.access_token, { maxAge: 3600 });
+      setCookie('user', data.data.user, { maxAge: 3600 });
       router.reload();
     } else if (res.status === 403) {
       alert('電子郵件或密碼錯誤');
@@ -169,7 +167,7 @@ function LoginSignupPage() {
         </div>
         <div className="h-full w-1/3 bg-[#7763FB]" />
       </div>
-      <div className="self-end mr-2">
+      <div className="mr-2 self-end">
         <Footer />
       </div>
     </div>
