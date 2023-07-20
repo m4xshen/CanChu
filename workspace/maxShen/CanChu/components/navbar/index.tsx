@@ -9,6 +9,7 @@ import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
 import useUsers from '@/hooks/useUsers';
 import { UserSearchType } from '@/types';
+import User from './User';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -57,22 +58,7 @@ function Navbar() {
               overflow-y-scroll rounded-2xl border border-[#00000019] bg-white"
           >
             {users.map((u, idx) => (
-              <Link
-                href={`/users/${u.id}`}
-                key={u.id}
-                className={`flex h-14 items-center ${
-                  idx !== users.length - 1 && 'border-b border-[#00000019]'
-                }`}
-              >
-                <Image
-                  className="ml-8 rounded-full"
-                  src={u.picture}
-                  alt="user profile"
-                  width={39}
-                  height={39}
-                />
-                <div className="ml-4 text-[#566470]">{u.name}</div>
-              </Link>
+              <User user={u} isLast={idx !== users.length - 1} />
             ))}
           </div>
         )}
