@@ -26,7 +26,7 @@ export default function useProfile(userId: number | undefined | null) {
       const data = await res.json();
       setProfile(data.data.user);
     })();
-  }, []);
+  }, [userId]);
 
   return profile;
 }

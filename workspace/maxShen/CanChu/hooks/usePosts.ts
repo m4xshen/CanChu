@@ -27,7 +27,7 @@ export default function usePosts(userId: number | null) {
         setPosts(data.data.posts);
       }
     })();
-  }, []);
+  }, [userId]);
 
   return posts;
 }

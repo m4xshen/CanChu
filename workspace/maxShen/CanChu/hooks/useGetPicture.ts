@@ -32,7 +32,7 @@ export default function useGetPicture(userId: number | undefined | null) {
       const pic = await getPicture(userId);
       setPicture(pic);
     })();
-  }, []);
+  }, [userId]);
 
   return picture;
 }
