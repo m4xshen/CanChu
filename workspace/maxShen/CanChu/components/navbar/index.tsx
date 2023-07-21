@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Pattaya } from 'next/font/google';
 import { getCookie } from 'cookies-next';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
@@ -27,6 +27,21 @@ function Navbar() {
   const profile = useProfile(user.id);
   const picture = useGetPicture(user.id);
   const getUsers = useUsers();
+  const [focus, setFocus] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      setFocus(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">
@@ -41,6 +56,7 @@ function Navbar() {
       >
         <Image src="/search.png" width={17} height={17} alt="search icon" />
         <input
+          ref={inputRef}
           type="text"
           placeholder="搜尋"
           className="ml-2 w-full bg-[#f0f2f5] text-[#566470] outline-0"
@@ -52,8 +68,9 @@ function Navbar() {
               setUsers([]);
             }
           }}
+          onFocus={() => setFocus(true)}
         />
-        {users.length > 0 && (
+        {focus && users.length > 0 && (
           <div
             className="absolute left-0 top-12 z-10 max-h-[14rem] w-80
               overflow-y-scroll rounded-2xl border border-[#00000019] bg-white"
