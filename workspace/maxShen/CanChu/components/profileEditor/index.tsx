@@ -7,9 +7,10 @@ import useUpdateProfile from '@/hooks/useUpdateProfile';
 
 interface Props {
   user: ProfileType | undefined;
+  editable: boolean;
 }
 
-function ProfileEditor({ user }: Props) {
+function ProfileEditor({ user, editable }: Props) {
   const [edit, setEdit] = useState(false);
   const introductionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLTextAreaElement>(null);
@@ -39,17 +40,19 @@ function ProfileEditor({ user }: Props) {
 
   return (
     <div className="w-96 rounded-2xl border border-[#0000001A] bg-white px-4 py-6">
-      <button
-        type="button"
-        className={`h-10 w-full rounded-md text-white ${
-          edit ? 'bg-[#D3D3D3]' : 'bg-[#5458F7]'
-        }`}
-        onClick={() => {
-          setEdit(true);
-        }}
-      >
-        編輯個人檔案
-      </button>
+      {editable && (
+        <button
+          type="button"
+          className={`h-10 w-full rounded-md text-white ${
+            edit ? 'bg-[#D3D3D3]' : 'bg-[#5458F7]'
+          }`}
+          onClick={() => {
+            setEdit(true);
+          }}
+        >
+          編輯個人檔案
+        </button>
+      )}
       <div className="my-4 flex flex-col gap-4 px-3">
         <div className="flex flex-col gap-2">
           <div className="text-lg font-bold">自我介紹</div>

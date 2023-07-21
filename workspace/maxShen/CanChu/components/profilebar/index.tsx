@@ -8,9 +8,10 @@ import { ProfileType } from '@/types';
 
 interface Props {
   profile: ProfileType | undefined;
+  edit: boolean;
 }
 
-function Profilebar({ profile }: Props) {
+function Profilebar({ profile, edit }: Props) {
   const router = useRouter();
   const picture = useGetPicture(profile?.id);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,6 +34,11 @@ function Profilebar({ profile }: Props) {
           <form
             onSubmit={(ev) => {
               ev.preventDefault();
+
+              if (!edit) {
+                return;
+              }
+
               inputRef?.current?.addEventListener('change', (e: Event) => {
                 const target = e.target as HTMLInputElement;
                 const { files } = target;
@@ -54,18 +60,20 @@ function Profilebar({ profile }: Props) {
               accept="image/png, image/jpeg, image/jpg"
               className="hidden"
             />
-            <button type="submit" className="group">
+            <button type="submit" className={`group ${!edit && 'cursor-auto'}`}>
               <div className="relative ml-7 h-44 w-44 shrink-0 overflow-hidden rounded-full">
                 <Image
                   src={picture}
                   fill
                   alt="user avatar"
-                  className="object-cover hover:brightness-50 group-hover:brightness-50"
+                  className={`object-cover ${
+                    edit && 'hover:brightness-50 group-hover:brightness-50'
+                  }`}
                 />
                 <div
-                  className="absolute left-1/2 top-1/2 hidden
-                  -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-lg text-white
-                  underline hover:block group-hover:block"
+                  className={`absolute left-1/2 top-1/2 hidden
+                    -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-lg text-white
+                    underline ${edit && 'hover:block group-hover:block'}`}
                 >
                   編輯大頭貼
                 </div>

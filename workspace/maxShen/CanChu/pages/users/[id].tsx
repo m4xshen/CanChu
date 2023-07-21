@@ -18,10 +18,10 @@ export default function ProfilePage({ profile }: { profile: ProfileType }) {
   return (
     <>
       <Navbar />
-      <Profilebar profile={profile} />
+      <Profilebar profile={profile} edit={isUser} />
       <div className="flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <ProfileEditor user={profile} />
+          <ProfileEditor user={profile} editable={isUser} />
           <div className="w-64">
             <Footer />
           </div>
