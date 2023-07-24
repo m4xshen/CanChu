@@ -10,6 +10,8 @@ export default function useRelation(profile: ProfileType) {
   useEffect(() => {
     if (user.id === profile.id) {
       setRelation(Relation.Self);
+    } else if (profile.friendship?.status === undefined) {
+      setRelation(Relation.Null);
     } else if (profile.friendship?.status === 'pending') {
       setRelation(Relation.Pending);
     } else if (profile.friendship?.status === 'requested') {

@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useProfile from '@/hooks/useProfile';
 import { ProfileType, Relation } from '@/types';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import useFriendRequest from '@/hooks/useFriendRequest';
+import useDeleteFriendship from '@/hooks/useDeleteFriendship';
 
 interface Props {
   user: ProfileType | undefined;
@@ -20,6 +21,20 @@ function ProfileEditor({ user, relation }: Props) {
 
   const updateProfile = useUpdateProfile();
   const [makeFriendRequest, removeFriendRequest] = useFriendRequest();
+  const deleteFriendship = useDeleteFriendship();
+
+  const [text, setText] = useState('');
+  useEffect(() => {
+    if (relation === Relation.Self) {
+      setText('編輯個人檔案');
+    } else if (relation === Relation.Null) {
+      setText('邀請成為好友');
+    } else if (relation === Relation.Requested) {
+      setText('刪除好友邀請');
+    } else if (relation === Relation.Friend) {
+      setText('刪除好友');
+    }
+  }, [relation]);
 
   async function handleSubmit() {
     if (
@@ -40,15 +55,6 @@ function ProfileEditor({ user, relation }: Props) {
     router.reload();
   }
 
-  let text = '';
-  if (relation === Relation.Self) {
-    text = '編輯個人檔案';
-  } else if (relation === Relation.Null) {
-    text = '邀請成為好友';
-  } else if (relation === Relation.Requested) {
-    text = '刪除好友邀請';
-  }
-
   function handleClick() {
     if (relation === Relation.Self) {
       setEdit(true);
@@ -66,6 +72,14 @@ function ProfileEditor({ user, relation }: Props) {
           return;
         }
         await removeFriendRequest(user.friendship.id);
+        router.reload();
+      })();
+    } else if (relation === Relation.Friend) {
+      (async () => {
+        if (!user?.friendship?.id) {
+          return;
+        }
+        await deleteFriendship(user.friendship.id);
         router.reload();
       })();
     }
