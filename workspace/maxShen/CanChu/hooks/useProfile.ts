@@ -1,32 +1,31 @@
 import { getCookie } from 'cookies-next';
-import { useEffect, useState } from 'react';
-import { ProfileType } from '@/types';
+import useSWR from 'swr';
+
+const fetcher = async (url: string) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${getCookie('access_token')}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch');
+  }
+
+  const data = await res.json();
+  return data;
+};
 
 export default function useProfile(userId: number | undefined | null) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-  const [profile, setProfile] = useState<ProfileType>();
 
-  useEffect(() => {
-    if (!userId) {
-      return;
-    }
+  const url = userId ? `${apiDomain}/users/${userId}/profile` : null;
+  const { data, error, isLoading } = useSWR(url, fetcher);
 
-    (async () => {
-      const res = await fetch(`${apiDomain}/users/${userId}/profile`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${getCookie('access_token')}`,
-        },
-      });
+  if (isLoading || error) {
+    return null;
+  }
 
-      if (!res.ok) {
-        return;
-      }
-
-      const data = await res.json();
-      setProfile(data.data.user);
-    })();
-  }, [userId]);
-
-  return profile;
+  return data?.data?.user;
 }
