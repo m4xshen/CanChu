@@ -43,6 +43,22 @@ function Navbar() {
     };
   }, []);
 
+  const findUsers = async (keyword: string) => {
+    if (keyword === '') {
+      setUsers([]);
+      return;
+    }
+    const res = await getUsers(keyword);
+    const data = await res.json();
+    setUsers(data.data.users);
+  };
+
+  let timeout: NodeJS.Timeout;
+  function debounce(keyword: string, delay: number) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => findUsers(keyword), delay);
+  }
+
   return (
     <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">
       <Link href="/">
@@ -60,14 +76,7 @@ function Navbar() {
           type="text"
           placeholder="搜尋"
           className="ml-2 w-full bg-[#f0f2f5] text-[#566470] outline-0"
-          onChange={async (e) => {
-            const res = await getUsers(e.target.value);
-            const data = await res.json();
-            setUsers(data.data.users);
-            if (e.target.value === '') {
-              setUsers([]);
-            }
-          }}
+          onChange={(e) => debounce(e.target.value, 500)}
           onFocus={() => setFocus(true)}
         />
         {focus && users.length > 0 && (
