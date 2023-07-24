@@ -1,12 +1,20 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import useAgreeFriendship from '@/hooks/useAgreeFriendship';
+import useDeleteFriendship from '@/hooks/useDeleteFriendship';
 
 interface Props {
   picture: string;
   text: string;
   request: boolean;
+  friendshipId?: number; // FIX
 }
 
-function User({ picture, text, request }: Props) {
+function User({ picture, text, request, friendshipId }: Props) {
+  const router = useRouter();
+  const agreeFriendship = useAgreeFriendship();
+  const deleteFriendship = useDeleteFriendship();
+
   return (
     <div className="flex items-center gap-3">
       <div
@@ -26,12 +34,26 @@ function User({ picture, text, request }: Props) {
           <button
             type="button"
             className="h-10 w-16 rounded-md bg-[#5458F7] text-white"
+            onClick={async () => {
+              if (!friendshipId) {
+                return;
+              }
+              await agreeFriendship(friendshipId);
+              router.reload();
+            }}
           >
             確認
           </button>
           <button
             type="button"
             className="ml-2 h-10 w-16 rounded-md bg-[#BFBFBF] text-white"
+            onClick={async () => {
+              if (!friendshipId) {
+                return;
+              }
+              await deleteFriendship(friendshipId);
+              router.reload();
+            }}
           >
             取消
           </button>

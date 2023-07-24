@@ -42,6 +42,7 @@ function Sidebar() {
           picture={pending.picture}
           text={pending.name}
           request
+          friendshipId={pending.friendship?.id}
         />
       ))}
       {friends.map((friend) => (
