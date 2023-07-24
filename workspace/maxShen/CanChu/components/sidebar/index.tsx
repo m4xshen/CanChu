@@ -39,6 +39,7 @@ function Sidebar() {
       {pendings.map((pending) => (
         <User
           key={pending.id}
+          id={pending.id}
           picture={pending.picture}
           text={pending.name}
           request
@@ -48,6 +49,7 @@ function Sidebar() {
       {friends.map((friend) => (
         <User
           key={friend.id}
+          id={friend.id}
           picture={friend.picture}
           text={friend.name}
           request={false}

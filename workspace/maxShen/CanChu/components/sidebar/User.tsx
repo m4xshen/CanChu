@@ -1,16 +1,19 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import useAgreeFriendship from '@/hooks/useAgreeFriendship';
 import useDeleteFriendship from '@/hooks/useDeleteFriendship';
 
+// FIX optional parameter
 interface Props {
+  id?: number;
   picture: string;
   text: string;
   request: boolean;
-  friendshipId?: number; // FIX
+  friendshipId?: number;
 }
 
-function User({ picture, text, request, friendshipId }: Props) {
+function User({ id, picture, text, request, friendshipId }: Props) {
   const router = useRouter();
   const agreeFriendship = useAgreeFriendship();
   const deleteFriendship = useDeleteFriendship();
@@ -21,12 +24,14 @@ function User({ picture, text, request, friendshipId }: Props) {
         className="relative flex h-11 w-11 items-center justify-center
           overflow-hidden rounded-full"
       >
-        <Image
-          src={picture}
-          fill
-          alt="friend avatar"
-          className="object-cover"
-        />
+        <Link href={`/users/${id}`}>
+          <Image
+            src={picture}
+            fill
+            alt="friend avatar"
+            className="object-cover"
+          />
+        </Link>
       </div>
       <div className="text-lg font-bold leading-6">{text}</div>
       {request && (

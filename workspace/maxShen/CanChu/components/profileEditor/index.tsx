@@ -6,6 +6,7 @@ import { ProfileType, Relation } from '@/types';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import useFriendRequest from '@/hooks/useFriendRequest';
 import useDeleteFriendship from '@/hooks/useDeleteFriendship';
+import useAgreeFriendship from '@/hooks/useAgreeFriendship';
 
 interface Props {
   user: ProfileType | undefined;
@@ -21,6 +22,7 @@ function ProfileEditor({ user, relation }: Props) {
 
   const updateProfile = useUpdateProfile();
   const [makeFriendRequest, removeFriendRequest] = useFriendRequest();
+  const agreeFriendship = useAgreeFriendship();
   const deleteFriendship = useDeleteFriendship();
 
   const [text, setText] = useState('');
@@ -33,6 +35,8 @@ function ProfileEditor({ user, relation }: Props) {
       setText('刪除好友邀請');
     } else if (relation === Relation.Friend) {
       setText('刪除好友');
+    } else if (relation === Relation.Pending) {
+      setText('接受好友邀請');
     }
   }, [relation]);
 
@@ -55,33 +59,34 @@ function ProfileEditor({ user, relation }: Props) {
     router.reload();
   }
 
-  function handleClick() {
+  async function handleClick() {
     if (relation === Relation.Self) {
       setEdit(true);
-    } else if (relation === Relation.Null) {
-      (async () => {
-        if (!user) {
-          return;
-        }
-        await makeFriendRequest(user.id);
-        router.reload();
-      })();
-    } else if (relation === Relation.Requested) {
-      (async () => {
-        if (!user?.friendship?.id) {
-          return;
-        }
-        await removeFriendRequest(user.friendship.id);
-        router.reload();
-      })();
+      return;
+    }
+
+    if (!user?.id) {
+      return;
+    }
+
+    if (relation === Relation.Null) {
+      await makeFriendRequest(user.id);
+      router.reload();
+    }
+
+    if (!user?.friendship?.id) {
+      return;
+    }
+
+    if (relation === Relation.Requested) {
+      await removeFriendRequest(user.friendship.id);
+      router.reload();
     } else if (relation === Relation.Friend) {
-      (async () => {
-        if (!user?.friendship?.id) {
-          return;
-        }
-        await deleteFriendship(user.friendship.id);
-        router.reload();
-      })();
+      await deleteFriendship(user.friendship.id);
+      router.reload();
+    } else if (relation === Relation.Pending) {
+      await agreeFriendship(user.friendship.id);
+      router.reload();
     }
   }
 
