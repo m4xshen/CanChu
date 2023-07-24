@@ -6,33 +6,14 @@ import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
 import useProfile from '@/hooks/useProfile';
 import useGetPicture from '@/hooks/useGetPicture';
-
-const friends = [
-  {
-    id: 1,
-    name: '大原所長',
-    picture: 'https://i.imgur.com/rVRCiZC.png',
-    friendship: {
-      id: 32,
-      status: 'friend',
-    },
-  },
-  {
-    id: 14,
-    name: 'Joseph Joestar',
-    picture: 'https://i.imgur.com/JSZhpVj.jpg',
-    friendship: {
-      id: 2,
-      status: 'friend',
-    },
-  },
-];
+import useFriends from '@/hooks/useFriends';
 
 function Sidebar() {
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
   const picture = useGetPicture(user.id);
+  const friends = useFriends(user.id);
 
   return (
     <nav
