@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Content from './Content';
 import CommentSection from './CommentSection';
 
@@ -7,18 +8,22 @@ import EditIcon from '../icons/EditIcon';
 interface Props {
   post: PostType;
   detail: boolean;
-  edit: boolean;
+  editable: boolean;
 }
 
-function Post({ post, detail, edit }: Props) {
+function Post({ post, detail, editable }: Props) {
+  const [edit, setEdit] = useState(false);
   const url = `/posts/${post.id}`;
 
   return (
     <div className="group relative flex justify-center">
-      {edit && (
+      {editable && (
         <button
           type="button"
           className="absolute right-4 top-4 hidden group-hover:block"
+          onClick={() => {
+            setEdit(true);
+          }}
         >
           <EditIcon />
         </button>
@@ -29,6 +34,8 @@ function Post({ post, detail, edit }: Props) {
           commentCount={post.comment_count}
           url={url}
           detail={detail}
+          edit={edit}
+          setEdit={setEdit}
         />
         <CommentSection
           comments={post.comments}

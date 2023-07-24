@@ -10,7 +10,7 @@ export default function DetailPage({ post }: { post: PostType }) {
     <>
       <Navbar />
       <div className="my-6">
-        <Post key={post.id} post={post} detail edit={false} />
+        <Post key={post.id} post={post} detail editable={false} />
       </div>
     </>
   );

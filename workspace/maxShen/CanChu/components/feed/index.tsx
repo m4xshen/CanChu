@@ -16,7 +16,7 @@ function Feed({ userId, edit }: Props) {
         <div className="w-[48rem] text-center">沒有新的貼文</div>
       ) : (
         posts.map((post) => (
-          <Post key={post.id} post={post} detail={false} edit={edit} />
+          <Post key={post.id} post={post} detail={false} editable={edit} />
         ))
       )}
       <LoadingIcon />

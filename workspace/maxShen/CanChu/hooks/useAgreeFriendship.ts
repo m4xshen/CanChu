@@ -1,7 +1,7 @@
-import { getCookie } from "cookies-next";
+import { getCookie } from 'cookies-next';
 
 async function agreeFriendship(friendshipId: number | null) {
-const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   await fetch(`${apiDomain}/friends/${friendshipId}/agree`, {
     method: 'POST',
     headers: {
