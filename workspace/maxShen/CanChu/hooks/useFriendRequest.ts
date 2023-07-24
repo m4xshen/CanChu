@@ -1,4 +1,4 @@
-import { getCookie } from "cookies-next";
+import { getCookie } from 'cookies-next';
 
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
 
@@ -7,8 +7,8 @@ async function makeFriendRequest(userId: number | null) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getCookie('access_token')}`,
-    }
-  })
+    },
+  });
 }
 
 async function removeFriendRequest(frienshipId: number | null) {
@@ -16,8 +16,8 @@ async function removeFriendRequest(frienshipId: number | null) {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${getCookie('access_token')}`,
-    }
-  })
+    },
+  });
 }
 
 export default function useFriendRequest() {

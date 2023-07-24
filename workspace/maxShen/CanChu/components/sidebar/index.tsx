@@ -7,6 +7,7 @@ import User from './User';
 import useProfile from '@/hooks/useProfile';
 import useGetPicture from '@/hooks/useGetPicture';
 import useFriends from '@/hooks/useFriends';
+import usePending from '@/hooks/usePending';
 
 function Sidebar() {
   const userCookie = getCookie('user')?.toString();
@@ -14,13 +15,18 @@ function Sidebar() {
   const profile = useProfile(user.id);
   const picture = useGetPicture(user.id);
   const friends = useFriends(user.id);
+  const pendings = usePending();
 
   return (
     <nav
       className="flex h-max w-96 flex-col gap-3 rounded-2xl border
         border-[#0000001A] bg-white p-5"
     >
-      <User picture={picture} text={profile?.name ? profile.name : ''} />
+      <User
+        picture={picture}
+        text={profile?.name ? profile.name : ''}
+        request={false}
+      />
       <div className="my-2 border-t border-t-[#D9D9D9]" />
       <div className="flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center">
@@ -30,8 +36,21 @@ function Sidebar() {
           我的好友
         </div>
       </div>
+      {pendings.map((pending) => (
+        <User
+          key={pending.id}
+          picture={pending.picture}
+          text={pending.name}
+          request
+        />
+      ))}
       {friends.map((friend) => (
-        <User key={friend.id} picture={friend.picture} text={friend.name} />
+        <User
+          key={friend.id}
+          picture={friend.picture}
+          text={friend.name}
+          request={false}
+        />
       ))}
       <div className="flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center">
