@@ -1,34 +1,32 @@
 import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
 
-import { getCookie } from 'cookies-next';
 import Navbar from '@/components/navbar';
-import { ProfileType } from '@/types';
+import { ProfileType, Relation } from '@/types';
 import Profilebar from '@/components/profilebar';
 import ProfileEditor from '@/components/profileEditor';
 import Footer from '@/components/footer';
 import PostCreator from '@/components/postCreator';
 import Feed from '@/components/feed';
+import useRelation from '@/hooks/useRelation';
 
 export default function ProfilePage({ profile }: { profile: ProfileType }) {
-  const userCookie = getCookie('user')?.toString();
-  const user = JSON.parse(userCookie || '{}');
-  const isUser = user.id === profile.id;
+  const relation = useRelation(profile);
 
   return (
     <>
       <Navbar />
-      <Profilebar profile={profile} edit={isUser} />
+      <Profilebar profile={profile} edit={relation === Relation.Self} />
       <div className="flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <ProfileEditor user={profile} editable={isUser} />
+          <ProfileEditor user={profile} relation={relation} />
           <div className="w-64">
             <Footer />
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          {isUser && <PostCreator />}
-          <Feed userId={profile.id} edit={isUser} />
+          {relation === Relation.Self && <PostCreator />}
+          <Feed userId={profile.id} edit={relation === Relation.Self} />
         </div>
       </div>
     </>

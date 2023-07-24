@@ -2,15 +2,16 @@ import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
 import useProfile from '@/hooks/useProfile';
-import { ProfileType } from '@/types';
+import { ProfileType, Relation } from '@/types';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
+import useFriendRequest from '@/hooks/useFriendRequest';
 
 interface Props {
   user: ProfileType | undefined;
-  editable: boolean;
+  relation: Relation;
 }
 
-function ProfileEditor({ user, editable }: Props) {
+function ProfileEditor({ user, relation }: Props) {
   const [edit, setEdit] = useState(false);
   const introductionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLTextAreaElement>(null);
@@ -18,6 +19,7 @@ function ProfileEditor({ user, editable }: Props) {
   const profile = useProfile(user?.id);
 
   const updateProfile = useUpdateProfile();
+  const [makeFriendRequest, removeFriendRequest] = useFriendRequest();
 
   async function handleSubmit() {
     if (
@@ -38,21 +40,48 @@ function ProfileEditor({ user, editable }: Props) {
     router.reload();
   }
 
+  let text = '';
+  if (relation === Relation.Self) {
+    text = '編輯個人檔案';
+  } else if (relation === Relation.Null) {
+    text = '邀請成為好友';
+  } else if (relation === Relation.Requested) {
+    text = '刪除好友邀請';
+  }
+
+  function handleClick() {
+    if (relation === Relation.Self) {
+      setEdit(true);
+    } else if (relation === Relation.Null) {
+      (async () => {
+        if (!user) {
+          return;
+        }
+        await makeFriendRequest(user.id);
+        router.reload();
+      })();
+    } else if (relation === Relation.Requested) {
+      (async () => {
+        if (!user?.friendship?.id) {
+          return;
+        }
+        await removeFriendRequest(user.friendship.id);
+        router.reload();
+      })();
+    }
+  }
+
   return (
     <div className="w-96 rounded-2xl border border-[#0000001A] bg-white px-4 py-6">
-      {editable && (
-        <button
-          type="button"
-          className={`h-10 w-full rounded-md text-white ${
-            edit ? 'bg-[#D3D3D3]' : 'bg-[#5458F7]'
-          }`}
-          onClick={() => {
-            setEdit(true);
-          }}
-        >
-          編輯個人檔案
-        </button>
-      )}
+      <button
+        type="button"
+        className={`h-10 w-full rounded-md text-white ${
+          edit ? 'bg-[#D3D3D3]' : 'bg-[#5458F7]'
+        }`}
+        onClick={handleClick}
+      >
+        {text}
+      </button>
       <div className="my-4 flex flex-col gap-4 px-3">
         <div className="flex flex-col gap-2">
           <div className="text-lg font-bold">自我介紹</div>

@@ -47,3 +47,11 @@ export interface UserSearchType {
   picture: string;
   friendship: FriendShipType | null;
 }
+
+export enum Relation {
+  Self,
+  Null,
+  Pending,
+  Requested,
+  Friend,
+}
