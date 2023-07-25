@@ -1,22 +1,20 @@
+import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useSWRConfig } from 'swr';
 import { getCookie } from 'cookies-next';
 import { useRef } from 'react';
 
-import { KeyedMutator } from 'swr';
 import useGetPicture from '@/hooks/useGetPicture';
 import useCreatePost from '@/hooks/useCreatePost';
 
-interface Props {
-  mutate: KeyedMutator<any>;
-}
-
-function PostCreator({ mutate }: Props) {
+function PostCreator() {
   const textRef = useRef<HTMLTextAreaElement>(null);
-
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const picture = useGetPicture(user.id);
   const createPost = useCreatePost();
+  const { mutate } = useSWRConfig();
+  const router = useRouter();
 
   return (
     <div
@@ -47,7 +45,13 @@ function PostCreator({ mutate }: Props) {
             if (textRef.current) {
               textRef.current.value = '';
             }
-            mutate();
+            if (router.query.id) {
+              mutate(
+                `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search?user_id=${router.query.id}`,
+              );
+            } else {
+              mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`);
+            }
           }}
         >
           發佈貼文

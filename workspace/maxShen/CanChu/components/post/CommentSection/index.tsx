@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { KeyedMutator } from 'swr';
 import Comment from './Comment';
 import CommentBar from './CommentBar';
 import { CommentType } from '@/types';
@@ -9,10 +8,9 @@ interface Props {
   postId: number;
   detail: boolean;
   url: string;
-  mutate: KeyedMutator<any>;
 }
 
-function CommentSection({ comments, postId, detail, url, mutate }: Props) {
+function CommentSection({ comments, postId, detail, url }: Props) {
   const content = (
     <>
       {detail &&
@@ -20,7 +18,7 @@ function CommentSection({ comments, postId, detail, url, mutate }: Props) {
         comments.map((comment) => (
           <Comment key={comment.id} comment={comment} />
         ))}
-      <CommentBar postId={postId} detail={detail} mutate={mutate} />
+      <CommentBar postId={postId} detail={detail} />
     </>
   );
 

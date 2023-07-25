@@ -12,7 +12,7 @@ interface Props {
 }
 
 function Feed({ userId, edit }: Props) {
-  const [mutate, posts] = usePosts(userId);
+  const posts = usePosts(userId);
 
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
@@ -20,7 +20,7 @@ function Feed({ userId, edit }: Props) {
 
   return (
     <>
-      {relation === Relation.Self && <PostCreator mutate={mutate} />}
+      {relation === Relation.Self && <PostCreator />}
       {posts === null || posts.length === 0 ? (
         <div className="w-[48rem] text-center">沒有新的貼文</div>
       ) : (

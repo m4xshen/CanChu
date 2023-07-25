@@ -1,4 +1,4 @@
-import useSWR, { KeyedMutator } from 'swr';
+import useSWR from 'swr';
 import { getCookie } from 'cookies-next';
 import { PostType } from '@/types';
 
@@ -13,20 +13,18 @@ async function fetcher(url: string) {
   return data;
 }
 
-export default function usePosts(
-  userId: number | null,
-): [KeyedMutator<any>, PostType[]] {
+export default function usePosts(userId: number | null): PostType[] {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
 
   const url = userId
     ? `${apiDomain}/posts/search?user_id=${userId}`
     : `${apiDomain}/posts/search`;
 
-  const { mutate, data, error, isLoading } = useSWR(url, fetcher);
+  const { data, error, isLoading } = useSWR(url, fetcher);
 
   if (isLoading || error) {
-    return [mutate, []];
+    return [];
   }
 
-  return [mutate, data?.data?.posts];
+  return data?.data?.posts;
 }

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { getCookie } from 'cookies-next';
 import { useRef } from 'react';
 
-import { KeyedMutator } from 'swr';
+import { useSWRConfig } from 'swr';
 import SendIcon from '../../icons/SendIcon';
 import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
@@ -11,15 +11,15 @@ import useCreateComment from '@/hooks/useCreateComment';
 interface Props {
   postId: number;
   detail: boolean;
-  mutate: KeyedMutator<any>;
 }
 
-export default function CommentBar({ postId, detail, mutate }: Props) {
+export default function CommentBar({ postId, detail }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
   const picture = useGetPicture(user.id);
+  const { mutate } = useSWRConfig();
 
   const createComment = useCreateComment();
 
@@ -43,7 +43,7 @@ export default function CommentBar({ postId, detail, mutate }: Props) {
       if (inputRef?.current?.value) {
         inputRef.current.value = '';
       }
-      mutate();
+      mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/${postId}`);
     })();
   }
 
