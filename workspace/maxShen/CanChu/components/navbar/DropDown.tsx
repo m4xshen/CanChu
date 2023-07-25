@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { deleteCookie } from 'cookies-next';
 import { NextRouter } from 'next/router';
+import { deleteCookie } from 'cookies-next';
 import { ProfileType } from '@/types';
 
 interface Props {
@@ -14,13 +14,13 @@ export default function DropDown({ profile, router }: Props) {
     <div className="absolute right-0 top-9 z-10">
       <div className="h-10 bg-transparent" />
       <nav
-        className="flex w-64 flex-col overflow-hidden
-                rounded-2xl border border-[#0000001A] bg-[#f6f6f6] drop-shadow-lg"
+        className="flex w-64 flex-col overflow-hidden rounded-2xl
+          border border-[#0000001A] bg-[#f6f6f6] drop-shadow-lg"
       >
         <div className="flex h-16 items-center bg-[#5458F7] text-white">
           <div
-            className="ml-4 flex h-9
-                    w-9 items-center justify-center rounded-full bg-white"
+            className="ml-4 flex h-9 w-9
+              items-center justify-center rounded-full bg-white"
           >
             <Image
               src="/purpleAvatar.png"
@@ -46,7 +46,7 @@ export default function DropDown({ profile, router }: Props) {
           onClick={() => {
             deleteCookie('access_token');
             deleteCookie('user');
-            router.reload();
+            router.push('/');
           }}
         >
           登出
