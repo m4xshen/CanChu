@@ -31,24 +31,17 @@ export default function InfoBar({ post, commentCount, url, detail }: Props) {
         className="flex h-14 items-center gap-2
           border-b border-t border-[#B7B7B7]"
       >
+        <button type="button" className="ml-2" onClick={toggleLike}>
+          {heart}
+        </button>
         {detail ? (
-          <>
-            <button type="button" className="ml-2" onClick={toggleLike}>
-              {heart}
-            </button>
-            <button type="button">
-              <CommentIcon />
-            </button>
-          </>
+          <button type="button">
+            <CommentIcon />
+          </button>
         ) : (
-          <>
-            <Link href={url} className="ml-2">
-              {heart}
-            </Link>
-            <Link href={url}>
-              <CommentIcon />
-            </Link>
-          </>
+          <Link href={url}>
+            <CommentIcon />
+          </Link>
         )}
       </div>
       <div
