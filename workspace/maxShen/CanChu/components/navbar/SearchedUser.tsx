@@ -8,7 +8,7 @@ interface Props {
   isLast: boolean;
 }
 
-export default function User({ user, isLast }: Props) {
+export default function SearchedUser({ user, isLast }: Props) {
   const { id } = user;
   const [picture, setPicture] = useState(user.picture);
 
