@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { KeyedMutator } from 'swr';
 import Content from './Content';
 import CommentSection from './CommentSection';
 import TitleBar from './TitleBar';
@@ -10,9 +11,10 @@ interface Props {
   post: PostType;
   detail: boolean;
   editable: boolean;
+  mutate: KeyedMutator<any>;
 }
 
-function Post({ post, detail, editable }: Props) {
+function Post({ post, detail, editable, mutate }: Props) {
   const [edit, setEdit] = useState(false);
   const url = `/posts/${post.id}`;
 
@@ -45,6 +47,7 @@ function Post({ post, detail, editable }: Props) {
           postId={post.id}
           detail={detail}
           url={url}
+          mutate={mutate}
         />
       </div>
     </div>

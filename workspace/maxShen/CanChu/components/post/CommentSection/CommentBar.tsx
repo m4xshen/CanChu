@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import { useRef } from 'react';
 
+import { KeyedMutator } from 'swr';
 import SendIcon from '../../icons/SendIcon';
 import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
@@ -11,12 +11,11 @@ import useCreateComment from '@/hooks/useCreateComment';
 interface Props {
   postId: number;
   detail: boolean;
+  mutate: KeyedMutator<any>;
 }
 
-export default function CommentBar({ postId, detail }: Props) {
+export default function CommentBar({ postId, detail, mutate }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
-
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
@@ -44,7 +43,7 @@ export default function CommentBar({ postId, detail }: Props) {
       if (inputRef?.current?.value) {
         inputRef.current.value = '';
       }
-      router.reload();
+      mutate();
     })();
   }
 
