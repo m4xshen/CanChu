@@ -1,9 +1,9 @@
-import { getCookie } from 'cookies-next';
 import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
 import usePosts from '@/hooks/usePosts';
 import useRelation from '@/hooks/useRelation';
 import { Relation } from '@/types';
+import useProfile from '@/hooks/useProfile';
 import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {
@@ -14,9 +14,8 @@ interface Props {
 function Feed({ userId, edit }: Props) {
   const posts = usePosts(userId);
 
-  const userCookie = getCookie('user')?.toString();
-  const user = JSON.parse(userCookie || '{}');
-  const relation = useRelation(user);
+  const profile = useProfile(userId);
+  const relation = useRelation(profile);
 
   return (
     <>
