@@ -13,7 +13,7 @@ interface Props {
 
 function Profilebar({ profile, edit }: Props) {
   const router = useRouter();
-  const picture = useGetPicture(profile?.id);
+  const picture = useGetPicture(profile);
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File>();
 

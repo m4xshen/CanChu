@@ -13,7 +13,7 @@ async function fetcher(url: string) {
   return data;
 }
 
-export default function usePosts(userId: number | null): PostType[] {
+export default function usePosts(userId: number | null | undefined): PostType[] {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
 
   const url = userId

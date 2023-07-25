@@ -13,7 +13,7 @@ function Sidebar() {
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
-  const picture = useGetPicture(user.id);
+  const picture = useGetPicture(user);
   const friends = useFriends(user.id);
   const pendings = usePending();
 

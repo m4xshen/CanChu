@@ -2,19 +2,16 @@ import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
 import usePosts from '@/hooks/usePosts';
 import useRelation from '@/hooks/useRelation';
-import { Relation } from '@/types';
-import useProfile from '@/hooks/useProfile';
+import { ProfileType, Relation } from '@/types';
 import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {
-  userId: number | null;
+  profile: ProfileType | null;
   edit: boolean;
 }
 
-function Feed({ userId, edit }: Props) {
-  const posts = usePosts(userId);
-
-  const profile = useProfile(userId);
+function Feed({ profile, edit }: Props) {
+  const posts = usePosts(profile?.id);
   const relation = useRelation(profile);
 
   return (

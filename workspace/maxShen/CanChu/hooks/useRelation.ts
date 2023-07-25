@@ -2,7 +2,7 @@ import { getCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { ProfileType, Relation } from '@/types';
 
-export default function useRelation(profile: ProfileType) {
+export default function useRelation(profile: ProfileType | null) {
   const [relation, setRelation] = useState<Relation>(Relation.Null);
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');

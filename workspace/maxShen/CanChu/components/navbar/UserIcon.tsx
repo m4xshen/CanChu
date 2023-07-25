@@ -14,8 +14,7 @@ export default function UserIcon() {
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
-  const picture = useGetPicture(user.id);
-
+  const picture = useGetPicture(profile);
   const router = useRouter();
 
   return (

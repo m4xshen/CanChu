@@ -11,7 +11,7 @@ function PostCreator() {
   const textRef = useRef<HTMLTextAreaElement>(null);
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
-  const picture = useGetPicture(user.id);
+  const picture = useGetPicture(user);
   const createPost = useCreatePost();
   const { mutate } = useSWRConfig();
   const router = useRouter();

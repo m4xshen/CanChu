@@ -18,7 +18,7 @@ export default function CommentBar({ postId, detail }: Props) {
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
-  const picture = useGetPicture(user.id);
+  const picture = useGetPicture(user);
   const { mutate } = useSWRConfig();
 
   const createComment = useCreateComment();

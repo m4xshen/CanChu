@@ -1,11 +1,15 @@
 import nookies from 'nookies';
 import { NextPageContext } from 'next';
+import { getCookie } from 'cookies-next';
 import Navbar from '@/components/navbar';
 import Sidebar from '@/components/sidebar';
 import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 
 function Home() {
+  const userCookie = getCookie('user')?.toString();
+  const user = JSON.parse(userCookie || '{}');
+
   return (
     <>
       <Navbar />
@@ -17,7 +21,7 @@ function Home() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <Feed userId={null} edit={false} />
+          <Feed profile={user} edit={false} />
         </div>
       </div>
     </>

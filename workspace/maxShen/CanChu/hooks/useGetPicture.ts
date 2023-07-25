@@ -1,11 +1,6 @@
-import useProfile from './useProfile';
+import { ProfileType } from '@/types';
 
-export default function useGetPicture(userId: number | undefined | null) {
-  if (!userId) {
-    return '/avatar.png';
-  }
-
-  const profile = useProfile(userId);
+export default function useGetPicture(profile: ProfileType | undefined | null) {
   if (!profile?.picture) {
     return '/avatar.png';
   }

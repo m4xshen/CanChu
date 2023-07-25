@@ -1,27 +1,30 @@
-import { useRouter } from 'next/router';
+import { useSWRConfig } from 'swr';
 import { useRef, useState } from 'react';
 
-import useProfile from '@/hooks/useProfile';
 import { ProfileType, Relation } from '@/types';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import MainButton from './MainButton';
 
 interface Props {
-  user: ProfileType | undefined;
+  profile: ProfileType | undefined;
   relation: Relation;
 }
 
-function ProfileEditor({ user, relation }: Props) {
+function ProfileEditor({ profile, relation }: Props) {
   const [edit, setEdit] = useState(false);
   const introductionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLTextAreaElement>(null);
-  const router = useRouter();
-  const profile = useProfile(user?.id);
+  const { mutate } = useSWRConfig();
 
   const updateProfile = useUpdateProfile();
 
   async function handleSubmit() {
-    if (!profile?.name || !introductionRef?.current || !tagsRef.current) {
+    if (
+      !profile?.id ||
+      !profile?.name ||
+      !introductionRef?.current ||
+      !tagsRef.current
+    ) {
       return;
     }
 
@@ -32,7 +35,7 @@ function ProfileEditor({ user, relation }: Props) {
     );
 
     setEdit(false);
-    router.reload();
+    mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${profile.id}/profile`);
   }
 
   return (
@@ -41,7 +44,7 @@ function ProfileEditor({ user, relation }: Props) {
         edit={edit}
         setEdit={setEdit}
         relation={relation}
-        user={user}
+        user={profile}
       />
       <div className="my-4 flex flex-col gap-4 px-3">
         <div className="flex flex-col gap-2">
@@ -50,10 +53,10 @@ function ProfileEditor({ user, relation }: Props) {
             <textarea
               ref={introductionRef}
               className="resize-none rounded-lg border border-[#BFBFBF] bg-[#F0F2F5] p-3"
-              defaultValue={user?.introduction ? user.introduction : ''}
+              defaultValue={profile?.introduction ? profile.introduction : ''}
             />
           ) : (
-            <p>{user?.introduction ? user.introduction : ''}</p>
+            <p>{profile?.introduction ? profile.introduction : ''}</p>
           )}
         </div>
         <div className="flex flex-col gap-2">
@@ -63,12 +66,12 @@ function ProfileEditor({ user, relation }: Props) {
             <textarea
               ref={tagsRef}
               className="resize-none rounded-lg border border-[#BFBFBF] bg-[#F0F2F5] p-3"
-              defaultValue={user?.tags ? user.tags : ''}
+              defaultValue={profile?.tags ? profile.tags : ''}
             />
           ) : (
             <div className="flex flex-wrap gap-1">
-              {user?.tags !== '' &&
-                user?.tags?.split(',').map((tag) => (
+              {profile?.tags !== '' &&
+                profile?.tags?.split(',').map((tag) => (
                   <div
                     key={tag}
                     className="rounded-xl border border-black px-3"
