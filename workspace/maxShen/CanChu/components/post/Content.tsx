@@ -1,3 +1,4 @@
+import { useSWRConfig } from 'swr';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 
@@ -14,6 +15,7 @@ function Content({ post, edit, setEdit }: Props) {
   const router = useRouter();
   const updatePost = useUpdatePost();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { mutate } = useSWRConfig();
 
   if (edit) {
     return (
@@ -21,7 +23,7 @@ function Content({ post, edit, setEdit }: Props) {
         <textarea
           ref={textareaRef}
           className="mb-3 mt-4 w-full resize-none rounded-lg
-              border border-[#BFBFBF] bg-[#F0F2F5] p-3"
+            border border-[#BFBFBF] bg-[#F0F2F5] p-3"
           defaultValue={post.context || ''}
         />
         <div className="mb-4 flex gap-4">
@@ -34,7 +36,13 @@ function Content({ post, edit, setEdit }: Props) {
                 return;
               }
               await updatePost(textareaRef?.current?.value, post.id);
-              router.reload();
+              if (router.query.id) {
+                mutate(
+                  `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search?user_id=${router.query.id}`,
+                );
+              } else {
+                mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`);
+              }
             }}
           >
             確認

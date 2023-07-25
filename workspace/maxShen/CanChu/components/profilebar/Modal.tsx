@@ -2,18 +2,21 @@ import AvatarEditor from 'react-avatar-editor';
 import { useRef } from 'react';
 
 import { NextRouter } from 'next/router';
+import { useSWRConfig } from 'swr';
 import CloseIcon from '../icons/CloseIcon';
 import useUpdatePicture from '@/hooks/useUpdatePicture';
 
 interface Props {
+  userId: number | null | undefined;
   file: File;
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
   router: NextRouter;
 }
 
-export default function Modal({ file, setFile, router }: Props) {
+export default function Modal({ userId, file, setFile, router }: Props) {
   const updatePicture = useUpdatePicture();
   const editor = useRef<AvatarEditor>(null);
+  const { mutate } = useSWRConfig();
 
   return (
     <>
@@ -66,7 +69,17 @@ export default function Modal({ file, setFile, router }: Props) {
                 return;
               }
 
-              router.reload();
+              mutate(
+                `${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${userId}/profile`,
+              );
+              if (router.query.id) {
+                mutate(
+                  `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search?user_id=${router.query.id}`,
+                );
+              } else {
+                mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`);
+              }
+              setFile(undefined);
             });
           }}
         >

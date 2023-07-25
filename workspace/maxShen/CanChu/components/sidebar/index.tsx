@@ -23,6 +23,7 @@ function Sidebar() {
         border-[#0000001A] bg-white p-5"
     >
       <User
+        id={user.id}
         picture={picture}
         text={profile?.name ? profile.name : ''}
         request={false}

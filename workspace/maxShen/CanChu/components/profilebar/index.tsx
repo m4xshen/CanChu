@@ -28,7 +28,7 @@ function Profilebar({ profile, edit }: Props) {
 
   return (
     <>
-      {file && <Modal file={file} setFile={setFile} router={router} />}
+      {file && <Modal userId={profile?.id} file={file} setFile={setFile} router={router} />}
       <div className="mb-6 flex h-[23rem] flex-col bg-white px-32">
         <div className="flex h-72 items-center gap-11 border-b border-[#C8C8C8]">
           <form
