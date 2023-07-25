@@ -9,7 +9,7 @@ export default function usePending() {
   useEffect(() => {
     (async () => {
       const res = await fetch(`${apiDomain}/friends/pending`, {
-        method: 'GEt',
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${getCookie('access_token')}`,
         },

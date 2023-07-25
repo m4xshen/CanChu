@@ -9,7 +9,7 @@ export default function useFriends(userId: number | null) {
   useEffect(() => {
     (async () => {
       const res = await fetch(`${apiDomain}/friends`, {
-        method: 'GEt',
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${getCookie('access_token')}`,
         },
