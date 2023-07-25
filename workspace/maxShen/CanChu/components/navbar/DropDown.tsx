@@ -45,6 +45,7 @@ export default function DropDown({ profile, router }: Props) {
           className="flex h-16 items-center pl-6 text-xl"
           onClick={() => {
             deleteCookie('access_token');
+            deleteCookie('user');
             router.reload();
           }}
         >

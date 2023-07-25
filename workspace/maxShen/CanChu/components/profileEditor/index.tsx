@@ -1,12 +1,10 @@
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import useProfile from '@/hooks/useProfile';
 import { ProfileType, Relation } from '@/types';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
-import useFriendRequest from '@/hooks/useFriendRequest';
-import useDeleteFriendship from '@/hooks/useDeleteFriendship';
-import useAgreeFriendship from '@/hooks/useAgreeFriendship';
+import MainButton from './MainButton';
 
 interface Props {
   user: ProfileType | undefined;
@@ -21,31 +19,9 @@ function ProfileEditor({ user, relation }: Props) {
   const profile = useProfile(user?.id);
 
   const updateProfile = useUpdateProfile();
-  const [makeFriendRequest, removeFriendRequest] = useFriendRequest();
-  const agreeFriendship = useAgreeFriendship();
-  const deleteFriendship = useDeleteFriendship();
-
-  const [text, setText] = useState('');
-  useEffect(() => {
-    if (relation === Relation.Self) {
-      setText('編輯個人檔案');
-    } else if (relation === Relation.Null) {
-      setText('邀請成為好友');
-    } else if (relation === Relation.Requested) {
-      setText('刪除好友邀請');
-    } else if (relation === Relation.Friend) {
-      setText('刪除好友');
-    } else if (relation === Relation.Pending) {
-      setText('接受好友邀請');
-    }
-  }, [relation]);
 
   async function handleSubmit() {
-    if (
-      !profile?.name ||
-      !introductionRef?.current ||
-      !tagsRef.current?.value
-    ) {
+    if (!profile?.name || !introductionRef?.current || !tagsRef.current) {
       return;
     }
 
@@ -59,48 +35,14 @@ function ProfileEditor({ user, relation }: Props) {
     router.reload();
   }
 
-  async function handleClick() {
-    if (relation === Relation.Self) {
-      setEdit(true);
-      return;
-    }
-
-    if (!user?.id) {
-      return;
-    }
-
-    if (relation === Relation.Null) {
-      await makeFriendRequest(user.id);
-      router.reload();
-    }
-
-    if (!user?.friendship?.id) {
-      return;
-    }
-
-    if (relation === Relation.Requested) {
-      await removeFriendRequest(user.friendship.id);
-      router.reload();
-    } else if (relation === Relation.Friend) {
-      await deleteFriendship(user.friendship.id);
-      router.reload();
-    } else if (relation === Relation.Pending) {
-      await agreeFriendship(user.friendship.id);
-      router.reload();
-    }
-  }
-
   return (
     <div className="w-96 rounded-2xl border border-[#0000001A] bg-white px-4 py-6">
-      <button
-        type="button"
-        className={`h-10 w-full rounded-md text-white ${
-          edit ? 'bg-[#D3D3D3]' : 'bg-[#5458F7]'
-        }`}
-        onClick={handleClick}
-      >
-        {text}
-      </button>
+      <MainButton
+        edit={edit}
+        setEdit={setEdit}
+        relation={relation}
+        user={user}
+      />
       <div className="my-4 flex flex-col gap-4 px-3">
         <div className="flex flex-col gap-2">
           <div className="text-lg font-bold">自我介紹</div>
