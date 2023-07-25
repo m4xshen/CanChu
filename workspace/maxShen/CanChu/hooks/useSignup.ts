@@ -17,14 +17,5 @@ async function signup(name: string, email: string, password: string) {
 }
 
 export default function useSignup() {
-  const wrappedSignup = async (
-    name: string,
-    email: string,
-    password: string,
-  ) => {
-    const res = await signup(name, email, password);
-    return res;
-  };
-
-  return wrappedSignup;
+  return signup;
 }

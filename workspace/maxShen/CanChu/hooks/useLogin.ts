@@ -16,10 +16,5 @@ async function login(email: string, password: string) {
 }
 
 export default function useLogin() {
-  const wrappedLogin = async (email: string, password: string) => {
-    const res = await login(email, password);
-    return res;
-  };
-
-  return wrappedLogin;
+  return login;
 }
