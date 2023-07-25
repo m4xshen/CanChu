@@ -6,7 +6,6 @@ import { ProfileType, Relation } from '@/types';
 import Profilebar from '@/components/profilebar';
 import ProfileEditor from '@/components/profileEditor';
 import Footer from '@/components/footer';
-import PostCreator from '@/components/postCreator';
 import Feed from '@/components/feed';
 import useRelation from '@/hooks/useRelation';
 
@@ -25,7 +24,6 @@ export default function ProfilePage({ profile }: { profile: ProfileType }) {
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          {relation === Relation.Self && <PostCreator />}
           <Feed userId={profile.id} edit={relation === Relation.Self} />
         </div>
       </div>

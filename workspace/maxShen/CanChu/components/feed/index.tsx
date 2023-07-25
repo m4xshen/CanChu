@@ -1,6 +1,10 @@
+import { getCookie } from 'cookies-next';
+import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
-import LoadingIcon from '../icons/LoadingIcon';
 import usePosts from '@/hooks/usePosts';
+import useRelation from '@/hooks/useRelation';
+import { Relation } from '@/types';
+import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {
   userId: number | null;
@@ -8,11 +12,16 @@ interface Props {
 }
 
 function Feed({ userId, edit }: Props) {
-  const posts = usePosts(userId);
+  const [mutate, posts] = usePosts(userId);
+
+  const userCookie = getCookie('user')?.toString();
+  const user = JSON.parse(userCookie || '{}');
+  const relation = useRelation(user);
 
   return (
     <>
-      {posts.length === 0 ? (
+      {relation === Relation.Self && <PostCreator mutate={mutate} />}
+      {posts === null || posts.length === 0 ? (
         <div className="w-[48rem] text-center">沒有新的貼文</div>
       ) : (
         posts.map((post) => (

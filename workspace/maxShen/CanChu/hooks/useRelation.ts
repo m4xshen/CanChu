@@ -8,6 +8,10 @@ export default function useRelation(profile: ProfileType) {
   const user = JSON.parse(userCookie || '{}');
 
   useEffect(() => {
+    if (!profile) {
+      return;
+    }
+
     if (user.id === profile.id) {
       setRelation(Relation.Self);
     } else if (profile.friendship?.status === undefined) {

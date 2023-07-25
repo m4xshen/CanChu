@@ -2,7 +2,6 @@ import nookies from 'nookies';
 import { NextPageContext } from 'next';
 import Navbar from '@/components/navbar';
 import Sidebar from '@/components/sidebar';
-import PostCreator from '@/components/postCreator';
 import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 
@@ -18,7 +17,6 @@ function Home() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <PostCreator />
           <Feed userId={null} edit={false} />
         </div>
       </div>
