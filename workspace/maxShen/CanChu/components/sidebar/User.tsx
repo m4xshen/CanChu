@@ -4,7 +4,6 @@ import Link from 'next/link';
 import useAgreeFriendship from '@/hooks/useAgreeFriendship';
 import useDeleteFriendship from '@/hooks/useDeleteFriendship';
 
-// FIX optional parameter
 interface Props {
   id?: number;
   picture: string;
@@ -67,5 +66,10 @@ function User({ id, picture, text, request, friendshipId }: Props) {
     </div>
   );
 }
+
+User.defaultProps = {
+  id: 0,
+  friendshipId: 0,
+};
 
 export default User;
