@@ -17,7 +17,7 @@ export default function InfoBar({ post, commentCount, url, detail }: Props) {
   const [isLiked, likeCount, toggleLike] = useLike(post);
   const throttle = useThrottle();
 
-  const heart = (
+  const heartIcon = (
     <div>
       {isLiked ? (
         <Image src="/heart.png" width={28} height={28} alt="heart icon" />
@@ -40,7 +40,7 @@ export default function InfoBar({ post, commentCount, url, detail }: Props) {
             throttle(toggleLike);
           }}
         >
-          {heart}
+          {heartIcon}
         </button>
         {detail ? (
           <button type="button">

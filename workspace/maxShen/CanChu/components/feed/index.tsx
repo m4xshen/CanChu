@@ -8,10 +8,10 @@ import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {
   profile: ProfileType | null;
-  edit: boolean;
+  editable: boolean;
 }
 
-function Feed({ profile, edit }: Props) {
+function Feed({ profile, editable }: Props) {
   const relation = useRelation(profile);
   const router = useRouter();
   const isHomePage = router.query.id === undefined;
@@ -26,7 +26,12 @@ function Feed({ profile, edit }: Props) {
       ) : (
         <>
           {posts.map((post) => (
-            <Post key={post.id} post={post} detail={false} editable={edit} />
+            <Post
+              key={post.id}
+              post={post}
+              detail={false}
+              editable={editable}
+            />
           ))}
           <LoadingIcon />
         </>

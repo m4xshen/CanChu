@@ -48,9 +48,9 @@ function PostCreator() {
               textRef.current.value = '';
             }
 
-            const url = router.query.id
-              ? `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search?user_id=${router.query.id}`
-              : `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`;
+            const url = `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search${
+              router.query.id ? `?user_id=${router.query.id}` : ''
+            }`;
             mutate(url);
           }}
         >

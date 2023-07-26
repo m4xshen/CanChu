@@ -17,6 +17,19 @@ function Content({ post, edit, setEdit }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { mutate } = useSWRConfig();
 
+  async function handleConfirm() {
+    setEdit(false);
+    if (!textareaRef?.current?.value) {
+      return;
+    }
+
+    await updatePost(textareaRef?.current?.value, post.id);
+    const url = `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search${
+      router.query.id ? `?user_id=${router.query.id}` : ''
+    }`;
+    mutate(url);
+  }
+
   if (edit) {
     return (
       <>
@@ -24,26 +37,13 @@ function Content({ post, edit, setEdit }: Props) {
           ref={textareaRef}
           className="mb-3 mt-4 w-full resize-none rounded-lg
             border border-[#BFBFBF] bg-[#F0F2F5] p-3"
-          defaultValue={post.context || ''}
+          defaultValue={post.context ?? ''}
         />
         <div className="mb-4 flex gap-4">
           <button
             type="submit"
             className="rounded-md bg-[#5458F7] px-7 py-2 font-bold text-white"
-            onClick={async () => {
-              setEdit(false);
-              if (!textareaRef?.current?.value) {
-                return;
-              }
-              await updatePost(textareaRef?.current?.value, post.id);
-              if (router.query.id) {
-                mutate(
-                  `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search?user_id=${router.query.id}`,
-                );
-              } else {
-                mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`);
-              }
-            }}
+            onClick={handleConfirm}
           >
             確認
           </button>
