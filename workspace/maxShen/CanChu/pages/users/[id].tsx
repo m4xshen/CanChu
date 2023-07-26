@@ -1,6 +1,9 @@
 import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
 
+import { getCookie } from 'cookies-next';
+import { SWRConfig } from 'swr';
+import { useRouter } from 'next/router';
 import Navbar from '@/components/navbar';
 import { Relation } from '@/types';
 import Profilebar from '@/components/profilebar';
@@ -9,13 +12,22 @@ import Footer from '@/components/footer';
 import Feed from '@/components/feed';
 import useRelation from '@/hooks/useRelation';
 import useProfile from '@/hooks/useProfile';
+import { fetcher } from '@/utils';
 
 export default function ProfilePage({ id }: { id: number }) {
   const profile = useProfile(id);
   const relation = useRelation(profile);
+  const router = useRouter();
 
   return (
-    <>
+    <SWRConfig
+      value={{
+        fetcher,
+        onError: () => {
+          router.reload();
+        },
+      }}
+    >
       <Navbar />
       <Profilebar profile={profile} edit={relation === Relation.Self} />
       <div className="flex justify-center gap-8">
@@ -29,7 +41,7 @@ export default function ProfilePage({ id }: { id: number }) {
           <Feed profile={profile} editable={relation === Relation.Self} />
         </div>
       </div>
-    </>
+    </SWRConfig>
   );
 }
 

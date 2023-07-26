@@ -1,20 +1,31 @@
 import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
 
+import { SWRConfig } from 'swr';
+import { useRouter } from 'next/router';
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
 import usePost from '@/hooks/usePost';
+import { fetcher } from '@/utils';
 
 export default function DetailPage({ id }: { id: number }) {
+  const router = useRouter();
   const post = usePost(id);
 
   return (
-    <>
+    <SWRConfig
+      value={{
+        fetcher,
+        onError: () => {
+          router.reload();
+        },
+      }}
+    >
       <Navbar />
       <div className="my-6">
         {post && <Post key={post.id} post={post} detail editable={false} />}
       </div>
-    </>
+    </SWRConfig>
   );
 }
 

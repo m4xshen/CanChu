@@ -1,18 +1,30 @@
-import nookies from 'nookies';
 import { NextPageContext } from 'next';
+import nookies from 'nookies';
 import { getCookie } from 'cookies-next';
+import { SWRConfig } from 'swr';
+import { useRouter } from 'next/router';
+
 import Navbar from '@/components/navbar';
 import Sidebar from '@/components/sidebar';
 import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 import useProfile from '@/hooks/useProfile';
+import { fetcher } from '@/utils';
 
 function Home() {
   const userId = parseInt(getCookie('user_id') as string, 10);
   const profile = useProfile(userId);
+  const router = useRouter();
 
   return (
-    <>
+    <SWRConfig
+      value={{
+        fetcher,
+        onError: () => {
+          router.reload();
+        },
+      }}
+    >
       <Navbar />
       <div className="mt-6 flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
@@ -25,7 +37,7 @@ function Home() {
           <Feed profile={profile} editable={false} />
         </div>
       </div>
-    </>
+    </SWRConfig>
   );
 }
 

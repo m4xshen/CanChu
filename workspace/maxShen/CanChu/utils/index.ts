@@ -1,3 +1,6 @@
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
+
 export default function getDisplayTime(date: string | null) {
   // return an empty string if the date is invalid
   if (date === null || Number.isNaN(new Date(date).getTime())) {
@@ -20,5 +23,20 @@ export default function getDisplayTime(date: string | null) {
     return `${Math.trunc(delta / 60).toString()} 分鐘前`;
   }
   return '剛剛';
-  // return `${Math.trunc(delta).toString()} 秒前`;
+}
+
+export async function fetcher(url: string) {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${getCookie('access_token')}`,
+    },
+  });
+
+  if (res.status === 403) {
+    throw new Error();
+  }
+
+  const data = await res.json();
+  return data;
 }

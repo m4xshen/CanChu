@@ -1,22 +1,6 @@
-import { getCookie } from 'cookies-next';
 import useSWR from 'swr';
 import { PostType } from '@/types';
-
-async function fetcher(url: string) {
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${getCookie('access_token')}`,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch');
-  }
-
-  const data = await res.json();
-  return data;
-}
+import { fetcher } from '@/utils';
 
 export default function usePost(id: number): PostType | null {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
