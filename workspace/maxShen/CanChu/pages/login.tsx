@@ -9,6 +9,11 @@ import useSignup from '@/hooks/useSignup';
 import useLogin from '@/hooks/useLogin';
 import Footer from '@/components/footer';
 
+enum AccountState {
+  LoggingIn,
+  SigningUp,
+}
+
 const pattaya = Pattaya({
   weight: '400',
   subsets: ['cyrillic'],
@@ -16,9 +21,7 @@ const pattaya = Pattaya({
 
 function LoginSignupPage() {
   const router = useRouter();
-
-  const [loggingIn, setLoggingIn] = useState(true);
-
+  const [accountState, setAccountState] = useState(AccountState.LoggingIn);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -61,7 +64,7 @@ function LoginSignupPage() {
 
     if (res.ok) {
       // go back to login page
-      setLoggingIn(true);
+      setAccountState(AccountState.LoggingIn);
       emailRef.current?.form?.reset();
     } else if (res.status === 403) {
       alert('email已經使用過');
@@ -71,7 +74,7 @@ function LoginSignupPage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (loggingIn) {
+    if (accountState === AccountState.LoggingIn) {
       handleLogin();
     } else if (passwordRef.current?.value !== passwordCheckRef.current?.value) {
       alert('密碼不一致');
@@ -85,20 +88,20 @@ function LoginSignupPage() {
       <div className="flex w-[56rem] overflow-hidden rounded-3xl border border-[#0000001A] bg-white">
         <div
           className={`w-2/3 ${
-            loggingIn ? 'pb-28' : 'pb-11'
+            accountState === AccountState.LoggingIn ? 'pb-28' : 'pb-11'
           } flex flex-col items-center`}
         >
           <h1 className={`mt-20 text-[#7763FB] text-6xl ${pattaya.className}`}>
             CanChu
           </h1>
           <div className="mt-10 text-4xl font-extralight">
-            {loggingIn ? '會員登入' : '會員註冊'}
+            {accountState === AccountState.LoggingIn ? '會員登入' : '會員註冊'}
           </div>
           <form
             className="flex flex-col items-center"
             onSubmit={(e) => handleSubmit(e)}
           >
-            {!loggingIn && (
+            {accountState === AccountState.SigningUp && (
               <label className="mt-8 flex flex-col gap-2">
                 使用者名稱
                 <input
@@ -132,7 +135,7 @@ function LoginSignupPage() {
                 required
               />
             </label>
-            {!loggingIn && (
+            {accountState === AccountState.SigningUp && (
               <label className="mt-8 flex flex-col gap-2">
                 再次輸入密碼
                 <input
@@ -148,20 +151,28 @@ function LoginSignupPage() {
               type="submit"
               className="mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white"
             >
-              {loggingIn ? '登入' : '註冊'}
+              {accountState === AccountState.LoggingIn ? '登入' : '註冊'}
             </button>
           </form>
           <div className="mt-2">
-            {loggingIn ? '尚未成為會員？' : '已經是會員了? '}
+            {accountState === AccountState.LoggingIn
+              ? '尚未成為會員？'
+              : '已經是會員了? '}
             <button
               type="button"
               className="text-[#5458F7]"
               onClick={() => {
-                setLoggingIn(!loggingIn);
+                if (accountState === AccountState.SigningUp) {
+                  setAccountState(AccountState.LoggingIn);
+                } else {
+                  setAccountState(AccountState.SigningUp);
+                }
                 emailRef.current?.form?.reset();
               }}
             >
-              {loggingIn ? '會員註冊 ' : '會員登入'}
+              {accountState === AccountState.LoggingIn
+                ? '會員註冊 '
+                : '會員登入'}
             </button>
           </div>
         </div>
