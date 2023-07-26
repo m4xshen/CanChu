@@ -52,7 +52,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
   return {
     props: {
-      id: ctx.params.id
+      id: ctx.params.id,
     },
   };
 }

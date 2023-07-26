@@ -4,6 +4,7 @@ import CommentIcon from '../icons/CommentIcon';
 import HeartIcon from '../icons/HeartIcon';
 import useLike from '@/hooks/useLike';
 import { PostType } from '@/types';
+import useThrottle from '@/hooks/useThrottle';
 
 interface Props {
   post: PostType;
@@ -14,6 +15,7 @@ interface Props {
 
 export default function InfoBar({ post, commentCount, url, detail }: Props) {
   const [isLiked, likeCount, toggleLike] = useLike(post);
+  const throttle = useThrottle();
 
   const heart = (
     <div>
@@ -31,7 +33,13 @@ export default function InfoBar({ post, commentCount, url, detail }: Props) {
         className="flex h-14 items-center gap-2
           border-b border-t border-[#B7B7B7]"
       >
-        <button type="button" className="ml-2" onClick={toggleLike}>
+        <button
+          type="button"
+          className="ml-2"
+          onClick={() => {
+            throttle(toggleLike);
+          }}
+        >
           {heart}
         </button>
         {detail ? (
