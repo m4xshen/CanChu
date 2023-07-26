@@ -1,1 +1,3 @@
-Max Shen
+# CanChu
+
+A social media website.
