@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
 import usePosts from '@/hooks/usePosts';
@@ -11,8 +12,10 @@ interface Props {
 }
 
 function Feed({ profile, edit }: Props) {
-  const posts = usePosts(profile?.id);
   const relation = useRelation(profile);
+  const router = useRouter();
+  const isHomePage = router.query.id === undefined;
+  const posts = usePosts(isHomePage ? null : profile?.id);
 
   return (
     <>

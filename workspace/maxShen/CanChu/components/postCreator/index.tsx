@@ -45,13 +45,11 @@ function PostCreator() {
             if (textRef.current) {
               textRef.current.value = '';
             }
-            if (router.query.id) {
-              mutate(
-                `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search?user_id=${router.query.id}`,
-              );
-            } else {
-              mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`);
-            }
+
+            const url = router.query.id
+              ? `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search?user_id=${router.query.id}`
+              : `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`;
+            mutate(url);
           }}
         >
           發佈貼文

@@ -13,8 +13,9 @@ function Sidebar() {
   const userCookie = getCookie('user')?.toString();
   const user = JSON.parse(userCookie || '{}');
   const profile = useProfile(user.id);
-  const picture = useGetPicture(user);
-  const friends = useFriends(user.id);
+
+  const picture = useGetPicture(profile);
+  const friends = useFriends(profile);
   const pendings = usePending();
 
   return (
