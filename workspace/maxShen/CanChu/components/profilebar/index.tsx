@@ -46,7 +46,19 @@ function Profilebar({ profile, edit }: Props) {
                 return;
               }
 
-              inputRef?.current?.addEventListener('change', (e: Event) => {
+              // trigger the file browser
+              inputRef.current?.click();
+              if (inputRef.current?.value) {
+                inputRef.current.value = '';
+              }
+            }}
+          >
+            <input
+              ref={inputRef}
+              type="file"
+              accept="image/png, image/jpeg, image/jpg"
+              className="hidden"
+              onChange={(e) => {
                 const target = e.target as HTMLInputElement;
                 const { files } = target;
 
@@ -55,17 +67,7 @@ function Profilebar({ profile, edit }: Props) {
                 }
 
                 setFile(files[0]);
-              });
-
-              // trigger the file browser
-              inputRef.current?.click();
-            }}
-          >
-            <input
-              ref={inputRef}
-              type="file"
-              accept="image/png, image/jpeg, image/jpg"
-              className="hidden"
+              }}
             />
             <button type="submit" className={`group ${!edit && 'cursor-auto'}`}>
               <div className="relative ml-7 h-44 w-44 shrink-0 overflow-hidden rounded-full">
