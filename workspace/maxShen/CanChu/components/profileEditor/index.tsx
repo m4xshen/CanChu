@@ -28,14 +28,14 @@ function ProfileEditor({ profile, relation }: Props) {
       return;
     }
 
-    updateProfile(
+    await updateProfile(
       profile?.name,
       introductionRef?.current?.value,
       tagsRef?.current?.value,
     );
 
-    setEdit(false);
     mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${profile.id}/profile`);
+    setEdit(false);
   }
 
   return (
