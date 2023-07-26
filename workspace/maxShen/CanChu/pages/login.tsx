@@ -37,8 +37,8 @@ function LoginSignupPage() {
     if (res.ok) {
       const data = await res.json();
       setCookie('access_token', data.data.access_token, { maxAge: 3600 });
-      setCookie('user', data.data.user, { maxAge: 3600 });
-      router.reload();
+      setCookie('user_id', data.data.user.id, { maxAge: 3600 });
+      router.push('/');
     } else if (res.status === 403) {
       alert('電子郵件或密碼錯誤');
     }

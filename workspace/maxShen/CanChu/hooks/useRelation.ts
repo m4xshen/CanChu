@@ -4,15 +4,14 @@ import { ProfileType, Relation } from '@/types';
 
 export default function useRelation(profile: ProfileType | null) {
   const [relation, setRelation] = useState<Relation>(Relation.Null);
-  const userCookie = getCookie('user')?.toString();
-  const user = JSON.parse(userCookie || '{}');
+  const userId = parseInt(getCookie('user_id') as string, 10);
 
   useEffect(() => {
     if (!profile) {
       return;
     }
 
-    if (user.id === profile.id) {
+    if (userId === profile.id) {
       setRelation(Relation.Self);
     } else if (profile.friendship?.status === undefined) {
       setRelation(Relation.Null);

@@ -10,9 +10,8 @@ import useFriends from '@/hooks/useFriends';
 import usePending from '@/hooks/usePending';
 
 function Sidebar() {
-  const userCookie = getCookie('user')?.toString();
-  const user = JSON.parse(userCookie || '{}');
-  const profile = useProfile(user.id);
+  const userId = parseInt(getCookie('user_id') as string, 10);
+  const profile = useProfile(userId);
 
   const picture = useGetPicture(profile);
   const friends = useFriends(profile);
@@ -24,7 +23,7 @@ function Sidebar() {
         border-[#0000001A] bg-white p-5"
     >
       <User
-        id={user.id}
+        id={userId}
         picture={picture}
         text={profile?.name ? profile.name : ''}
         request={false}

@@ -6,12 +6,14 @@ import { useRef } from 'react';
 
 import useGetPicture from '@/hooks/useGetPicture';
 import useCreatePost from '@/hooks/useCreatePost';
+import useProfile from '@/hooks/useProfile';
 
 function PostCreator() {
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const userCookie = getCookie('user')?.toString();
-  const user = JSON.parse(userCookie || '{}');
-  const picture = useGetPicture(user);
+
+  const userId = parseInt(getCookie('user_id') as string, 10);
+  const profile = useProfile(userId);
+  const picture = useGetPicture(profile);
   const createPost = useCreatePost();
   const { mutate } = useSWRConfig();
   const router = useRouter();

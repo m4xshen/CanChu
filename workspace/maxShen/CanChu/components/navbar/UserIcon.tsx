@@ -11,9 +11,8 @@ import useProfile from '@/hooks/useProfile';
 export default function UserIcon() {
   const [displayDropDown, setDisplayDropDown] = useState(false);
 
-  const userCookie = getCookie('user')?.toString();
-  const user = JSON.parse(userCookie || '{}');
-  const profile = useProfile(user.id);
+  const userId = parseInt(getCookie('user_id') as string, 10);
+  const profile = useProfile(userId);
   const picture = useGetPicture(profile);
   const router = useRouter();
 

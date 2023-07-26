@@ -5,10 +5,11 @@ import Navbar from '@/components/navbar';
 import Sidebar from '@/components/sidebar';
 import Feed from '@/components/feed';
 import Footer from '@/components/footer';
+import useProfile from '@/hooks/useProfile';
 
 function Home() {
-  const userCookie = getCookie('user')?.toString();
-  const user = JSON.parse(userCookie || '{}');
+  const userId = parseInt(getCookie('user_id') as string, 10);
+  const profile = useProfile(userId);
 
   return (
     <>
@@ -21,7 +22,7 @@ function Home() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <Feed profile={user} edit={false} />
+          <Feed profile={profile} edit={false} />
         </div>
       </div>
     </>
