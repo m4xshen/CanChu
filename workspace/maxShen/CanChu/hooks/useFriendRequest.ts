@@ -1,7 +1,6 @@
 import { getCookie } from 'cookies-next';
 
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-
 async function makeFriendRequest(userId: number | null) {
   await fetch(`${apiDomain}/friends/${userId}/request`, {
     method: 'POST',

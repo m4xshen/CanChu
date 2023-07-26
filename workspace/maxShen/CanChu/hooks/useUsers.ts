@@ -8,7 +8,8 @@ async function getUsers(keyword: string) {
       Authorization: `Bearer ${getCookie('access_token')}`,
     },
   });
-  return res;
+  const data = await res.json();
+  return data.data.users;
 }
 
 export default function useUsers() {

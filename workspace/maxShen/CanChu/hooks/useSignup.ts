@@ -1,6 +1,5 @@
 async function signup(name: string, email: string, password: string) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-
   const res = await fetch(`${apiDomain}/users/signup`, {
     method: 'POST',
     headers: {

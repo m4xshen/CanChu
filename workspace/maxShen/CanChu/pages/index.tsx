@@ -22,7 +22,7 @@ function Home() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <Feed profile={profile} edit={false} />
+          <Feed profile={profile} editable={false} />
         </div>
       </div>
     </>

@@ -13,7 +13,7 @@ export default function useRelation(profile: ProfileType | null) {
 
     if (userId === profile.id) {
       setRelation(Relation.Self);
-    } else if (profile.friendship?.status === undefined) {
+    } else if (profile.friendship === null) {
       setRelation(Relation.Null);
     } else if (profile.friendship?.status === 'pending') {
       setRelation(Relation.Pending);

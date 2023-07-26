@@ -2,7 +2,6 @@ import { getCookie } from 'cookies-next';
 
 async function updateProfile(name: string, introduction: string, tags: string) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-
   await fetch(`${apiDomain}/users/profile`, {
     method: 'PUT',
     headers: {

@@ -14,7 +14,6 @@ interface Props {
 }
 
 export default function MainButton({ edit, setEdit, relation, user }: Props) {
-  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [text, setText] = useState('');
   const { mutate } = useSWRConfig();
 
@@ -46,6 +45,7 @@ export default function MainButton({ edit, setEdit, relation, user }: Props) {
       return;
     }
 
+    const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
     if (relation === Relation.Null) {
       await makeFriendRequest(user.id);
       mutate(`${apiDomain}/users/${user.id}/profile`);

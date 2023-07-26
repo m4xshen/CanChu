@@ -48,7 +48,8 @@ function PostCreator() {
               textRef.current.value = '';
             }
 
-            const url = `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search${
+            const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+            const url = `${apiDomain}/posts/search${
               router.query.id ? `?user_id=${router.query.id}` : ''
             }`;
             mutate(url);

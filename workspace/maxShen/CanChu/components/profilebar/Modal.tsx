@@ -69,15 +69,12 @@ export default function Modal({ userId, file, setFile, router }: Props) {
                 return;
               }
 
-              mutate(
-                `${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${userId}/profile`,
-              );
+              const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+              mutate(`${apiDomain}/users/${userId}/profile`);
               if (router.query.id) {
-                mutate(
-                  `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search?user_id=${router.query.id}`,
-                );
+                mutate(`${apiDomain}/posts/search?user_id=${router.query.id}`);
               } else {
-                mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/search`);
+                mutate(`${apiDomain}/posts/search`);
               }
               setFile(undefined);
             });

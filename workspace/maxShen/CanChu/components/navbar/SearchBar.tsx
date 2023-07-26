@@ -20,9 +20,8 @@ export default function SearchBar({ focus, setFocus }: Props) {
       setUsers([]);
       return;
     }
-    const res = await getUsers(keyword);
-    const data = await res.json();
-    setUsers(data.data.users);
+    const fetchedUsers = await getUsers(keyword);
+    setUsers(fetchedUsers);
   };
 
   let timeout: NodeJS.Timeout;
@@ -64,7 +63,11 @@ export default function SearchBar({ focus, setFocus }: Props) {
             overflow-y-scroll rounded-2xl border border-[#00000019] bg-white"
         >
           {users.map((u, idx) => (
-            <SearchedUser user={u} isLast={idx !== users.length - 1} />
+            <SearchedUser
+              key={u.id}
+              user={u}
+              isLast={idx !== users.length - 1}
+            />
           ))}
         </div>
       )}

@@ -42,7 +42,9 @@ export default function CommentBar({ postId, detail }: Props) {
       if (inputRef?.current?.value) {
         inputRef.current.value = '';
       }
-      mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/${postId}`);
+
+      const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+      mutate(`${apiDomain}/posts/${postId}`);
     })();
   }
 

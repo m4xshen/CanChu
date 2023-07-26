@@ -19,7 +19,8 @@ async function fetcher(url: string) {
 }
 
 export default function usePost(id: number): PostType | null {
-  const url = `${process.env.NEXT_PUBLIC_API_DOMAIN}/posts/${id}`;
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+  const url = `${apiDomain}/posts/${id}`;
   const { data, error, isLoading } = useSWR(url, fetcher);
 
   if (isLoading || error) {

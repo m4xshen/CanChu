@@ -36,7 +36,8 @@ function ProfileEditor({ profile, relation }: Props) {
       tagsRef?.current?.value,
     );
 
-    mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${profile.id}/profile`);
+    const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+    mutate(`${apiDomain}/users/${profile.id}/profile`);
     setEdit(false);
   }
 

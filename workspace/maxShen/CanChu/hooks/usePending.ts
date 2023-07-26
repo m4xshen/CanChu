@@ -1,5 +1,6 @@
 import { getCookie } from 'cookies-next';
 import useSWR from 'swr';
+import { UserSearchType } from '@/types';
 
 async function fetcher(url: string) {
   const res = await fetch(url, {
@@ -12,7 +13,7 @@ async function fetcher(url: string) {
   return data;
 }
 
-export default function usePending() {
+export default function usePending(): UserSearchType[] {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const url = `${apiDomain}/friends/pending`;
   const { data, error, isLoading } = useSWR(url, fetcher);

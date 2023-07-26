@@ -5,12 +5,12 @@ import { PostType } from '@/types';
 export default function useLike(
   post: PostType,
 ): [isLiked: boolean, likeCount: number, toggleLike: () => void] {
-  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [isLiked, setIsLiked] = useState(post.is_liked ?? false);
   const [likeCount, setLikeCount] = useState(post.like_count ?? 0);
 
   function toggleLike() {
     const method = isLiked ? 'DELETE' : 'POST';
+    const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
     fetch(`${apiDomain}/posts/${post.id}/like`, {
       method,
       headers: {
