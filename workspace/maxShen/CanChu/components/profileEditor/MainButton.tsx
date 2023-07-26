@@ -47,7 +47,7 @@ export default function MainButton({ edit, setEdit, relation, user }: Props) {
 
     if (relation === Relation.Null) {
       await makeFriendRequest(user.id);
-      mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${user.id}/profile` )
+      mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${user.id}/profile`);
     }
 
     if (!user?.friendship?.id) {
@@ -61,7 +61,7 @@ export default function MainButton({ edit, setEdit, relation, user }: Props) {
     } else if (relation === Relation.Pending) {
       await agreeFriendship(user.friendship.id);
     }
-    mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${user.id}/profile` )
+    mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${user.id}/profile`);
   }
 
   return (

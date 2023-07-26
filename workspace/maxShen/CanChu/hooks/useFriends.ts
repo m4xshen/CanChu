@@ -1,26 +1,25 @@
 import { getCookie } from 'cookies-next';
-import { useEffect, useState } from 'react';
-import { UserSearchType } from '@/types';
+import useSWR from 'swr';
 
-export default function useFriends(userId: number | null) {
-  const [friends, setFriends] = useState<UserSearchType[]>([]);
+async function fetcher(url: string) {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${getCookie('access_token')}`,
+    },
+  });
+  const data = await res.json();
+  return data;
+}
+
+export default function useFriends() {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+  const url = `${apiDomain}/friends`;
+  const { data, error, isLoading } = useSWR(url, fetcher);
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`${apiDomain}/friends`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${getCookie('access_token')}`,
-        },
-      });
+  if (isLoading || error) {
+    return [];
+  }
 
-      if (res.ok) {
-        const data = await res.json();
-        setFriends(data.data.users);
-      }
-    })();
-  }, [userId]);
-
-  return friends;
+  return data.data.users;
 }

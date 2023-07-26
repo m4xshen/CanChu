@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useSWRConfig } from 'swr';
 import useAgreeFriendship from '@/hooks/useAgreeFriendship';
 import useDeleteFriendship from '@/hooks/useDeleteFriendship';
 
@@ -14,9 +14,10 @@ interface Props {
 }
 
 function User({ id, picture, text, request, friendshipId }: Props) {
-  const router = useRouter();
+  const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const agreeFriendship = useAgreeFriendship();
   const deleteFriendship = useDeleteFriendship();
+  const { mutate } = useSWRConfig();
 
   return (
     <div className="flex items-center gap-3">
@@ -44,7 +45,8 @@ function User({ id, picture, text, request, friendshipId }: Props) {
                 return;
               }
               await agreeFriendship(friendshipId);
-              router.reload();
+              mutate(`${apiDomain}/friends`);
+              mutate(`${apiDomain}/friends/pending`);
             }}
           >
             確認
@@ -57,7 +59,8 @@ function User({ id, picture, text, request, friendshipId }: Props) {
                 return;
               }
               await deleteFriendship(friendshipId);
-              router.reload();
+              mutate(`${apiDomain}/friends`);
+              mutate(`${apiDomain}/friends/pending`);
             }}
           >
             取消

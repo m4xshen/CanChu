@@ -1,26 +1,25 @@
 import { getCookie } from 'cookies-next';
-import { useEffect, useState } from 'react';
-import { UserSearchType } from '@/types';
+import useSWR from 'swr';
+
+async function fetcher(url: string) {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${getCookie('access_token')}`,
+    },
+  });
+  const data = await res.json();
+  return data;
+}
 
 export default function usePending() {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-  const [pendings, setPendings] = useState<UserSearchType[]>([]);
+  const url = `${apiDomain}/friends/pending`;
+  const { data, error, isLoading } = useSWR(url, fetcher);
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`${apiDomain}/friends/pending`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${getCookie('access_token')}`,
-        },
-      });
+  if (isLoading || error) {
+    return [];
+  }
 
-      if (res.ok) {
-        const data = await res.json();
-        setPendings(data.data.users);
-      }
-    })();
-  }, []);
-
-  return pendings;
+  return data.data.users;
 }
