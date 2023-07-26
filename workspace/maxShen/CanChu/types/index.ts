@@ -55,3 +55,8 @@ export enum Relation {
   Requested,
   Friend,
 }
+
+export enum AccountState {
+  LoggingIn,
+  SigningUp,
+}
