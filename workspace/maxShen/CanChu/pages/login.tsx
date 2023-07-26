@@ -6,7 +6,7 @@ import { setCookie } from 'cookies-next';
 import nookies from 'nookies';
 
 import useSignup from '@/hooks/useSignup';
-import useLogin from '@/hooks/useLogin';
+import useLogIn from '@/hooks/useLogIn';
 import Footer from '@/components/footer';
 
 enum AccountState {
@@ -27,15 +27,15 @@ function LoginSignupPage() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordCheckRef = useRef<HTMLInputElement>(null);
 
-  const login = useLogin();
+  const logIn = useLogIn();
   const signup = useSignup();
 
-  async function handleLogin() {
+  async function handleLogIn() {
     if (!emailRef?.current?.value || !passwordRef?.current?.value) {
       return;
     }
 
-    const res = await login(emailRef.current.value, passwordRef.current.value);
+    const res = await logIn(emailRef.current.value, passwordRef.current.value);
 
     if (res.ok) {
       const data = await res.json();
@@ -75,7 +75,7 @@ function LoginSignupPage() {
     e.preventDefault();
 
     if (accountState === AccountState.LoggingIn) {
-      handleLogin();
+      handleLogIn();
     } else if (passwordRef.current?.value !== passwordCheckRef.current?.value) {
       alert('密碼不一致');
     } else {

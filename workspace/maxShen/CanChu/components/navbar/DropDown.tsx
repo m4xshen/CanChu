@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { NextRouter } from 'next/router';
-import { deleteCookie } from 'cookies-next';
 import { ProfileType } from '@/types';
+import useLogOut from '@/hooks/useLogOut';
 
 interface Props {
   profile: ProfileType | undefined;
@@ -10,6 +10,8 @@ interface Props {
 }
 
 export default function DropDown({ profile, router }: Props) {
+  const logOut = useLogOut(router);
+
   return (
     <div className="absolute right-0 top-9 z-10">
       <div className="h-10 bg-transparent" />
@@ -43,11 +45,7 @@ export default function DropDown({ profile, router }: Props) {
         <button
           type="button"
           className="flex h-16 items-center pl-6 text-xl"
-          onClick={() => {
-            deleteCookie('access_token');
-            deleteCookie('user_id');
-            router.push('/');
-          }}
+          onClick={logOut}
         >
           登出
         </button>

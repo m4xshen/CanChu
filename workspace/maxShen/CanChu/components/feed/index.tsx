@@ -16,18 +16,21 @@ function Feed({ profile, edit }: Props) {
   const router = useRouter();
   const isHomePage = router.query.id === undefined;
   const posts = usePosts(isHomePage ? null : profile?.id);
+  const noPosts = posts === null || posts.length === 0;
 
   return (
     <>
       {relation === Relation.Self && <PostCreator />}
-      {posts === null || posts.length === 0 ? (
+      {noPosts ? (
         <div className="w-[48rem] text-center">沒有新的貼文</div>
       ) : (
-        posts.map((post) => (
-          <Post key={post.id} post={post} detail={false} editable={edit} />
-        ))
+        <>
+          {posts.map((post) => (
+            <Post key={post.id} post={post} detail={false} editable={edit} />
+          ))}
+          <LoadingIcon />
+        </>
       )}
-      <LoadingIcon />
     </>
   );
 }

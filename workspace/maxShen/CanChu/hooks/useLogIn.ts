@@ -1,4 +1,4 @@
-async function login(email: string, password: string) {
+async function logIn(email: string, password: string) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const res = await fetch(`${apiDomain}/users/signin`, {
     method: 'POST',
@@ -15,6 +15,6 @@ async function login(email: string, password: string) {
   return res;
 }
 
-export default function useLogin() {
-  return login;
+export default function useLogIn() {
+  return logIn;
 }

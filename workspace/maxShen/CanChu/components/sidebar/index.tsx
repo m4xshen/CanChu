@@ -14,7 +14,7 @@ function Sidebar() {
   const profile = useProfile(userId);
 
   const picture = useGetPicture(profile);
-  const friends = useFriends(profile);
+  const friends = useFriends();
   const pendings = usePending();
 
   return (
