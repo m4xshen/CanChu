@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+import { useSWRConfig } from 'swr';
 import { ProfileType, Relation } from '@/types';
 import useFriendRequest from '@/hooks/useFriendRequest';
 import useDeleteFriendship from '@/hooks/useDeleteFriendship';
@@ -15,7 +15,7 @@ interface Props {
 
 export default function MainButton({ edit, setEdit, relation, user }: Props) {
   const [text, setText] = useState('');
-  const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   const [makeFriendRequest, removeFriendRequest] = useFriendRequest();
   const agreeFriendship = useAgreeFriendship();
@@ -47,7 +47,7 @@ export default function MainButton({ edit, setEdit, relation, user }: Props) {
 
     if (relation === Relation.Null) {
       await makeFriendRequest(user.id);
-      router.reload();
+      mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${user.id}/profile` )
     }
 
     if (!user?.friendship?.id) {
@@ -56,14 +56,12 @@ export default function MainButton({ edit, setEdit, relation, user }: Props) {
 
     if (relation === Relation.Requested) {
       await removeFriendRequest(user.friendship.id);
-      router.reload();
     } else if (relation === Relation.Friend) {
       await deleteFriendship(user.friendship.id);
-      router.reload();
     } else if (relation === Relation.Pending) {
       await agreeFriendship(user.friendship.id);
-      router.reload();
     }
+    mutate(`${process.env.NEXT_PUBLIC_API_DOMAIN}/users/${user.id}/profile` )
   }
 
   return (
