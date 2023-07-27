@@ -30,6 +30,7 @@ function Content({ post, edit, setEdit }: Props) {
       router.query.id ? `?user_id=${router.query.id}` : ''
     }`;
     mutate(url);
+    mutate(`${apiDomain}/posts/${router.query.id}`);
   }
 
   if (edit) {

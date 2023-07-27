@@ -36,7 +36,7 @@ export default function ProfilePage({ id }: { id: string }) {
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <Feed profile={profile} editable={relation === Relation.Self} />
+          <Feed profile={profile} />
         </div>
       </div>
     </SWRConfig>

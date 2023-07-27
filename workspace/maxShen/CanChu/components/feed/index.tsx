@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { getCookie } from 'cookies-next';
 import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
 import usePosts from '@/hooks/usePosts';
@@ -8,15 +9,17 @@ import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {
   profile: ProfileType | null;
-  editable: boolean;
 }
 
-function Feed({ profile, editable }: Props) {
+function Feed({ profile }: Props) {
   const relation = useRelation(profile);
   const router = useRouter();
+
   const isHomePage = router.query.id === undefined;
   const posts = usePosts(isHomePage ? null : profile?.id);
   const noPosts = posts === null || posts.length === 0;
+
+  const userId = parseInt(getCookie('user_id') as string, 10);
 
   return (
     <>
@@ -30,7 +33,7 @@ function Feed({ profile, editable }: Props) {
               key={post.id}
               post={post}
               detail={false}
-              editable={editable}
+              editable={post.user_id === userId}
             />
           ))}
           <LoadingIcon />
