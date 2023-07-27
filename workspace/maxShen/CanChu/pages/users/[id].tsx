@@ -11,18 +11,16 @@ import Feed from '@/components/feed';
 
 import useRelation from '@/hooks/useRelation';
 import useProfile from '@/hooks/useProfile';
-import { fetcher } from '@/utils';
 import { Relation } from '@/types';
 
-export default function ProfilePage({ id }: { id: number }) {
-  const profile = useProfile(id);
+export default function ProfilePage({ id }: { id: string }) {
+  const profile = useProfile(parseInt(id, 10));
   const relation = useRelation(profile);
   const router = useRouter();
 
   return (
     <SWRConfig
       value={{
-        fetcher,
         onError: () => {
           router.reload();
         },

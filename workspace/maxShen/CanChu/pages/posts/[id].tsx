@@ -6,7 +6,6 @@ import { SWRConfig } from 'swr';
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
 import usePost from '@/hooks/usePost';
-import { fetcher } from '@/utils';
 
 export default function DetailPage({ id }: { id: number }) {
   const router = useRouter();
@@ -15,7 +14,6 @@ export default function DetailPage({ id }: { id: number }) {
   return (
     <SWRConfig
       value={{
-        fetcher,
         onError: () => {
           router.reload();
         },

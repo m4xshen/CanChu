@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import { PostType } from '@/types';
+import { fetcher } from '@/utils';
 
 export default function usePosts(
   userId: number | null | undefined,
@@ -9,7 +10,7 @@ export default function usePosts(
     ? `${apiDomain}/posts/search?user_id=${userId}`
     : `${apiDomain}/posts/search`;
 
-  const { data, error, isLoading } = useSWR(url);
+  const { data, error, isLoading } = useSWR(url, fetcher);
 
   if (isLoading || error) {
     return [];

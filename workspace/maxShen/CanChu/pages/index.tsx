@@ -9,7 +9,6 @@ import Sidebar from '@/components/sidebar';
 import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 import useProfile from '@/hooks/useProfile';
-import { fetcher } from '@/utils';
 
 function Home() {
   const userId = parseInt(getCookie('user_id') as string, 10);
@@ -19,7 +18,6 @@ function Home() {
   return (
     <SWRConfig
       value={{
-        fetcher,
         onError: () => {
           router.reload();
         },
