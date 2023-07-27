@@ -13,7 +13,8 @@ export default function Interests({ edit, tagsRef, profile }: Props) {
       {edit ? (
         <textarea
           ref={tagsRef}
-          className="resize-none rounded-lg border border-[#BFBFBF] bg-[#F0F2F5] p-3"
+          className="resize-none rounded-lg
+            border border-[#BFBFBF] bg-[#F0F2F5] p-3 outline-none"
           defaultValue={profile?.tags ? profile.tags : ''}
         />
       ) : (

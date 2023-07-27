@@ -31,7 +31,7 @@ function PostCreator() {
           ref={textRef}
           placeholder="說點什麼嗎？"
           className="h-24 resize-none rounded-lg border border-[#D9D9D9]
-            bg-[#F0F2F5] p-3 pr-2 text-xl text-[#767676] outline-0"
+            bg-[#F0F2F5] p-3 pr-2 text-xl text-[#767676] outline-none"
         />
         <button
           type="submit"

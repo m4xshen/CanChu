@@ -17,7 +17,8 @@ export default function Introduction({
       {edit ? (
         <textarea
           ref={introductionRef}
-          className="resize-none rounded-lg border border-[#BFBFBF] bg-[#F0F2F5] p-3"
+          className="resize-none rounded-lg
+            border border-[#BFBFBF] bg-[#F0F2F5] p-3 outline-none"
           defaultValue={profile?.introduction ? profile.introduction : ''}
         />
       ) : (

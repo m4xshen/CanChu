@@ -49,7 +49,7 @@ export default function SearchBar({ focus, setFocus }: Props) {
         ref={inputRef}
         type="text"
         placeholder="搜尋"
-        className="ml-2 w-full bg-[#f0f2f5] text-[#566470] outline-0"
+        className="ml-2 w-full bg-[#f0f2f5] text-[#566470] outline-none"
         onChange={(e) => debounce(() => findUsers(e.target.value))}
         onFocus={() => setFocus(true)}
       />

@@ -66,7 +66,7 @@ export default function CommentBar({ postId, detail }: Props) {
           type="text"
           placeholder="留個言吧"
           className="pointer-events-auto h-6 w-full bg-[#f0f2f5]
-            pr-2 text-xl text-[#777777] outline-0"
+            pr-2 text-xl text-[#777777] outline-none"
         />
         {detail && (
           <button
