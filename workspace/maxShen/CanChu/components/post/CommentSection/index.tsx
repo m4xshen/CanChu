@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import { CommentType } from '@/types';
 import Comment from './Comment';
 import CommentBar from './CommentBar';
-import { CommentType } from '@/types';
 
 interface Props {
   comments: CommentType[];

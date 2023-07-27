@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-import SearchedUser from './SearchedUser';
 import { UserSearchType } from '@/types';
 import useUsers from '@/hooks/useUsers';
+import SearchedUser from './SearchedUser';
 
 interface Props {
   focus: boolean;

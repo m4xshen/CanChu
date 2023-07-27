@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import { useState } from 'react';
 
-import DropDown from './DropDown';
 import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
+import DropDown from './DropDown';
 
 export default function UserIcon() {
   const [displayDropDown, setDisplayDropDown] = useState(false);

@@ -1,8 +1,8 @@
-import AvatarEditor from 'react-avatar-editor';
-import { useRef } from 'react';
-
 import { NextRouter } from 'next/router';
 import { useSWRConfig } from 'swr';
+import { useRef } from 'react';
+import AvatarEditor from 'react-avatar-editor';
+
 import CloseIcon from '../icons/CloseIcon';
 import useUpdatePicture from '@/hooks/useUpdatePicture';
 

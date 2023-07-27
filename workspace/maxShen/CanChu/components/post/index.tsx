@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import { PostType } from '@/types';
 import Content from './Content';
 import CommentSection from './CommentSection';
 import TitleBar from './TitleBar';
 import EditIcon from '../icons/EditIcon';
-import { PostType } from '@/types';
 import InfoBar from './InfoBar';
 
 interface Props {

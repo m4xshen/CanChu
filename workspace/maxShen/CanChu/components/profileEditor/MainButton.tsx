@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-
 import { useSWRConfig } from 'swr';
+
 import { ProfileType, Relation } from '@/types';
 import useFriendRequest from '@/hooks/useFriendRequest';
 import useDeleteFriendship from '@/hooks/useDeleteFriendship';

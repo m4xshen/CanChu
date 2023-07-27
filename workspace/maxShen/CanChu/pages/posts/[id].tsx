@@ -1,8 +1,8 @@
 import { GetServerSidePropsContext } from 'next';
-import nookies from 'nookies';
-
-import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';
+import nookies from 'nookies';
+import { SWRConfig } from 'swr';
+
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
 import usePost from '@/hooks/usePost';

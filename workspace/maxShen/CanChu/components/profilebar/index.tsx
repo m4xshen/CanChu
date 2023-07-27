@@ -2,9 +2,9 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-import Modal from './Modal';
 import useGetPicture from '@/hooks/useGetPicture';
 import { ProfileType } from '@/types';
+import Modal from './Modal';
 
 interface Props {
   profile: ProfileType | undefined;

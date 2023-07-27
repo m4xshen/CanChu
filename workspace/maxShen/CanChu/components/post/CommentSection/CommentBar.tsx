@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { getCookie } from 'cookies-next';
 import { useRef } from 'react';
-
 import { useSWRConfig } from 'swr';
-import SendIcon from '../../icons/SendIcon';
+
 import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
 import useCreateComment from '@/hooks/useCreateComment';
+import SendIcon from '../../icons/SendIcon';
 
 interface Props {
   postId: number;
