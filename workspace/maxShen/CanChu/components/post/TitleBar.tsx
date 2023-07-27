@@ -27,7 +27,9 @@ export default function TitleBar({ post, url, detail }: Props) {
         </div>
       </Link>
       <div>
-        <div className="cursor-pointer text-lg font-bold">{post.name}</div>
+        <Link href={profile?.id ? `/users/${profile.id}` : '/'}>
+          <div className="cursor-pointer text-lg font-bold">{post.name}</div>
+        </Link>
         <Link
           href={url}
           className={`text-sm font-normal text-[#909090] ${

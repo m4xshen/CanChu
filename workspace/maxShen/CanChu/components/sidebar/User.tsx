@@ -20,20 +20,20 @@ function User({ id, picture, text, request, friendshipId }: Props) {
 
   return (
     <div className="flex items-center gap-3">
-      <div
-        className="relative flex h-11 w-11 items-center justify-center
-          overflow-hidden rounded-full"
-      >
-        <Link href={`/users/${id}`}>
+      <Link href={`/users/${id}`} className="flex items-center gap-3">
+        <div
+          className="relative flex h-11 w-11 items-center justify-center
+            overflow-hidden rounded-full"
+        >
           <Image
             src={picture}
             fill
             alt="friend avatar"
             className="object-cover"
           />
-        </Link>
-      </div>
-      <div className="text-lg font-bold leading-6">{text}</div>
+        </div>
+        <div className="text-lg font-bold leading-6">{text}</div>
+      </Link>
       {request && (
         <div className="ml-auto">
           <button
