@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import getDisplayTime from '@/utils';
 import useProfile from '@/hooks/useProfile';
 import { PostType } from '@/types';
+import { getDisplayTime } from '@/utils';
 
 interface Props {
   post: PostType;

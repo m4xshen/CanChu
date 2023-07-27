@@ -1,18 +1,18 @@
 import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
-
-import { getCookie } from 'cookies-next';
 import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';
+
 import Navbar from '@/components/navbar';
-import { Relation } from '@/types';
 import Profilebar from '@/components/profilebar';
 import ProfileEditor from '@/components/profileEditor';
 import Footer from '@/components/footer';
 import Feed from '@/components/feed';
+
 import useRelation from '@/hooks/useRelation';
 import useProfile from '@/hooks/useProfile';
 import { fetcher } from '@/utils';
+import { Relation } from '@/types';
 
 export default function ProfilePage({ id }: { id: number }) {
   const profile = useProfile(id);

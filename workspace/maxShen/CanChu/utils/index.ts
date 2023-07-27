@@ -1,26 +1,26 @@
 import { getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
 
-export default function getDisplayTime(date: string | null) {
-  // return an empty string if the date is invalid
-  if (date === null || Number.isNaN(new Date(date).getTime())) {
+export function getDisplayTime(date: string | null) {
+  const invalidDate = date === null || Number.isNaN(new Date(date).getTime());
+  if (invalidDate) {
     return '';
   }
 
-  // get rounded delta time in seconds
-  const delta = (new Date().getTime() - new Date(date).getTime()) / 1000;
+  const currentTime = new Date().getTime();
+  const postTime = new Date(date).getTime();
+  const deltaTimeInSeconds = (currentTime - postTime) / 1000;
 
-  if (delta >= 24 * 5 * 3600) {
+  if (deltaTimeInSeconds >= 24 * 5 * 3600) {
     return date;
   }
-  if (delta >= 24 * 3600) {
-    return `${Math.trunc(delta / (24 * 3600)).toString()} 天前`;
+  if (deltaTimeInSeconds >= 24 * 3600) {
+    return `${Math.trunc(deltaTimeInSeconds / (24 * 3600)).toString()} 天前`;
   }
-  if (delta >= 3600) {
-    return `${Math.trunc(delta / 3600).toString()} 小時前`;
+  if (deltaTimeInSeconds >= 3600) {
+    return `${Math.trunc(deltaTimeInSeconds / 3600).toString()} 小時前`;
   }
-  if (delta >= 60) {
-    return `${Math.trunc(delta / 60).toString()} 分鐘前`;
+  if (deltaTimeInSeconds >= 60) {
+    return `${Math.trunc(deltaTimeInSeconds / 60).toString()} 分鐘前`;
   }
   return '剛剛';
 }
