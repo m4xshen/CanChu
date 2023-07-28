@@ -32,6 +32,7 @@ export default function DetailPage({ id, userId }: Props) {
             post={post}
             detail
             editable={post.user_id === userId}
+            userId={userId}
           />
         )}
       </div>
