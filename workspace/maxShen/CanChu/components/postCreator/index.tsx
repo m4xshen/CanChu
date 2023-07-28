@@ -24,7 +24,13 @@ function PostCreator({ mutate, userId }: Props) {
         border border-[#0000001A] bg-white p-5"
     >
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full">
-        <Image src={picture} fill alt="user avatar" className="object-cover" />
+        <Image
+          src={picture}
+          fill
+          sizes="5rem"
+          alt="user avatar"
+          className="object-cover"
+        />
       </div>
       <div className="flex w-full flex-col gap-3">
         <textarea

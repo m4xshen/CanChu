@@ -53,7 +53,13 @@ export default function CommentBar({ postId, userId, detail }: Props) {
         className="relative ml-10 h-[50px] w-[50px]
         shrink-0 overflow-hidden rounded-full"
       >
-        <Image src={picture} fill alt="user avatar" className="object-cover" />
+        <Image
+          src={picture}
+          fill
+          sizes="50px"
+          alt="user avatar"
+          className="object-cover"
+        />
       </div>
       <div
         className="mr-12 flex h-12 w-full items-center justify-between

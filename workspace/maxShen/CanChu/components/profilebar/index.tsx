@@ -74,6 +74,7 @@ function Profilebar({ profile, edit }: Props) {
                 <Image
                   src={picture}
                   fill
+                  sizes="11rem"
                   alt="user avatar"
                   className={`object-cover ${
                     edit && 'hover:brightness-50 group-hover:brightness-50'

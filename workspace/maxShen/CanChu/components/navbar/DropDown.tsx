@@ -27,8 +27,9 @@ export default function DropDown({ profile, router }: Props) {
             <Image
               src="/purpleAvatar.png"
               width={29}
-              height={24}
+              height={29}
               alt="purple avatar"
+              className="h-auto w-auto"
             />
           </div>
           <div className="ml-4 text-xl font-bold">

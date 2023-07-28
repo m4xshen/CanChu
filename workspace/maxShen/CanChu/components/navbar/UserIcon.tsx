@@ -31,6 +31,7 @@ export default function UserIcon({ userId }: Props) {
           <Image
             src={picture}
             fill
+            sizes="2.25rem"
             alt="user avatar"
             className="object-cover"
           />

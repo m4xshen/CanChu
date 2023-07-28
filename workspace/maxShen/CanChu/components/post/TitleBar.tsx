@@ -21,6 +21,7 @@ export default function TitleBar({ post, url, detail }: Props) {
           <Image
             src={post.picture ? post.picture : '/avatar.png'}
             fill
+            sizes="5rem"
             alt="user avatar"
             className="object-cover"
           />

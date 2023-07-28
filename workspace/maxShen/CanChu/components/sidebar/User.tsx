@@ -28,6 +28,7 @@ function User({ id, picture, text, request, friendshipId }: Props) {
           <Image
             src={picture}
             fill
+            sizes="2.75rem"
             alt="friend avatar"
             className="object-cover"
           />
