@@ -1,4 +1,4 @@
-import { useSWRConfig } from 'swr';
+import { KeyedMutator, useSWRConfig } from 'swr';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 
@@ -9,9 +9,10 @@ interface Props {
   post: PostType;
   edit: boolean;
   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  customMutate?: KeyedMutator<any[]>;
 }
 
-function Content({ post, edit, setEdit }: Props) {
+function Content({ post, edit, setEdit, customMutate }: Props) {
   const router = useRouter();
   const updatePost = useUpdatePost();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -26,11 +27,11 @@ function Content({ post, edit, setEdit }: Props) {
     await updatePost(textareaRef?.current?.value, post.id);
 
     const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-    const url = `${apiDomain}/posts/search${
-      router.query.id ? `?user_id=${router.query.id}` : ''
-    }`;
-    mutate(url);
-    mutate(`${apiDomain}/posts/${router.query.id}`);
+    if (customMutate) {
+      customMutate();
+    } else {
+      mutate(`${apiDomain}/posts/${router.query.id}`);
+    }
   }
 
   if (edit) {
@@ -70,5 +71,9 @@ function Content({ post, edit, setEdit }: Props) {
     </pre>
   );
 }
+
+Content.defaultProps = {
+  customMutate: null,
+};
 
 export default Content;

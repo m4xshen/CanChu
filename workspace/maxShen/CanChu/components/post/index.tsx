@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { KeyedMutator } from 'swr';
+
 import { PostType } from '@/types';
 import Content from './Content';
 import CommentSection from './CommentSection';
@@ -10,9 +12,10 @@ interface Props {
   post: PostType;
   detail: boolean;
   editable: boolean;
+  mutate?: KeyedMutator<any[]>;
 }
 
-function Post({ post, detail, editable }: Props) {
+function Post({ post, detail, editable, mutate }: Props) {
   const [edit, setEdit] = useState(false);
   const url = `/posts/${post.id}`;
 
@@ -32,7 +35,12 @@ function Post({ post, detail, editable }: Props) {
         )}
         <div className="px-10 pt-7">
           <TitleBar post={post} url={url} detail={detail} />
-          <Content post={post} edit={edit} setEdit={setEdit} />
+          <Content
+            post={post}
+            edit={edit}
+            setEdit={setEdit}
+            customMutate={mutate}
+          />
           <InfoBar
             post={post}
             commentCount={post.comment_count}
@@ -50,5 +58,9 @@ function Post({ post, detail, editable }: Props) {
     </div>
   );
 }
+
+Post.defaultProps = {
+  mutate: null,
+};
 
 export default Post;

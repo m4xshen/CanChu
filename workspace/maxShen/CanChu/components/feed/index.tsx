@@ -18,7 +18,7 @@ function Feed({ profile }: Props) {
   const router = useRouter();
 
   const isHomePage = router.query.id === undefined;
-  const [isEnd, size, setSize, posts] = usePosts(
+  const [mutate, isEnd, size, setSize, posts] = usePosts(
     isHomePage ? null : profile?.id,
   );
   useInfiniteScroll(async () => setSize(size + 1), 100);
@@ -28,7 +28,7 @@ function Feed({ profile }: Props) {
 
   return (
     <>
-      {relation === Relation.Self && <PostCreator />}
+      {relation === Relation.Self && <PostCreator mutate={mutate} />}
       {noPosts ? (
         <div className="w-[48rem] text-center">沒有新的貼文</div>
       ) : (
@@ -39,6 +39,7 @@ function Feed({ profile }: Props) {
               post={post}
               detail={false}
               editable={post.user_id === userId}
+              mutate={mutate}
             />
           ))}
           {!isEnd && <LoadingIcon />}
