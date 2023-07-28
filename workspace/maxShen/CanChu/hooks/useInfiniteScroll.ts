@@ -4,7 +4,7 @@ export default function useInfiniteScroll(
   callback: () => any,
   distance: number,
 ) {
-  const [isNearToBottom, setIsBottom] = useState(false);
+  const [isNearToBottom, setIsNearToBottom] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
@@ -12,7 +12,7 @@ export default function useInfiniteScroll(
         window.innerHeight + Math.round(window.scrollY) >=
         document.body.offsetHeight - distance
       ) {
-        setIsBottom(true);
+        setIsNearToBottom(true);
       }
     }
 
@@ -21,7 +21,7 @@ export default function useInfiniteScroll(
     if (isNearToBottom) {
       (async () => {
         await callback();
-        setIsBottom(false);
+        setIsNearToBottom(false);
       })();
     }
 

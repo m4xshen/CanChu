@@ -5,8 +5,8 @@ import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
 import usePosts from '@/hooks/usePosts';
 import useRelation from '@/hooks/useRelation';
-import { ProfileType, Relation } from '@/types';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import { ProfileType, Relation } from '@/types';
 import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {

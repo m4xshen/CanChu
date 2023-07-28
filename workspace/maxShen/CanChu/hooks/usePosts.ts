@@ -10,15 +10,18 @@ export default function usePosts(
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [isEnd, setIsEnd] = useState(false);
 
-  function getKey(pageIndex: number, previousPageData: any) {
+  function getURL(pageIndex: number, previousPageData: any) {
     const nextCursor = previousPageData?.data?.next_cursor;
 
-    if (pageIndex === 0) {
+    const isFirstPage = pageIndex === 0;
+    if (isFirstPage) {
       return userId
         ? `${apiDomain}/posts/search?user_id=${userId}`
         : `${apiDomain}/posts/search`;
     }
-    if (previousPageData && nextCursor) {
+
+    const hasNextPage = previousPageData && nextCursor;
+    if (hasNextPage) {
       return userId
         ? `${apiDomain}/posts/search?user_id=${userId}&cursor='${nextCursor}'`
         : `${apiDomain}/posts/search?cursor='${nextCursor}'`;
@@ -29,7 +32,7 @@ export default function usePosts(
   }
 
   const { data, error, isLoading, size, setSize } = useSWRInfinite(
-    getKey,
+    getURL,
     fetcher,
     {
       revalidateFirstPage: false,
