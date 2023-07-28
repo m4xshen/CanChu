@@ -1,18 +1,17 @@
 import useSWRInfinite from 'swr/infinite';
+import { useState } from 'react';
 
 import { PostType } from '@/types';
 import { fetcher } from '@/utils';
 
 export default function usePosts(
   userId: number | null | undefined,
-): [number, any, PostType[]] {
+): [boolean, number, any, PostType[]] {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+  const [isEnd, setIsEnd] = useState(false);
+
   function getKey(pageIndex: number, previousPageData: any) {
     const nextCursor = previousPageData?.data?.next_cursor;
-
-    if (previousPageData && !nextCursor) {
-      return null;
-    }
 
     if (pageIndex === 0) {
       return userId
@@ -25,6 +24,7 @@ export default function usePosts(
         : `${apiDomain}/posts/search?cursor='${nextCursor}'`;
     }
 
+    setIsEnd(true);
     return null;
   }
 
@@ -37,9 +37,9 @@ export default function usePosts(
   );
 
   if (isLoading || error) {
-    return [size, setSize, []];
+    return [isEnd, size, setSize, []];
   }
-  const posts = data?.map((d) => d.data.posts).flat();
 
-  return [size, setSize, posts ?? []];
+  const posts = data?.map((d) => d.data.posts).flat();
+  return [isEnd, size, setSize, posts ?? []];
 }

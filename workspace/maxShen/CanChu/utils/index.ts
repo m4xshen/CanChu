@@ -25,11 +25,7 @@ export function getDisplayTime(date: string | null) {
   return '剛剛';
 }
 
-export async function fetcher(url: string | null) {
-  if (!url) {
-    return null;
-  }
-
+export async function fetcher(url: string) {
   const res = await fetch(url, {
     method: 'GET',
     headers: {
