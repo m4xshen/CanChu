@@ -10,7 +10,11 @@ const pattaya = Pattaya({
   subsets: ['cyrillic'],
 });
 
-function Navbar() {
+interface Props {
+  userId: number;
+}
+
+function Navbar({ userId }: Props) {
   const [focus, setFocus] = useState(false);
 
   return (
@@ -21,7 +25,7 @@ function Navbar() {
         </h1>
       </Link>
       <SearchBar focus={focus} setFocus={setFocus} />
-      <UserIcon />
+      <UserIcon userId={userId} />
     </div>
   );
 }

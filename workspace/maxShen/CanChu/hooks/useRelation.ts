@@ -1,10 +1,11 @@
-import { getCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { ProfileType, Relation } from '@/types';
 
-export default function useRelation(profile: ProfileType | null) {
+export default function useRelation(
+  userId: number,
+  profile: ProfileType | null,
+) {
   const [relation, setRelation] = useState<Relation>(Relation.Null);
-  const userId = parseInt(getCookie('user_id') as string, 10);
 
   useEffect(() => {
     if (!profile) {

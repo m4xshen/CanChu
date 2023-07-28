@@ -1,6 +1,4 @@
 import { useRouter } from 'next/router';
-import { getCookie } from 'cookies-next';
-
 import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
 import usePosts from '@/hooks/usePosts';
@@ -11,10 +9,11 @@ import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {
   profile: ProfileType | null;
+  userId: number;
 }
 
-function Feed({ profile }: Props) {
-  const relation = useRelation(profile);
+function Feed({ profile, userId }: Props) {
+  const relation = useRelation(userId, profile);
   const router = useRouter();
 
   const isHomePage = router.query.id === undefined;
@@ -24,11 +23,12 @@ function Feed({ profile }: Props) {
   useInfiniteScroll(async () => setSize(size + 1), 100);
 
   const noPosts = posts === null || posts.length === 0;
-  const userId = parseInt(getCookie('user_id') as string, 10);
 
   return (
     <>
-      {relation === Relation.Self && <PostCreator mutate={mutate} />}
+      {relation === Relation.Self && (
+        <PostCreator mutate={mutate} userId={userId} />
+      )}
       {noPosts ? (
         <div className="w-[48rem] text-center">沒有新的貼文</div>
       ) : (
@@ -39,6 +39,7 @@ function Feed({ profile }: Props) {
               post={post}
               detail={false}
               editable={post.user_id === userId}
+              userId={userId}
               mutate={mutate}
             />
           ))}

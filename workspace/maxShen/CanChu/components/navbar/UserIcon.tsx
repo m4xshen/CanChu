@@ -1,17 +1,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { getCookie } from 'cookies-next';
 import { useState } from 'react';
 
 import useGetPicture from '@/hooks/useGetPicture';
 import useProfile from '@/hooks/useProfile';
 import DropDown from './DropDown';
 
-export default function UserIcon() {
+interface Props {
+  userId: number;
+}
+
+export default function UserIcon({ userId }: Props) {
   const [displayDropDown, setDisplayDropDown] = useState(false);
 
-  const userId = parseInt(getCookie('user_id') as string, 10);
   const profile = useProfile(userId);
   const picture = useGetPicture(profile);
   const router = useRouter();

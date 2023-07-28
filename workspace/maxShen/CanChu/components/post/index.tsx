@@ -12,10 +12,11 @@ interface Props {
   post: PostType;
   detail: boolean;
   editable: boolean;
+  userId: number;
   mutate?: KeyedMutator<any[]>;
 }
 
-function Post({ post, detail, editable, mutate }: Props) {
+function Post({ post, detail, editable, userId, mutate }: Props) {
   const [edit, setEdit] = useState(false);
   const url = `/posts/${post.id}`;
 
@@ -51,6 +52,7 @@ function Post({ post, detail, editable, mutate }: Props) {
         <CommentSection
           comments={post.comments}
           postId={post.id}
+          userId={userId}
           detail={detail}
           url={url}
         />

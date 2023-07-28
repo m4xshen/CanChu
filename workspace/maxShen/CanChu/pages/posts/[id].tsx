@@ -2,16 +2,19 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import { SWRConfig } from 'swr';
-import { getCookie } from 'cookies-next';
 
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
 import usePost from '@/hooks/usePost';
 
-export default function DetailPage({ id }: { id: number }) {
+interface Props {
+  id: string;
+  userId: number;
+}
+
+export default function DetailPage({ id, userId }: Props) {
   const router = useRouter();
-  const post = usePost(id);
-  const userId = parseInt(getCookie('user_id') as string, 10);
+  const post = usePost(parseInt(id, 10));
 
   return (
     <SWRConfig
@@ -21,7 +24,7 @@ export default function DetailPage({ id }: { id: number }) {
         },
       }}
     >
-      <Navbar />
+      <Navbar userId={userId} />
       <div className="my-6">
         {post && (
           <Post
@@ -53,9 +56,11 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
+  const userId = parseInt(nookies.get(ctx).user_id, 10);
   return {
     props: {
       id: ctx.params.id,
+      userId,
     },
   };
 }

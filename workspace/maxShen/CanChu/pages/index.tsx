@@ -1,6 +1,5 @@
 import { NextPageContext } from 'next';
 import nookies from 'nookies';
-import { getCookie } from 'cookies-next';
 import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';
 
@@ -10,8 +9,11 @@ import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 import useProfile from '@/hooks/useProfile';
 
-function Home() {
-  const userId = parseInt(getCookie('user_id') as string, 10);
+interface Props {
+  userId: number;
+}
+
+function Home({ userId }: Props) {
   const profile = useProfile(userId);
   const router = useRouter();
 
@@ -23,16 +25,16 @@ function Home() {
         },
       }}
     >
-      <Navbar />
+      <Navbar userId={userId} />
       <div className="mt-6 flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <Sidebar />
+          <Sidebar userId={userId} />
           <div className="w-64">
             <Footer />
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <Feed profile={profile} />
+          <Feed profile={profile} userId={userId} />
         </div>
       </div>
     </SWRConfig>
@@ -51,7 +53,11 @@ export async function getServerSideProps(ctx: NextPageContext) {
     };
   }
 
+  const userId = parseInt(nookies.get(ctx).user_id, 10);
+
   return {
-    props: {},
+    props: {
+      userId,
+    },
   };
 }

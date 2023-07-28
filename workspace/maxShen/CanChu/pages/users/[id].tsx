@@ -13,9 +13,14 @@ import useRelation from '@/hooks/useRelation';
 import useProfile from '@/hooks/useProfile';
 import { Relation } from '@/types';
 
-export default function ProfilePage({ id }: { id: string }) {
+interface Props {
+  id: string;
+  userId: number;
+}
+
+export default function ProfilePage({ id, userId }: Props) {
   const profile = useProfile(parseInt(id, 10));
-  const relation = useRelation(profile);
+  const relation = useRelation(userId, profile);
   const router = useRouter();
 
   return (
@@ -26,7 +31,7 @@ export default function ProfilePage({ id }: { id: string }) {
         },
       }}
     >
-      <Navbar />
+      <Navbar userId={userId} />
       <Profilebar profile={profile} edit={relation === Relation.Self} />
       <div className="flex justify-center gap-8">
         <div className="flex flex-col items-center gap-3">
@@ -36,7 +41,7 @@ export default function ProfilePage({ id }: { id: string }) {
           </div>
         </div>
         <div className="flex flex-col items-center gap-5 pb-5">
-          <Feed profile={profile} />
+          <Feed profile={profile} userId={userId} />
         </div>
       </div>
     </SWRConfig>
@@ -60,9 +65,11 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
+  const userId = parseInt(nookies.get(ctx).user_id, 10);
   return {
     props: {
       id: ctx.params.id,
+      userId,
     },
   };
 }

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { getCookie } from 'cookies-next';
 import { useRef } from 'react';
 import { useSWRConfig } from 'swr';
 
@@ -10,12 +9,12 @@ import SendIcon from '../../icons/SendIcon';
 
 interface Props {
   postId: number;
+  userId: number;
   detail: boolean;
 }
 
-export default function CommentBar({ postId, detail }: Props) {
+export default function CommentBar({ postId, userId, detail }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const userId = parseInt(getCookie('user_id') as string, 10);
   const profile = useProfile(userId);
   const picture = useGetPicture(profile);
   const { mutate } = useSWRConfig();

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { getCookie } from 'cookies-next';
 import { KeyedMutator } from 'swr';
 import { useRef } from 'react';
 
@@ -9,12 +8,12 @@ import useProfile from '@/hooks/useProfile';
 
 interface Props {
   mutate: KeyedMutator<any[]>;
+  userId: number;
 }
 
-function PostCreator({ mutate }: Props) {
+function PostCreator({ mutate, userId }: Props) {
   const textRef = useRef<HTMLTextAreaElement>(null);
 
-  const userId = parseInt(getCookie('user_id') as string, 10);
   const profile = useProfile(userId);
   const picture = useGetPicture(profile);
   const createPost = useCreatePost();

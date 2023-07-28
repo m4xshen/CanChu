@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getCookie } from 'cookies-next';
 
 import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
@@ -9,8 +8,11 @@ import useGetPicture from '@/hooks/useGetPicture';
 import useFriends from '@/hooks/useFriends';
 import usePending from '@/hooks/usePending';
 
-function Sidebar() {
-  const userId = parseInt(getCookie('user_id') as string, 10);
+interface Props {
+  userId: number;
+}
+
+function Sidebar({ userId }: Props) {
   const profile = useProfile(userId);
 
   const picture = useGetPicture(profile);

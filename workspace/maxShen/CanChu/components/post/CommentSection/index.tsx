@@ -6,11 +6,12 @@ import CommentBar from './CommentBar';
 interface Props {
   comments: CommentType[];
   postId: number;
+  userId: number;
   detail: boolean;
   url: string;
 }
 
-function CommentSection({ comments, postId, detail, url }: Props) {
+function CommentSection({ comments, postId, userId, detail, url }: Props) {
   const content = (
     <>
       {detail &&
@@ -18,7 +19,7 @@ function CommentSection({ comments, postId, detail, url }: Props) {
         comments.map((comment) => (
           <Comment key={comment.id} comment={comment} />
         ))}
-      <CommentBar postId={postId} detail={detail} />
+      <CommentBar postId={postId} userId={userId} detail={detail} />
     </>
   );
 
