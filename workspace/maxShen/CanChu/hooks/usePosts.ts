@@ -37,6 +37,7 @@ export default function usePosts(
     fetcher,
     {
       revalidateFirstPage: false,
+      revalidateOnMount: true,
     },
   );
 

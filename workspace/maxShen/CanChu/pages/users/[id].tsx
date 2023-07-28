@@ -40,9 +40,7 @@ export default function ProfilePage({ id, userId }: Props) {
             <Footer />
           </div>
         </div>
-        <div className="flex flex-col items-center gap-5 pb-5">
-          <Feed profile={profile} userId={userId} />
-        </div>
+        <Feed profile={profile} userId={userId} />
       </div>
     </SWRConfig>
   );

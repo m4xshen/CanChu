@@ -25,7 +25,7 @@ function Feed({ profile, userId }: Props) {
   const noPosts = posts === null || posts.length === 0;
 
   return (
-    <>
+    <div className="flex flex-col items-center gap-5 pb-5">
       {relation === Relation.Self && (
         <PostCreator mutate={mutate} userId={userId} />
       )}
@@ -46,7 +46,7 @@ function Feed({ profile, userId }: Props) {
           {!isEnd && <LoadingIcon />}
         </>
       )}
-    </>
+    </div>
   );
 }
 

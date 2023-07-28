@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import { PostType } from '@/types';
 
@@ -7,6 +7,11 @@ export default function useLike(
 ): [isLiked: boolean, likeCount: number, toggleLike: () => void] {
   const [isLiked, setIsLiked] = useState(post.is_liked ?? false);
   const [likeCount, setLikeCount] = useState(post.like_count ?? 0);
+
+  useEffect(() => {
+    setIsLiked(post.is_liked ?? false);
+    setLikeCount(post.like_count ?? 0);
+  }, [post]);
 
   function toggleLike() {
     const method = isLiked ? 'DELETE' : 'POST';
