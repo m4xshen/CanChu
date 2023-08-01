@@ -36,7 +36,7 @@ function Post({ post, detail, editable, userId, mutate }: Props) {
           <EditIcon />
         </button>
       )}
-      <div className="px-10 pt-7">
+      <div className="px-5 pt-7 sm:px-10">
         <TitleBar post={post} url={url} detail={detail} />
         <Content
           post={post}

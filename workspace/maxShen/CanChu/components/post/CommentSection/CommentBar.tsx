@@ -48,9 +48,9 @@ export default function CommentBar({ postId, userId, detail }: Props) {
   }
 
   return (
-    <div className="mb-5 mt-3 flex items-center gap-4">
+    <div className="mb-5 mt-3 flex items-center gap-4 px-5 sm:px-10">
       <div
-        className="relative ml-10 h-[50px] w-[50px]
+        className="relative h-[50px] w-[50px]
         shrink-0 overflow-hidden rounded-full"
       >
         <Image
@@ -62,7 +62,7 @@ export default function CommentBar({ postId, userId, detail }: Props) {
         />
       </div>
       <div
-        className="mr-12 flex h-12 w-full items-center justify-between
+        className="flex h-12 w-full items-center justify-between
           rounded-lg border border-[#d9d9d9] bg-[#f0f2f5] pl-6
           pr-3 text-xl font-normal leading-10 text-[#777777]"
       >

@@ -19,10 +19,7 @@ function PostCreator({ mutate, userId }: Props) {
   const createPost = useCreatePost();
 
   return (
-    <div
-      className="flex w-full gap-6 rounded-2xl
-        border border-[#0000001A] bg-white p-5"
-    >
+    <div className="flex w-full gap-6 rounded-2xl border border-[#0000001A] bg-white p-5">
       <div
         className="relative h-[6vw] max-h-[5rem] min-h-[3rem] w-[6vw] min-w-[3rem]
         max-w-[5rem] shrink-0 overflow-hidden rounded-full"
@@ -34,12 +31,12 @@ function PostCreator({ mutate, userId }: Props) {
           ref={textRef}
           placeholder="說點什麼嗎？"
           className="h-24 resize-none rounded-lg border border-[#D9D9D9]
-            bg-[#F0F2F5] p-3 pr-2 text-xl text-[#767676] outline-none"
+            bg-[#F0F2F5] p-3 pr-2 text-[#767676] outline-none sm:text-xl"
         />
         <button
           type="submit"
-          className="flex h-10 w-20 items-center justify-center self-end
-            rounded-md bg-[#5458F7] text-white sm:w-36"
+          className="flex h-10 w-36 items-center justify-center
+            self-end rounded-md bg-[#5458F7] text-white"
           onClick={async () => {
             if (!textRef.current?.value) {
               return;
