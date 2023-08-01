@@ -75,12 +75,10 @@ export default function Form({
   }
 
   let buttonText;
-  if (isLoading) {
-    buttonText = '載入中...';
-  } else if (accountState === AccountState.LoggingIn) {
-    buttonText = '登入';
+  if (accountState === AccountState.LoggingIn) {
+    buttonText = isLoading ? '登入中...' : '登入';
   } else {
-    buttonText = '註冊';
+    buttonText = isLoading ? '註冊中...' : '註冊';
   }
 
   return (
