@@ -19,23 +19,32 @@ export default function LoginSignupPage() {
 
   return (
     <div
-      className="mx-auto flex h-screen w-max
-        flex-col items-center justify-center gap-3"
+      className="mx-auto flex h-screen w-[95%] max-w-3xl
+        flex-col items-center justify-center lg:gap-3"
     >
       <div
-        className="flex w-[56rem] overflow-hidden rounded-3xl
-          border border-[#0000001A] bg-white"
+        className="flex w-full overflow-hidden
+          rounded-3xl border border-[#0000001A] bg-white"
       >
         <div
-          className={`w-2/3 ${
+          className={`w-full lg:w-2/3 ${
             accountState === AccountState.LoggingIn ? 'pb-28' : 'pb-11'
           } flex flex-col items-center`}
         >
-          <h1 className={`mt-20 text-[#7763FB] text-6xl ${pattaya.className}`}>
-            CanChu
-          </h1>
-          <div className="mt-10 text-4xl font-extralight">
-            {accountState === AccountState.LoggingIn ? '會員登入' : '會員註冊'}
+          <div
+            className="mt-10 flex h-[20%] w-full flex-wrap items-center justify-center
+              gap-3 px-3 lg:w-min"
+          >
+            <h1
+              className={`text-[#7763FB] text-5xl sm:text-6xl text-center ${pattaya.className}`}
+            >
+              CanChu
+            </h1>
+            <div className="text-center text-3xl font-extralight sm:text-4xl">
+              {accountState === AccountState.LoggingIn
+                ? '會員登入'
+                : '會員註冊'}
+            </div>
           </div>
           <Form
             accountState={accountState}
@@ -48,9 +57,9 @@ export default function LoginSignupPage() {
             emailRef={emailRef}
           />
         </div>
-        <div className="h-full w-1/3 bg-[#7763FB]" />
+        <div className="h-full w-0 bg-[#7763FB] lg:w-1/3" />
       </div>
-      <div className="mr-2 self-end">
+      <div className="mx-2 self-end">
         <Footer />
       </div>
     </div>

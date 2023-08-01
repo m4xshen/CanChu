@@ -83,7 +83,7 @@ export default function Form({
 
   return (
     <form
-      className="flex flex-col items-center"
+      className="flex w-full flex-col items-center"
       onSubmit={(e) => handleSubmit(e)}
     >
       {accountState === AccountState.SigningUp && (
