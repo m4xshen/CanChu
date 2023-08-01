@@ -6,8 +6,12 @@ export default function useProfile(userId: number | undefined | null) {
   const url = userId ? `${apiDomain}/users/${userId}/profile` : null;
   const { data, error, isLoading } = useSWR(url, fetcher);
 
-  if (isLoading || error) {
+  if (error) {
     return null;
+  }
+
+  if (isLoading) {
+    return "loading...";
   }
 
   return data?.data?.user;

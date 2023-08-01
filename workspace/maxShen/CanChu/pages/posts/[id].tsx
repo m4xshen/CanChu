@@ -14,7 +14,7 @@ interface Props {
 
 export default function DetailPage({ id, userId }: Props) {
   const router = useRouter();
-  const post = usePost(parseInt(id, 10));
+  const { post, isLoading } = usePost(parseInt(id, 10));
 
   return (
     <SWRConfig
@@ -25,8 +25,10 @@ export default function DetailPage({ id, userId }: Props) {
       }}
     >
       <Navbar userId={userId} />
-      <div className="my-6">
-        {post && (
+      <div className="my-6 flex justify-center">
+        {isLoading ? (
+          <div className="w-[48rem] text-center">載入中 ...</div>
+        ) : (
           <Post
             key={post.id}
             post={post}

@@ -1,13 +1,8 @@
-import { KeyedMutator } from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { useState } from 'react';
-
-import { PostType } from '@/types';
 import { fetcher } from '@/utils';
 
-export default function usePosts(
-  userId: number | null | undefined,
-): [KeyedMutator<any[]>, boolean, number, any, PostType[]] {
+export default function usePosts(userId: number | null | undefined) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const [isEnd, setIsEnd] = useState(false);
 
@@ -42,9 +37,9 @@ export default function usePosts(
   );
 
   if (isLoading || error) {
-    return [mutate, isEnd, size, setSize, []];
+    return { mutate, isLoading, isEnd, size, setSize, posts: [] };
   }
 
   const posts = data?.map((d) => d.data.posts).flat();
-  return [mutate, isEnd, size, setSize, posts ?? []];
+  return { mutate, isLoading, isEnd, size, setSize, posts: posts ?? [] };
 }

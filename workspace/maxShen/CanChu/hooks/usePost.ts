@@ -1,8 +1,7 @@
 import useSWR from 'swr';
-import { PostType } from '@/types';
 import { fetcher } from '@/utils';
 
-export default function usePost(id: number): PostType | null {
+export default function usePost(id: number) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
   const url = `${apiDomain}/posts/${id}`;
   const { data, error, isLoading } = useSWR(url, fetcher, {
@@ -10,8 +9,8 @@ export default function usePost(id: number): PostType | null {
   });
 
   if (isLoading || error) {
-    return null;
+    return { post: null, isLoading };
   }
 
-  return data?.data?.post;
+  return { post: data?.data?.post, isLoading };
 }
