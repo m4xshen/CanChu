@@ -16,7 +16,6 @@ const Input = forwardRef<any, Props>((props, ref) => {
         className="h-10 w-80 rounded-md border border-[#5458F7] px-3 outline-none"
         placeholder={placeholder}
         type={type}
-        required
       />
     </label>
   );

@@ -23,47 +23,37 @@ export default function Form({
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordCheckRef = useRef<HTMLInputElement>(null);
 
-  const logIn = useLogIn();
-  const signup = useSignup();
-
   async function handleLogIn() {
-    if (!emailRef?.current?.value || !passwordRef?.current?.value) {
-      return;
-    }
+    const { error, data } = await useLogIn(
+      emailRef.current?.value.trim(),
+      passwordRef.current?.value.trim(),
+    );
 
-    const res = await logIn(emailRef.current.value, passwordRef.current.value);
-
-    if (res.ok) {
-      const data = await res.json();
+    const success = !error && data;
+    if (success) {
       setCookie('access_token', data.data.access_token, { maxAge: 3600 });
       setCookie('user_id', data.data.user.id, { maxAge: 3600 });
       router.push('/');
-    } else if (res.status === 403) {
-      alert('電子郵件或密碼錯誤');
+    } else {
+      alert(error?.message);
     }
   }
 
   async function handleSignup() {
-    if (
-      !nameRef?.current?.value ||
-      !emailRef?.current?.value ||
-      !passwordRef?.current?.value
-    ) {
-      return;
-    }
-
-    const res = await signup(
-      nameRef?.current?.value,
-      emailRef?.current?.value,
-      passwordRef?.current?.value,
+    const { data, error } = await useSignup(
+      nameRef.current?.value.trim(),
+      emailRef.current?.value.trim(),
+      passwordRef.current?.value.trim(),
+      passwordCheckRef.current?.value.trim(),
     );
 
-    if (res.ok) {
+    const success = !error && data;
+    if (success) {
       // go back to login page
       setAccountState(AccountState.LoggingIn);
       emailRef.current?.form?.reset();
-    } else if (res.status === 403) {
-      alert('email已經使用過');
+    } else {
+      alert(error?.message);
     }
   }
 
@@ -72,8 +62,6 @@ export default function Form({
 
     if (accountState === AccountState.LoggingIn) {
       handleLogIn();
-    } else if (passwordRef.current?.value !== passwordCheckRef.current?.value) {
-      alert('密碼不一致');
     } else {
       handleSignup();
     }
@@ -95,7 +83,7 @@ export default function Form({
       <Input
         ref={emailRef}
         label="電子郵件"
-        type="email"
+        type="text"
         placeholder="例: shirney@appworks.tw"
       />
       <Input ref={passwordRef} label="密碼" type="password" />
