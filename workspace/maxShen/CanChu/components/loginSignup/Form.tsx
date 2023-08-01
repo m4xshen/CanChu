@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { setCookie } from 'cookies-next';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import useSignup from '@/hooks/useSignup';
 import useLogIn from '@/hooks/useLogIn';
@@ -22,13 +22,13 @@ export default function Form({
   const nameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordCheckRef = useRef<HTMLInputElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleLogIn() {
     const { error, data } = await useLogIn(
       emailRef.current?.value.trim(),
       passwordRef.current?.value.trim(),
     );
-
     const success = !error && data;
     if (success) {
       setCookie('access_token', data.data.access_token, { maxAge: 3600 });
@@ -36,6 +36,7 @@ export default function Form({
       router.push('/');
     } else {
       alert(error?.message);
+      setIsLoading(false);
     }
   }
 
@@ -55,16 +56,31 @@ export default function Form({
     } else {
       alert(error?.message);
     }
+    setIsLoading(false);
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
     if (accountState === AccountState.LoggingIn) {
       handleLogIn();
     } else {
       handleSignup();
     }
+  }
+
+  let buttonText;
+  if (isLoading) {
+    buttonText = '載入中...';
+  } else if (accountState === AccountState.LoggingIn) {
+    buttonText = '登入';
+  } else {
+    buttonText = '註冊';
   }
 
   return (
@@ -92,9 +108,11 @@ export default function Form({
       )}
       <button
         type="submit"
-        className="mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white"
+        className={`mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white ${
+          isLoading && 'cursor-wait'
+        }`}
       >
-        {accountState === AccountState.LoggingIn ? '登入' : '註冊'}
+        {buttonText}
       </button>
     </form>
   );
