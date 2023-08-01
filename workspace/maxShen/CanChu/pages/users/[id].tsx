@@ -34,13 +34,18 @@ export default function ProfilePage({ id, userId }: Props) {
       <Navbar userId={userId} />
       <Profilebar profile={profile} edit={relation === Relation.Self} />
       <div className="flex justify-center gap-8">
-        <div className="flex flex-col items-center gap-3">
+        <div className="hidden w-96 flex-col items-center gap-3 xl:flex">
           <ProfileEditor profile={profile} relation={relation} />
           <div className="w-64">
             <Footer />
           </div>
         </div>
-        <Feed profile={profile} userId={userId} />
+        <div className="mx-3 flex w-full max-w-[48rem] flex-col items-center gap-5">
+          <div className="w-full xl:hidden">
+            <ProfileEditor profile={profile} relation={relation} />
+          </div>
+          <Feed profile={profile} userId={userId} />
+        </div>
       </div>
     </SWRConfig>
   );

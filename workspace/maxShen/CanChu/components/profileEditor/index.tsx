@@ -42,7 +42,7 @@ function ProfileEditor({ profile, relation }: Props) {
   }
 
   return (
-    <div className="w-96 rounded-2xl border border-[#0000001A] bg-white px-4 py-6">
+    <div className="rounded-2xl w-full border border-[#0000001A] bg-white px-4 py-6">
       <MainButton
         edit={edit}
         setEdit={setEdit}

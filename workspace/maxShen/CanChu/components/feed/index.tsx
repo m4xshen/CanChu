@@ -48,7 +48,7 @@ function Feed({ profile, userId }: Props) {
   }
 
   return (
-    <div className="mx-3 flex w-full max-w-[48em] flex-col items-center gap-5 pb-5">
+    <div className="mx-3 flex w-full max-w-[48rem] flex-col items-center gap-5 pb-5">
       {relation === Relation.Self && (
         <PostCreator mutate={mutate} userId={userId} />
       )}

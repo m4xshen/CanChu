@@ -36,7 +36,7 @@ function Profilebar({ profile, edit }: Props) {
           router={router}
         />
       )}
-      <div className="mb-6 flex h-[23rem] flex-col bg-white px-32">
+      <div className="mb-6 flex h-[23rem] flex-col bg-white px-3 lg:px-20 xl:px-32">
         <div className="flex h-72 items-center gap-11 border-b border-[#C8C8C8]">
           <form
             onSubmit={(ev) => {
@@ -70,7 +70,7 @@ function Profilebar({ profile, edit }: Props) {
               }}
             />
             <button type="submit" className={`group ${!edit && 'cursor-auto'}`}>
-              <div className="relative ml-7 h-44 w-44 shrink-0 overflow-hidden rounded-full">
+              <div className="relative ml-7 h-32 w-32 shrink-0 overflow-hidden rounded-full sm:h-44 sm:w-44">
                 <Image
                   src={picture}
                   fill
