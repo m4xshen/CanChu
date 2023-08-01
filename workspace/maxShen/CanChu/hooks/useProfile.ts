@@ -11,7 +11,7 @@ export default function useProfile(userId: number | undefined | null) {
   }
 
   if (isLoading) {
-    return "loading...";
+    return 'loading...';
   }
 
   return data?.data?.user;

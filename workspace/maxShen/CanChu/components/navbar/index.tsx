@@ -18,9 +18,14 @@ function Navbar({ userId }: Props) {
   const [focus, setFocus] = useState(false);
 
   return (
-    <div className="flex h-24 items-center border-b border-[#d9d9d9] bg-white">
+    <div
+      className="flex h-24 items-center border-b border-[#d9d9d9]
+        bg-white px-5 md:px-16 xl:px-36"
+    >
       <Link href="/">
-        <h1 className={`text-[#7763FB] text-4xl ml-36 ${pattaya.className}`}>
+        <h1
+          className={`text-[#7763FB] text-3xl md:text-4xl ${pattaya.className}`}
+        >
           CanChu
         </h1>
       </Link>

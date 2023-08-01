@@ -26,9 +26,9 @@ function Feed({ profile, userId }: Props) {
 
   let content;
   if (isLoading) {
-    content = <div className="w-[48rem] text-center">載入中 ...</div>;
+    content = <div className="w-full text-center">載入中 ...</div>;
   } else if (noPosts) {
-    content = <div className="w-[48rem] text-center">沒有新的貼文</div>;
+    content = <div className="w-full text-center">沒有新的貼文</div>;
   } else {
     content = (
       <>
@@ -48,7 +48,7 @@ function Feed({ profile, userId }: Props) {
   }
 
   return (
-    <div className="flex flex-col items-center gap-5 pb-5">
+    <div className="mx-3 flex w-full max-w-[48em] flex-col items-center gap-5 pb-5">
       {relation === Relation.Self && (
         <PostCreator mutate={mutate} userId={userId} />
       )}

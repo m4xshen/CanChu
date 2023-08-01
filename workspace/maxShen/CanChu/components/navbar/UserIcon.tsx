@@ -20,7 +20,7 @@ export default function UserIcon({ userId }: Props) {
 
   return (
     <div
-      className="relative ml-auto mr-36"
+      className="relative ml-auto"
       onMouseLeave={() => setDisplayDropDown(false)}
     >
       <Link

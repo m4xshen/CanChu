@@ -20,17 +20,14 @@ function PostCreator({ mutate, userId }: Props) {
 
   return (
     <div
-      className="flex w-[48rem] gap-6 rounded-2xl
+      className="flex w-full gap-6 rounded-2xl
         border border-[#0000001A] bg-white p-5"
     >
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full">
-        <Image
-          src={picture}
-          fill
-          sizes="5rem"
-          alt="user avatar"
-          className="object-cover"
-        />
+      <div
+        className="relative h-[6vw] max-h-[5rem] min-h-[3rem] w-[6vw] min-w-[3rem]
+        max-w-[5rem] shrink-0 overflow-hidden rounded-full"
+      >
+        <Image src={picture} fill alt="user avatar" className="object-cover" />
       </div>
       <div className="flex w-full flex-col gap-3">
         <textarea
@@ -41,8 +38,8 @@ function PostCreator({ mutate, userId }: Props) {
         />
         <button
           type="submit"
-          className="flex h-10 w-36 items-center justify-center self-end
-            rounded-md bg-[#5458F7] text-white"
+          className="flex h-10 w-20 items-center justify-center self-end
+            rounded-md bg-[#5458F7] text-white sm:w-36"
           onClick={async () => {
             if (!textRef.current?.value) {
               return;

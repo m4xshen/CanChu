@@ -41,8 +41,8 @@ export default function SearchBar({ focus, setFocus }: Props) {
 
   return (
     <div
-      className="relative ml-6 flex h-12 w-80 items-center rounded-lg
-        border border-[#d9d9d9] bg-[#f0f2f5] px-4"
+      className="relative ml-5 flex h-12 w-1/2 max-w-xs items-center rounded-lg
+        border border-[#d9d9d9] bg-[#f0f2f5] px-4 md:ml-6"
     >
       <Image src="/search.png" width={17} height={17} alt="search icon" />
       <input

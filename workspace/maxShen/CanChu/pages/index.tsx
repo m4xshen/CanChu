@@ -27,7 +27,7 @@ function Home({ userId }: Props) {
     >
       <Navbar userId={userId} />
       <div className="mt-6 flex justify-center gap-8">
-        <div className="flex flex-col items-center gap-3">
+        <div className="hidden xl:flex flex-col items-center gap-3">
           <Sidebar userId={userId} />
           <div className="w-64">
             <Footer />

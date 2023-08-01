@@ -17,7 +17,10 @@ export default function TitleBar({ post, url, detail }: Props) {
   return (
     <div className="flex w-full items-center gap-3">
       <Link href={profile?.id ? `/users/${profile.id}` : '/'}>
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full">
+        <div
+          className="relative h-[6vw] max-h-[5rem] min-h-[3rem] w-[6vw] min-w-[3rem]
+        max-w-[5rem] shrink-0 overflow-hidden rounded-full"
+        >
           <Image
             src={post.picture ? post.picture : '/avatar.png'}
             fill

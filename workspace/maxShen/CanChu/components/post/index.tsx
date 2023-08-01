@@ -22,7 +22,7 @@ function Post({ post, detail, editable, userId, mutate }: Props) {
 
   return (
     <div
-      className="group relative w-[48rem] rounded-2xl
+      className="group relative w-full rounded-2xl
         border border-[#0000001A] bg-white"
     >
       {editable && (

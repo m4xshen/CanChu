@@ -25,17 +25,19 @@ export default function DetailPage({ id, userId }: Props) {
       }}
     >
       <Navbar userId={userId} />
-      <div className="my-6 flex justify-center">
+      <div className="mx-3 my-6 flex flex-col items-center justify-center">
         {isLoading ? (
-          <div className="w-[48rem] text-center">載入中 ...</div>
+          <div className="w-full text-center">載入中 ...</div>
         ) : (
-          <Post
-            key={post.id}
-            post={post}
-            detail
-            editable={post.user_id === userId}
-            userId={userId}
-          />
+          <div className="w-full max-w-[48em]">
+            <Post
+              key={post.id}
+              post={post}
+              detail
+              editable={post.user_id === userId}
+              userId={userId}
+            />
+          </div>
         )}
       </div>
     </SWRConfig>
