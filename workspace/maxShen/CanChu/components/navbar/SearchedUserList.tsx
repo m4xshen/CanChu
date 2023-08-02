@@ -8,7 +8,7 @@ interface Props {
 export default function SearchedUserList({ users }: Props) {
   return (
     <div
-      className="absolute left-0 top-12 z-10 max-h-[14rem] w-80
+      className="absolute left-0 top-12 z-10 max-h-[14rem] w-full
         overflow-y-scroll rounded-2xl border border-[#00000019] bg-white"
     >
       {users.map((u, idx) => (

@@ -104,7 +104,8 @@ function Profilebar({ profile, edit }: Props) {
         <div className="flex-grow">
           <button
             type="button"
-            className="h-full w-28 border-b-4 border-[#5458F7] text-xl font-bold text-[#5458F7]"
+            className="h-full w-28 border-b-4 border-[#5458F7]
+              text-xl font-bold text-[#5458F7]"
           >
             貼文
           </button>

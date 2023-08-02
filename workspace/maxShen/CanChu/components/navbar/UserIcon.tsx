@@ -23,8 +23,7 @@ export default function UserIcon({ userId }: Props) {
       className="relative ml-auto"
       onMouseLeave={() => setDisplayDropDown(false)}
     >
-      <Link
-        href={profile?.id ? `/users/${profile.id}` : '/'}
+      <div
         onMouseEnter={() => setDisplayDropDown(true)}
       >
         <div className="relative h-9 w-9 overflow-hidden rounded-full">
@@ -36,7 +35,7 @@ export default function UserIcon({ userId }: Props) {
             className="object-cover"
           />
         </div>
-      </Link>
+      </div>
       {displayDropDown && <DropDown profile={profile} router={router} />}
     </div>
   );

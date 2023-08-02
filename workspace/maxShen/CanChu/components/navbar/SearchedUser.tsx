@@ -13,12 +13,12 @@ export default function SearchedUser({ user, isLast }: Props) {
   return (
     <Link
       href={`/users/${id}`}
-      className={`flex h-14 items-center ${
+      className={`flex py-2 items-center ${
         isLast && 'border-b border-[#00000019]'
       }`}
     >
       <Image
-        className="ml-8 rounded-full"
+        className="ml-3 shrink-0 rounded-full sm:ml-8"
         src={user.picture ? user.picture : '/avatar.png'}
         alt="user profile"
         width={39}
