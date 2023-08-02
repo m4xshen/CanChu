@@ -3,11 +3,12 @@ import Link from 'next/link';
 import { useSWRConfig } from 'swr';
 import useAgreeFriendship from '@/hooks/useAgreeFriendship';
 import useDeleteFriendship from '@/hooks/useDeleteFriendship';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   id?: number;
   picture: string;
-  text: string;
+  text: string | undefined;
   request: boolean;
   friendshipId?: number;
 }
@@ -33,7 +34,11 @@ function User({ id, picture, text, request, friendshipId }: Props) {
             className="object-cover"
           />
         </div>
-        <div className="text-lg font-bold leading-6">{text}</div>
+        {text ? (
+          <div className="text-lg font-bold leading-6">{text}</div>
+        ) : (
+          <Skeleton duration={0.8} containerClassName="w-20" />
+        )}
       </Link>
       {request && (
         <div className="ml-auto">

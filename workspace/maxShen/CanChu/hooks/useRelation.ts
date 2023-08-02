@@ -5,7 +5,7 @@ export default function useRelation(
   userId: number,
   profile: ProfileType | null,
 ) {
-  const [relation, setRelation] = useState<Relation>(Relation.Null);
+  const [relation, setRelation] = useState<Relation>();
 
   useEffect(() => {
     if (!profile) {

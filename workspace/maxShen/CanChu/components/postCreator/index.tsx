@@ -1,3 +1,4 @@
+import Skeleton from 'react-loading-skeleton';
 import Image from 'next/image';
 import { KeyedMutator } from 'swr';
 import { useRef } from 'react';
@@ -5,18 +6,30 @@ import { useRef } from 'react';
 import useGetPicture from '@/hooks/useGetPicture';
 import useCreatePost from '@/hooks/useCreatePost';
 import useProfile from '@/hooks/useProfile';
+import { Relation } from '@/types';
 
 interface Props {
   mutate: KeyedMutator<any[]>;
   userId: number;
+  relation: Relation | undefined;
 }
 
-function PostCreator({ mutate, userId }: Props) {
+function PostCreator({ mutate, userId, relation }: Props) {
   const textRef = useRef<HTMLTextAreaElement>(null);
 
   const profile = useProfile(userId);
   const picture = useGetPicture(profile);
   const createPost = useCreatePost();
+
+  if (relation === undefined) {
+    return (
+      <Skeleton height={188} borderRadius={16} containerClassName="w-full" />
+    );
+  }
+
+  if (relation !== Relation.Self) {
+    return null;
+  }
 
   return (
     <div className="flex w-full gap-6 rounded-2xl border border-[#0000001A] bg-white p-5">

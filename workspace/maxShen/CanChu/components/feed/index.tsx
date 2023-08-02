@@ -1,10 +1,13 @@
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 import { useRouter } from 'next/router';
 import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
 import usePosts from '@/hooks/usePosts';
 import useRelation from '@/hooks/useRelation';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { ProfileType, Relation } from '@/types';
+import { ProfileType } from '@/types';
 import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {
@@ -26,7 +29,28 @@ function Feed({ profile, userId }: Props) {
 
   let content;
   if (isLoading) {
-    content = <div className="w-full text-center">載入中 ...</div>;
+    content = (
+      <>
+        <Skeleton
+          duration={0.8}
+          height={300}
+          borderRadius={16}
+          containerClassName="w-full"
+        />
+        <Skeleton
+          duration={0.8}
+          height={300}
+          borderRadius={16}
+          containerClassName="w-full"
+        />
+        <Skeleton
+          duration={0.8}
+          height={300}
+          borderRadius={16}
+          containerClassName="w-full"
+        />
+      </>
+    );
   } else if (noPosts) {
     content = <div className="w-full text-center">沒有新的貼文</div>;
   } else {
@@ -49,9 +73,7 @@ function Feed({ profile, userId }: Props) {
 
   return (
     <div className="mx-3 flex w-full max-w-[48rem] flex-col items-center gap-5 pb-5">
-      {relation === Relation.Self && (
-        <PostCreator mutate={mutate} userId={userId} />
-      )}
+      <PostCreator mutate={mutate} userId={userId} relation={relation} />
       {content}
     </div>
   );

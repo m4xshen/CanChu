@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Skeleton from 'react-loading-skeleton';
 import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
 import useProfile from '@/hooks/useProfile';
@@ -16,8 +17,19 @@ function Sidebar({ userId }: Props) {
   const profile = useProfile(userId);
 
   const picture = useGetPicture(profile);
-  const friends = useFriends();
-  const pendings = usePending();
+  const { isLoading: friendsLoading, data: friends } = useFriends();
+  const { isLoading: pendingLoading, data: pendings } = usePending();
+
+  if (friendsLoading || pendingLoading) {
+    return (
+      <Skeleton
+        duration={0.8}
+        height={700}
+        borderRadius={16}
+        containerClassName="w-96"
+      />
+    );
+  }
 
   return (
     <nav
@@ -27,7 +39,7 @@ function Sidebar({ userId }: Props) {
       <User
         id={userId}
         picture={picture}
-        text={profile?.name ? profile.name : ''}
+        text={profile?.name}
         request={false}
       />
       <div className="my-2 border-t border-t-[#D9D9D9]" />
