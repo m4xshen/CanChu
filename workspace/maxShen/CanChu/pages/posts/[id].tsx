@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import { SWRConfig } from 'swr';
+import Skeleton from 'react-loading-skeleton';
 
 import Navbar from '@/components/navbar';
 import Post from '@/components/post';
@@ -26,10 +27,15 @@ export default function DetailPage({ id, userId }: Props) {
     >
       <Navbar userId={userId} />
       <div className="mx-3 my-6 flex flex-col items-center justify-center">
-        {isLoading ? (
-          <div className="w-full text-center">載入中 ...</div>
-        ) : (
-          <div className="w-full max-w-[48em]">
+        <div className="w-full max-w-[48em]">
+          {isLoading ? (
+            <Skeleton
+              duration={0.8}
+              height={300}
+              borderRadius={16}
+              containerClassName="w-full"
+            />
+          ) : (
             <Post
               key={post.id}
               post={post}
@@ -37,8 +43,8 @@ export default function DetailPage({ id, userId }: Props) {
               editable={post.user_id === userId}
               userId={userId}
             />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </SWRConfig>
   );
