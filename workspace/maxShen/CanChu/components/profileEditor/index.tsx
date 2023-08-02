@@ -2,7 +2,6 @@ import { useSWRConfig } from 'swr';
 import { useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-import Skeleton from 'react-loading-skeleton';
 import { ProfileType, Relation } from '@/types';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import MainButton from './MainButton';
