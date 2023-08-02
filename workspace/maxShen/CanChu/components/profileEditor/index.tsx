@@ -1,5 +1,6 @@
 import { useSWRConfig } from 'swr';
 import { useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 import Skeleton from 'react-loading-skeleton';
 import { ProfileType, Relation } from '@/types';
