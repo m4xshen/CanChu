@@ -10,7 +10,7 @@ import Interests from './Interests';
 
 interface Props {
   profile: ProfileType | undefined;
-  relation: Relation;
+  relation: Relation | undefined;
 }
 
 function ProfileEditor({ profile, relation }: Props) {
