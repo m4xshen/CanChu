@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSWRConfig } from 'swr';
+import Skeleton from 'react-loading-skeleton';
+
 import useAgreeFriendship from '@/hooks/useAgreeFriendship';
 import useDeleteFriendship from '@/hooks/useDeleteFriendship';
-import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   id?: number;

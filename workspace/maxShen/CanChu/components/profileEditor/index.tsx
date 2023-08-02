@@ -6,6 +6,7 @@ import useUpdateProfile from '@/hooks/useUpdateProfile';
 import MainButton from './MainButton';
 import Introduction from './Introduction';
 import Interests from './Interests';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   profile: ProfileType | undefined;
@@ -41,8 +42,14 @@ function ProfileEditor({ profile, relation }: Props) {
     setEdit(false);
   }
 
+  if (relation === undefined) {
+    return (
+      <Skeleton height={250} borderRadius={16} containerClassName="w-full" />
+    );
+  }
+
   return (
-    <div className="rounded-2xl w-full border border-[#0000001A] bg-white px-4 py-6">
+    <div className="w-full rounded-2xl border border-[#0000001A] bg-white px-4 py-6">
       <MainButton
         edit={edit}
         setEdit={setEdit}

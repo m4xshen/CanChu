@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 import useGetPicture from '@/hooks/useGetPicture';
 import { ProfileType } from '@/types';
@@ -93,7 +94,7 @@ function Profilebar({ profile, edit }: Props) {
           <div className="flex flex-col justify-around">
             <div>
               <div className="text-4xl font-bold">
-                {profile?.name ? profile.name : ''}
+                {profile?.name ? profile.name : <Skeleton duration={0.8} />}
               </div>
               <div className="text-xl font-medium text-[#484848]">
                 {profile?.friend_count ? profile.friend_count : 0}位朋友
