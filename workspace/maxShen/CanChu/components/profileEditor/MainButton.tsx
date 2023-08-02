@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function MainButton({ edit, setEdit, relation, user }: Props) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState('載入中...');
   const { mutate } = useSWRConfig();
 
   const [makeFriendRequest, removeFriendRequest] = useFriendRequest();

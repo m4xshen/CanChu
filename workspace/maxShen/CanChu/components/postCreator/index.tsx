@@ -21,7 +21,7 @@ function PostCreator({ mutate, userId, relation }: Props) {
   const picture = useGetPicture(profile);
   const createPost = useCreatePost();
 
-  if (relation === undefined) {
+  if (relation === undefined || !profile) {
     return (
       <Skeleton height={188} borderRadius={16} containerClassName="w-full" />
     );
@@ -32,10 +32,13 @@ function PostCreator({ mutate, userId, relation }: Props) {
   }
 
   return (
-    <div className="flex w-full gap-6 rounded-2xl border border-[#0000001A] bg-white p-5">
+    <div
+      className="flex w-full gap-6 rounded-2xl
+        border border-[#0000001A] bg-white p-5"
+    >
       <div
-        className="relative h-[6vw] max-h-[5rem] min-h-[3rem] w-[6vw] min-w-[3rem]
-        max-w-[5rem] shrink-0 overflow-hidden rounded-full"
+        className="relative h-[6vw] max-h-[5rem] min-h-[3rem] w-[6vw]
+          min-w-[3rem] max-w-[5rem] shrink-0 overflow-hidden rounded-full"
       >
         <Image src={picture} fill alt="user avatar" className="object-cover" />
       </div>

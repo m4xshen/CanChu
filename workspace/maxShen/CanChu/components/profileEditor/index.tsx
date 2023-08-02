@@ -1,16 +1,16 @@
 import { useSWRConfig } from 'swr';
 import { useRef, useState } from 'react';
 
+import Skeleton from 'react-loading-skeleton';
 import { ProfileType, Relation } from '@/types';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import MainButton from './MainButton';
 import Introduction from './Introduction';
 import Interests from './Interests';
-import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   profile: ProfileType | undefined;
-  relation: Relation;
+  relation: Relation | undefined;
 }
 
 function ProfileEditor({ profile, relation }: Props) {
@@ -42,9 +42,13 @@ function ProfileEditor({ profile, relation }: Props) {
     setEdit(false);
   }
 
-  if (relation === undefined) {
+  if (
+    relation === undefined ||
+    profile?.introduction === undefined ||
+    profile?.tags === undefined
+  ) {
     return (
-      <Skeleton height={250} borderRadius={16} containerClassName="w-full" />
+      <Skeleton height={350} borderRadius={16} containerClassName="w-full" />
     );
   }
 
