@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { setCookie } from 'cookies-next';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import useSignup from '@/hooks/useSignup';
 import useLogIn from '@/hooks/useLogIn';
@@ -22,6 +22,9 @@ export default function Form({
   const nameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordCheckRef = useRef<HTMLInputElement>(null);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordCheckError, setPasswordCheckError] = useState(false);
 
   async function handleLogIn() {
     const { error, data } = await useLogIn(
@@ -35,6 +38,7 @@ export default function Form({
       setCookie('user_id', data.data.user.id, { maxAge: 3600 });
       router.push('/');
     } else {
+      setEmailError(error?.message === 'Email格式錯誤');
       alert(error?.message);
     }
   }
@@ -53,6 +57,15 @@ export default function Form({
       setAccountState(AccountState.LoggingIn);
       emailRef.current?.form?.reset();
     } else {
+      setEmailError(
+        error?.message === 'Email格式錯誤' ||
+          error?.message === 'Email已經使用過',
+      );
+      setPasswordError(
+        error?.message ===
+          '密碼須包含大寫和小寫字母以及數字，且長度超過八個字符',
+      );
+      setPasswordCheckError(error?.message === '密碼不一致');
       alert(error?.message);
     }
   }
@@ -76,6 +89,7 @@ export default function Form({
         <Input
           ref={nameRef}
           label="使用者名稱"
+          error={false}
           type="text"
           placeholder="例: Chou Chou Hu"
         />
@@ -83,12 +97,23 @@ export default function Form({
       <Input
         ref={emailRef}
         label="電子郵件"
+        error={emailError}
         type="text"
         placeholder="例: shirney@appworks.tw"
       />
-      <Input ref={passwordRef} label="密碼" type="password" />
+      <Input
+        ref={passwordRef}
+        label="密碼"
+        error={passwordError}
+        type="password"
+      />
       {accountState === AccountState.SigningUp && (
-        <Input ref={passwordCheckRef} label="再次輸入密碼" type="password" />
+        <Input
+          ref={passwordCheckRef}
+          label="再次輸入密碼"
+          error={passwordCheckError}
+          type="password"
+        />
       )}
       <button
         type="submit"
