@@ -1,18 +1,8 @@
-import { isValidEmail } from '@/utils';
-
 export default async function useLogIn(
-  email: string | undefined,
-  password: string | undefined,
+  email: string,
+  password: string,
 ): Promise<{ error: Error | undefined; data: any }> {
   try {
-    if (!email || !password) {
-      throw new Error('請填入所有欄位');
-    }
-
-    if (!isValidEmail(email)) {
-      throw new Error('Email格式錯誤');
-    }
-
     const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
     const res = await fetch(`${apiDomain}/users/signin`, {
       method: 'POST',

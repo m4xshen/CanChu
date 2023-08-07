@@ -4,9 +4,10 @@ import { useRef, useState } from 'react';
 import nookies from 'nookies';
 
 import Footer from '@/components/footer';
-import Form from '@/components/loginSignup/Form';
+import SignupForm from '@/components/loginSignup/SignupForm';
 import { AccountState } from '@/types';
 import Prompts from '@/components/loginSignup/Prompts';
+import LoginForm from '@/components/loginSignup/LoginForm';
 
 const pattaya = Pattaya({
   weight: '400',
@@ -46,11 +47,11 @@ export default function LoginSignupPage() {
                 : '會員註冊'}
             </div>
           </div>
-          <Form
-            accountState={accountState}
-            setAccountState={setAccountState}
-            emailRef={emailRef}
-          />
+          {accountState === AccountState.LoggingIn ? (
+            <LoginForm />
+          ) : (
+            <SignupForm setAccountState={setAccountState} emailRef={emailRef} />
+          )}
           <Prompts
             accountState={accountState}
             setAccountState={setAccountState}
