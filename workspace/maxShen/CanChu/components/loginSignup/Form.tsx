@@ -132,7 +132,7 @@ export default function Form({
       <button
         type="submit"
         className={`mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white ${
-          isLoading && 'cursor-wait'
+          isLoading && 'cursor-wait brightness-75'
         }`}
       >
         {buttonText}
