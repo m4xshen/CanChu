@@ -1,6 +1,7 @@
-import { KeyedMutator, useSWRConfig } from 'swr';
-import { useRef } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useRef } from 'react';
+import { KeyedMutator, useSWRConfig } from 'swr';
 import Swal from 'sweetalert2';
 
 import { PostType } from '@/types';
@@ -76,9 +77,22 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
     );
   }
 
+  const words = post.context?.split(' ') ?? [];
+  const showReadMore = words.length >= 100 && router.query.id === undefined;
+
   return (
     <pre className="my-4 min-h-[83px] whitespace-pre-wrap text-lg leading-6">
-      {post.context}
+      {showReadMore ? (
+        <>
+          {words.slice(0, 100).join(' ')}
+          ...
+          <Link href={`/posts/${post.id}`} className="font-semibold">
+            查看更多
+          </Link>
+        </>
+      ) : (
+        post.context
+      )}
     </pre>
   );
 }
