@@ -22,9 +22,7 @@ export default function UserIcon({ userId }: Props) {
       className="relative ml-auto"
       onMouseLeave={() => setDisplayDropDown(false)}
     >
-      <div
-        onMouseEnter={() => setDisplayDropDown(true)}
-      >
+      <div onMouseEnter={() => setDisplayDropDown(true)}>
         <div className="relative h-9 w-9 overflow-hidden rounded-full">
           <Image
             src={picture}

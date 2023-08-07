@@ -1,6 +1,7 @@
 import { useSWRConfig } from 'swr';
 import { useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import Swal from 'sweetalert2';
 
 import { ProfileType, Relation } from '@/types';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
@@ -79,8 +80,18 @@ function ProfileEditor({ profile, relation }: Props) {
             <button
               type="button"
               className="rounded-md bg-[#D3D3D3] px-7 py-2 font-bold text-white"
-              onClick={() => {
-                setEdit(false);
+              onClick={async () => {
+                const result = await Swal.fire({
+                  title: '確認',
+                  text: '確定取消編輯嗎？',
+                  icon: 'question',
+                  showCancelButton: true,
+                  confirmButtonText: '確認',
+                  cancelButtonText: '取消',
+                });
+                if (result.isConfirmed) {
+                  setEdit(false);
+                }
               }}
             >
               取消

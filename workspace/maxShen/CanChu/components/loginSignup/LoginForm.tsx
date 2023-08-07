@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { setCookie } from 'cookies-next';
 import { useState } from 'react';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { Field, Formik, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import useLogIn from '@/hooks/useLogIn';
@@ -30,8 +30,8 @@ export default function LoginForm() {
         title: 'Error',
         text: error?.message,
         icon: 'error',
-        confirmButtonText: 'OK'
-      })
+        confirmButtonText: 'OK',
+      });
       setIsLoading(false);
     }
   }

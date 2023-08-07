@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSWRConfig } from 'swr';
+import Swal from 'sweetalert2';
 
 import { ProfileType, Relation } from '@/types';
 import useFriendRequest from '@/hooks/useFriendRequest';
@@ -58,7 +59,17 @@ export default function MainButton({ edit, setEdit, relation, user }: Props) {
     if (relation === Relation.Requested) {
       await removeFriendRequest(user.friendship.id);
     } else if (relation === Relation.Friend) {
-      await deleteFriendship(user.friendship.id);
+      const result = await Swal.fire({
+        title: '確認',
+        text: '確定要刪除此好友嗎？',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: '確認，刪除此好友',
+        cancelButtonText: '取消',
+      });
+      if (result.isConfirmed) {
+        await deleteFriendship(user.friendship.id);
+      }
     } else if (relation === Relation.Pending) {
       await agreeFriendship(user.friendship.id);
     }

@@ -1,6 +1,7 @@
 import { KeyedMutator, useSWRConfig } from 'swr';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
 import { PostType } from '@/types';
 import useUpdatePost from '@/hooks/useUpdatePost';
@@ -54,8 +55,18 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
           <button
             type="submit"
             className="rounded-md bg-[#D3D3D3] px-7 py-2 font-bold text-white"
-            onClick={() => {
-              setEdit(false);
+            onClick={async () => {
+              const result = await Swal.fire({
+                title: '確認',
+                text: '確定取消編輯嗎？',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '確認',
+                cancelButtonText: '取消',
+              });
+              if (result.isConfirmed) {
+                setEdit(false);
+              }
             }}
           >
             取消
