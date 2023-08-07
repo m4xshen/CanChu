@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { setCookie } from 'cookies-next';
 import { useState } from 'react';
+import Swal from 'sweetalert2'
 import { Field, Formik, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import useLogIn from '@/hooks/useLogIn';
@@ -25,7 +26,12 @@ export default function LoginForm() {
       setCookie('user_id', data.data.user.id, { maxAge: 3600 });
       router.push('/');
     } else {
-      alert(error?.message);
+      Swal.fire({
+        title: 'Error',
+        text: error?.message,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
       setIsLoading(false);
     }
   }

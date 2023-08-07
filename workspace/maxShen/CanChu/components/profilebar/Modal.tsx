@@ -2,6 +2,7 @@ import { NextRouter } from 'next/router';
 import { useSWRConfig } from 'swr';
 import { useRef } from 'react';
 import AvatarEditor from 'react-avatar-editor';
+import Swal from 'sweetalert2';
 
 import CloseIcon from '../icons/CloseIcon';
 import useUpdatePicture from '@/hooks/useUpdatePicture';
@@ -64,7 +65,12 @@ export default function Modal({ userId, file, setFile, router }: Props) {
               const res = await updatePicture(blob);
 
               if (res.status === 413) {
-                alert('檔案大小太大');
+                Swal.fire({
+                  title: 'Error',
+                  text: '檔案大小太大',
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                });
                 setFile(undefined);
                 return;
               }

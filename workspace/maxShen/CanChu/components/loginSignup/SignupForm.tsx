@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ErrorMessage, Field, Formik, FormikValues } from 'formik';
 import * as Yup from 'yup';
+import Swal from 'sweetalert2';
 
 import useSignup from '@/hooks/useSignup';
 import { AccountState } from '@/types';
@@ -31,7 +32,12 @@ export default function SignupForm({ setAccountState, emailRef }: Props) {
       setAccountState(AccountState.LoggingIn);
       emailRef.current?.form?.reset();
     } else {
-      alert(error?.message);
+      Swal.fire({
+        title: 'Error',
+        text: error?.message,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
     }
     setIsLoading(false);
   }
