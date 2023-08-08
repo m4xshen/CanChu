@@ -77,14 +77,20 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
     );
   }
 
-  const words = post.context?.split(' ') ?? [];
-  const showReadMore = words.length >= 100 && router.query.id === undefined;
+  const words = post.context ?? '';
+  const lines = post.context?.split('\n') ?? [];
+
+  const showReadMore =
+    (words.length >= 200 || lines.length >= 3) &&
+    router.pathname !== '/posts/[id]';
 
   return (
     <pre className="my-4 min-h-[83px] whitespace-pre-wrap text-lg leading-6">
       {showReadMore ? (
         <>
-          {words.slice(0, 100).join(' ')}
+          {lines.length >= 3
+            ? lines.slice(0, 3).join('\n')
+            : words.slice(0, 200)}
           ...
           <Link href={`/posts/${post.id}`} className="font-semibold">
             查看更多
