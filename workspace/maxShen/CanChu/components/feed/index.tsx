@@ -33,19 +33,19 @@ function Feed({ profile, userId }: Props) {
       <>
         <Skeleton
           duration={0.8}
-          height={300}
+          height={400}
           borderRadius={16}
           containerClassName="w-full"
         />
         <Skeleton
           duration={0.8}
-          height={300}
+          height={400}
           borderRadius={16}
           containerClassName="w-full"
         />
         <Skeleton
           duration={0.8}
-          height={300}
+          height={400}
           borderRadius={16}
           containerClassName="w-full"
         />
