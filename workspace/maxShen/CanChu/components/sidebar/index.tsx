@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import Link from 'next/link';
-
 import Skeleton from 'react-loading-skeleton';
+import { useState } from 'react';
+
 import FriendsIcon from '../icons/FriendsIcon';
 import User from './User';
 import useProfile from '@/hooks/useProfile';
@@ -15,6 +15,7 @@ interface Props {
 
 function Sidebar({ userId }: Props) {
   const profile = useProfile(userId);
+  const [friendListLen, setFriendListLen] = useState(5);
 
   const picture = useGetPicture(profile);
   const { isLoading: friendsLoading, data: friends } = useFriends();
@@ -24,7 +25,7 @@ function Sidebar({ userId }: Props) {
     return (
       <Skeleton
         duration={0.8}
-        height={700}
+        height={503}
         borderRadius={16}
         containerClassName="w-96"
       />
@@ -61,7 +62,7 @@ function Sidebar({ userId }: Props) {
           friendshipId={pending.friendship?.id}
         />
       ))}
-      {friends.map((friend) => (
+      {friends.slice(0, friendListLen).map((friend) => (
         <User
           key={friend.id}
           id={friend.id}
@@ -74,9 +75,16 @@ function Sidebar({ userId }: Props) {
         <div className="flex h-11 w-11 items-center justify-center">
           <Image width="39" height="39" src="/bar.png" alt="bar" />
         </div>
-        <Link href="/" className="text-lg font-medium underline">
-          查看全部
-        </Link>
+        <button
+          type="button"
+          className="text-lg font-medium underline"
+          onClick={() => {
+            const newFriendListLen = friendListLen === 5 ? friends.length : 5;
+            setFriendListLen(newFriendListLen);
+          }}
+        >
+          {friendListLen === 5 ? '查看全部' : '查看部份'}
+        </button>
       </div>
     </nav>
   );
