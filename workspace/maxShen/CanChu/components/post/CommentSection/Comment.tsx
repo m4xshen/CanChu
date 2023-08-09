@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getDisplayTime } from '@/utils';
 import { CommentType } from '@/types';
+import SmallVerifiedIcon from '@/components/icons/SmallVerifiedIcon';
 
 interface Props {
   comment: CommentType;
@@ -28,8 +29,12 @@ function Comment({ comment }: Props) {
           className="mb-1 flex max-w-full flex-col gap-1 rounded-2xl
             bg-[#d9d9d9] bg-opacity-30 p-3 text-[#525252]"
         >
-          <Link href={`/users/${comment.user.id}`} className="font-semibold">
+          <Link
+            href={`/users/${comment.user.id}`}
+            className="flex items-center font-semibold"
+          >
             {comment.user.name}
+            {comment.user.name === 'Max Shen' && <SmallVerifiedIcon />}
           </Link>
           <p className="max-w-full break-words">{comment.content}</p>
         </div>
