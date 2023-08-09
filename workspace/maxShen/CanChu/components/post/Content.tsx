@@ -95,9 +95,9 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
       {showReadMore ? (
         <ReactMarkdown className="markdown-editor">
           {`${
-            lines.length > 3
-              ? lines.slice(0, 3).join('\n')
-              : words.slice(0, 200)
+            words.length > 200
+              ? words.slice(0, 200)
+              : lines.slice(0, 3).join('\n')
           }...**[查看更多](${`/posts/${post.id}`})**` ?? ''}
         </ReactMarkdown>
       ) : (
