@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { KeyedMutator, useSWRConfig } from 'swr';
 import Swal from 'sweetalert2';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 import { PostType } from '@/types';
 import useUpdatePost from '@/hooks/useUpdatePost';
@@ -87,17 +87,17 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
   return (
     <pre className="my-4 min-h-[83px] whitespace-pre-wrap text-lg leading-6">
       {showReadMore ? (
-        <>
-          {lines.length >= 3
-            ? lines.slice(0, 3).join('\n')
-            : words.slice(0, 200)}
-          ...
-          <Link href={`/posts/${post.id}`} className="font-semibold">
-            查看更多
-          </Link>
-        </>
+        <ReactMarkdown className="markdown-editor">
+          {`${
+            lines.length >= 3
+              ? lines.slice(0, 3).join('\n')
+              : words.slice(0, 200)
+          }...**[查看更多](${`/posts/${post.id}`})**` ?? ''}
+        </ReactMarkdown>
       ) : (
-        post.context
+        <ReactMarkdown className="markdown-editor">
+          {post.context ?? ''}
+        </ReactMarkdown>
       )}
     </pre>
   );

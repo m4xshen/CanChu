@@ -9,3 +9,83 @@ body {
 body.modal-open {
   overflow: hidden;
 }
+
+.markdown-editor a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.markdown-editor h1 {
+  display: block;
+  font-size: 2em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  font-weight: bold;
+}
+
+.markdown-editor h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  font-weight: bold;
+}
+
+.markdown-editor h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+
+.markdown-editor h4 {
+  display: block;
+  margin-top: 1.33em;
+  margin-bottom: 1.33em;
+  font-weight: bold;
+}
+
+.markdown-editor ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  line-height: 1rem;
+}
+
+.markdown-editor ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+  line-height: 1rem;
+}
+
+.markdown-editor ul ul,
+ol ul {
+  list-style-type: circle;
+  list-style-position: inside;
+  margin-left: 15px;
+}
+
+.markdown-editor ol ol,
+ul ol {
+  list-style-type: lower-latin;
+  list-style-position: inside;
+  margin-left: 15px;
+}
+
+.markdown-editor blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 0 10px;
+  padding: 0 10px;
+}
+
+.markdown-editor code {
+  padding: 0.2em 0.4em;
+  background-color: #555;
+  color: white;
+  border-radius: 6px;
+}
+
+.markdown-editor p {
+  line-height: 1.8rem;
+}
