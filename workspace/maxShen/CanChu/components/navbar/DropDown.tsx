@@ -19,18 +19,23 @@ export default function DropDown({ profile, router }: Props) {
         className="flex w-64 flex-col overflow-hidden rounded-2xl
           border border-[#0000001A] bg-[#f6f6f6] drop-shadow-lg"
       >
-        <div className="flex h-16 items-center bg-[#5458F7] text-white">
+        <div className="flex py-4 items-center bg-[#5458F7] text-white">
           <div
-            className="ml-4 flex h-9 w-9
+            className="ml-4 flex h-9 w-9 shrink-0
               items-center justify-center rounded-full bg-white"
           >
-            <Image
-              src="/purpleAvatar.png"
-              width={29}
-              height={29}
-              alt="purple avatar"
-              className="h-auto w-auto"
-            />
+            <div
+              className="relative h-[29px] w-[29px]
+                overflow-hidden rounded-full"
+            >
+              <Image
+                src="/purpleAvatar.png"
+                fill
+                sizes="29px"
+                alt="purple avatar"
+                className="object-cover"
+              />
+            </div>
           </div>
           <div className="ml-4 text-xl font-bold">
             {profile?.name ? profile.name : ''}

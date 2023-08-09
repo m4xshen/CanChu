@@ -24,11 +24,11 @@ function User({ id, picture, text, request, friendshipId }: Props) {
     <div className="flex items-center gap-3">
       <Link href={`/users/${id}`} className="flex items-center gap-3">
         <div
-          className="relative flex h-11 w-11 items-center justify-center
+          className="relative flex h-11 w-11 items-center justify-center shrink-0
             overflow-hidden rounded-full"
         >
           <Image
-            src={picture}
+            src={picture === '' ? '/avatar.png' : picture}
             fill
             sizes="2.75rem"
             alt="friend avatar"
@@ -42,7 +42,7 @@ function User({ id, picture, text, request, friendshipId }: Props) {
         )}
       </Link>
       {request && (
-        <div className="ml-auto">
+        <div className="ml-auto shrink-0">
           <button
             type="button"
             className="h-10 w-16 rounded-md bg-[#5458F7] text-white"
