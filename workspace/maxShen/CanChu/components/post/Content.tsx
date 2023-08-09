@@ -6,6 +6,7 @@ import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 import { PostType } from '@/types';
 import useUpdatePost from '@/hooks/useUpdatePost';
+import useUpdateHeight from '@/hooks/useUpdateHeight';
 
 interface Props {
   post: PostType;
@@ -18,6 +19,8 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
   const router = useRouter();
   const updatePost = useUpdatePost();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const updateHeight = useUpdateHeight(textareaRef, edit);
+
   const { mutate } = useSWRConfig();
 
   async function handleConfirm() {
@@ -41,8 +44,9 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
       <>
         <textarea
           ref={textareaRef}
-          className="mb-3 mt-4 w-full resize-none rounded-lg
-            border border-[#BFBFBF] bg-[#F0F2F5] p-3"
+          className="mb-3 mt-4 h-auto w-full resize-none overflow-hidden
+            rounded-lg border border-[#BFBFBF] bg-[#F0F2F5] p-3"
+          onChange={updateHeight}
           defaultValue={post.context ?? ''}
         />
         <div className="mb-4 flex gap-4">

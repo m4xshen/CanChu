@@ -1,3 +1,4 @@
+import useUpdateHeight from '@/hooks/useUpdateHeight';
 import { ProfileType } from '@/types';
 
 interface Props {
@@ -11,14 +12,17 @@ export default function Introduction({
   introductionRef,
   profile,
 }: Props) {
+  const updateHeight = useUpdateHeight(introductionRef, edit);
+
   return (
     <div className="flex flex-col gap-2">
       <div className="text-lg font-bold">自我介紹</div>
       {edit ? (
         <textarea
           ref={introductionRef}
-          className="resize-none rounded-lg
+          className="resize-none overflow-hidden rounded-lg
             border border-[#BFBFBF] bg-[#F0F2F5] p-3 outline-none"
+          onChange={updateHeight}
           defaultValue={profile?.introduction ? profile.introduction : ''}
         />
       ) : (

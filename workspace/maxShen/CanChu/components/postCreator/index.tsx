@@ -7,6 +7,7 @@ import useGetPicture from '@/hooks/useGetPicture';
 import useCreatePost from '@/hooks/useCreatePost';
 import useProfile from '@/hooks/useProfile';
 import { Relation } from '@/types';
+import useUpdateHeight from '@/hooks/useUpdateHeight';
 
 interface Props {
   mutate: KeyedMutator<any[]>;
@@ -16,6 +17,7 @@ interface Props {
 
 function PostCreator({ mutate, userId, relation }: Props) {
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const updateHeight = useUpdateHeight(textRef, true);
 
   const profile = useProfile(userId);
   const picture = useGetPicture(profile);
@@ -46,8 +48,9 @@ function PostCreator({ mutate, userId, relation }: Props) {
         <textarea
           ref={textRef}
           placeholder="說點什麼嗎？"
-          className="h-24 resize-none rounded-lg border border-[#D9D9D9]
+          className="h-24 resize-none overflow-hidden rounded-lg border border-[#D9D9D9]
             bg-[#F0F2F5] p-3 pr-2 text-[#767676] outline-none sm:text-xl"
+          onInput={updateHeight}
         />
         <button
           type="submit"
@@ -62,6 +65,7 @@ function PostCreator({ mutate, userId, relation }: Props) {
 
             if (textRef.current) {
               textRef.current.value = '';
+              updateHeight();
             }
 
             mutate();
