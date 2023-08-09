@@ -66,6 +66,8 @@ export default function MainButton({ edit, setEdit, relation, user }: Props) {
         showCancelButton: true,
         confirmButtonText: '確認，刪除此好友',
         cancelButtonText: '取消',
+        confirmButtonColor: '#5458F7',
+        cancelButtonColor: '#D3D3D3',
       });
       if (result.isConfirmed) {
         await deleteFriendship(user.friendship.id);

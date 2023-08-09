@@ -64,6 +64,8 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
                 showCancelButton: true,
                 confirmButtonText: '確認',
                 cancelButtonText: '取消',
+                confirmButtonColor: '#5458F7',
+                cancelButtonColor: '#D3D3D3',
               });
               if (result.isConfirmed) {
                 setEdit(false);
