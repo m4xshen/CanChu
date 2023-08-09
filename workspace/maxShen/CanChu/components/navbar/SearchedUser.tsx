@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { UserSearchType } from '@/types';
+import SmallVerifiedIcon from '../icons/SmallVerifiedIcon';
 
 interface Props {
   user: UserSearchType;
@@ -24,7 +25,10 @@ export default function SearchedUser({ user, isLast }: Props) {
         width={39}
         height={39}
       />
-      <div className="ml-4 text-[#566470]">{user.name}</div>
+      <div className="ml-4 flex items-center text-[#566470]">
+        {user.name}
+        {user.name === 'Max Shen' && <SmallVerifiedIcon />}
+      </div>
     </Link>
   );
 }

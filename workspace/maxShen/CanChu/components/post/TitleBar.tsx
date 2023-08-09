@@ -4,6 +4,7 @@ import Link from 'next/link';
 import useProfile from '@/hooks/useProfile';
 import { PostType } from '@/types';
 import { getDisplayTime } from '@/utils';
+import SmallVerifiedIcon from '../icons/SmallVerifiedIcon';
 
 interface Props {
   post: PostType;
@@ -32,7 +33,10 @@ export default function TitleBar({ post, url, detail }: Props) {
       </Link>
       <div>
         <Link href={profile?.id ? `/users/${profile.id}` : '/'}>
-          <div className="cursor-pointer text-lg font-bold">{post.name}</div>
+          <div className="flex cursor-pointer items-center text-lg font-bold">
+            {post.name}
+            {post.name === 'Max Shen' && <SmallVerifiedIcon />}
+          </div>
         </Link>
         <Link
           href={url}

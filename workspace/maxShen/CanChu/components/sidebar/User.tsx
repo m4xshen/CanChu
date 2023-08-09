@@ -24,8 +24,8 @@ function User({ id, picture, text, request, friendshipId }: Props) {
     <div className="flex items-center gap-3">
       <Link href={`/users/${id}`} className="flex items-center gap-3">
         <div
-          className="relative flex h-11 w-11 items-center justify-center shrink-0
-            overflow-hidden rounded-full"
+          className="relative flex h-11 w-11 shrink-0 items-center
+            justify-center overflow-hidden rounded-full"
         >
           <Image
             src={picture === '' ? '/avatar.png' : picture}

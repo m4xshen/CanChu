@@ -6,6 +6,7 @@ import Skeleton from 'react-loading-skeleton';
 import useGetPicture from '@/hooks/useGetPicture';
 import { ProfileType } from '@/types';
 import Modal from './Modal';
+import LargeVerifiedIcon from '../icons/LargeVerifiedIcon';
 
 interface Props {
   profile: ProfileType | undefined;
@@ -94,7 +95,14 @@ function Profilebar({ profile, edit }: Props) {
           <div className="flex flex-col justify-around">
             <div>
               <div className="text-4xl font-bold">
-                {profile?.name ? profile.name : <Skeleton duration={0.8} />}
+                {profile?.name ? (
+                  <div className="flex items-center">
+                    {profile.name}
+                    {profile.name === 'Max Shen' && <LargeVerifiedIcon />}
+                  </div>
+                ) : (
+                  <Skeleton duration={0.8} />
+                )}
               </div>
               <div className="text-xl font-medium text-[#484848]">
                 {profile?.friend_count ? profile.friend_count : 0}位朋友
