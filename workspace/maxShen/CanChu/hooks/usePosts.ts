@@ -1,10 +1,8 @@
 import useSWRInfinite from 'swr/infinite';
-import { useState } from 'react';
 import { fetcher } from '@/utils';
 
 export default function usePosts(userId: number | null | undefined) {
   const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
-  const [isEnd, setIsEnd] = useState(false);
 
   function getURL(pageIndex: number, previousPageData: any) {
     const nextCursor = previousPageData?.data?.next_cursor;
@@ -23,7 +21,6 @@ export default function usePosts(userId: number | null | undefined) {
         : `${apiDomain}/posts/search?cursor='${nextCursor}'`;
     }
 
-    setIsEnd(true);
     return null;
   }
 
@@ -37,9 +34,9 @@ export default function usePosts(userId: number | null | undefined) {
   );
 
   if (isLoading || error) {
-    return { mutate, isLoading, isEnd, size, setSize, posts: [] };
+    return { mutate, isLoading, size, setSize, posts: [] };
   }
 
   const posts = data?.map((d) => d.data.posts).flat();
-  return { mutate, isLoading, isEnd, size, setSize, posts: posts ?? [] };
+  return { mutate, isLoading, size, setSize, posts: posts ?? [] };
 }

@@ -8,7 +8,6 @@ import usePosts from '@/hooks/usePosts';
 import useRelation from '@/hooks/useRelation';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { ProfileType } from '@/types';
-import LoadingIcon from '../icons/LoadingIcon';
 
 interface Props {
   profile: ProfileType | null;
@@ -20,10 +19,10 @@ function Feed({ profile, userId }: Props) {
   const router = useRouter();
 
   const isHomePage = router.query.id === undefined;
-  const { mutate, isLoading, isEnd, size, setSize, posts } = usePosts(
+  const { mutate, isLoading, size, setSize, posts } = usePosts(
     isHomePage ? null : profile?.id,
   );
-  useInfiniteScroll(async () => setSize(size + 1), 100);
+  useInfiniteScroll(async () => setSize(size + 1), 500);
 
   const noPosts = posts === null || posts.length === 0;
 
@@ -66,7 +65,12 @@ function Feed({ profile, userId }: Props) {
             mutate={mutate}
           />
         ))}
-        {!isEnd && <LoadingIcon />}
+        <Skeleton
+          duration={0.8}
+          height={400}
+          borderRadius={16}
+          containerClassName="w-full"
+        />
       </>
     );
   }
