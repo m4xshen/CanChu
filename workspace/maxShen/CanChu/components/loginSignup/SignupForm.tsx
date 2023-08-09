@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ErrorMessage, Field, Formik, FormikValues } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 
@@ -68,67 +68,62 @@ export default function SignupForm({ setAccountState, emailRef }: Props) {
         handleSubmit(values);
       }}
     >
-      {(formik) => (
-        <form
-          className="flex w-full flex-col items-center"
-          onSubmit={formik.handleSubmit}
+      <Form className="flex w-full flex-col items-center">
+        <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
+          使用者名稱
+          <Field
+            name="name"
+            type="text"
+            placeholder="例: Chou Chou Hu"
+            className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
+          />
+          <div className="text-sm text-red-500">
+            <ErrorMessage name="name" />
+          </div>
+        </label>
+        <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
+          電子郵件
+          <Field
+            name="email"
+            type="text"
+            placeholder="例: shirney@appworks.tw"
+            className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
+          />
+          <div className="text-sm text-red-500">
+            <ErrorMessage name="email" />
+          </div>
+        </label>
+        <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
+          密碼
+          <Field
+            name="password"
+            type="password"
+            className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
+          />
+          <div className="text-sm text-red-500">
+            <ErrorMessage name="password" />
+          </div>
+        </label>
+        <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
+          再次輸入密碼
+          <Field
+            name="passwordCheck"
+            type="password"
+            className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
+          />
+          <div className="text-sm text-red-500">
+            <ErrorMessage name="passwordCheck" />
+          </div>
+        </label>
+        <button
+          type="submit"
+          className={`mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white ${
+            isLoading && 'cursor-wait brightness-75'
+          }`}
         >
-          <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
-            使用者名稱
-            <Field
-              name="name"
-              type="text"
-              placeholder="例: Chou Chou Hu"
-              className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
-            />
-            <div className="text-sm text-red-500">
-              <ErrorMessage name="name" />
-            </div>
-          </label>
-          <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
-            電子郵件
-            <Field
-              name="email"
-              type="text"
-              placeholder="例: shirney@appworks.tw"
-              className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
-            />
-            <div className="text-sm text-red-500">
-              <ErrorMessage name="email" />
-            </div>
-          </label>
-          <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
-            密碼
-            <Field
-              name="password"
-              type="password"
-              className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
-            />
-            <div className="text-sm text-red-500">
-              <ErrorMessage name="password" />
-            </div>
-          </label>
-          <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
-            再次輸入密碼
-            <Field
-              name="passwordCheck"
-              type="password"
-              className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
-            />
-            <div className="text-sm text-red-500">
-              <ErrorMessage name="passwordCheck" />
-            </div>
-          </label>
-          <button
-            type="submit"
-            className={`mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white ${
-              isLoading && 'cursor-wait brightness-75'
-            }`}
-          >
-            {buttonText}
-          </button>
-        </form>
-      )}
+          {buttonText}
+        </button>
+      </Form>
     </Formik>
   );
 }

@@ -19,7 +19,7 @@ function Feed({ profile, userId }: Props) {
   const router = useRouter();
 
   const isHomePage = router.query.id === undefined;
-  const { mutate, isLoading, size, setSize, posts } = usePosts(
+  const { mutate, isLoading, isEnd, size, setSize, posts } = usePosts(
     isHomePage ? null : profile?.id,
   );
   useInfiniteScroll(async () => setSize(size + 1), 500);
@@ -65,12 +65,14 @@ function Feed({ profile, userId }: Props) {
             mutate={mutate}
           />
         ))}
-        <Skeleton
-          duration={0.8}
-          height={400}
-          borderRadius={16}
-          containerClassName="w-full"
-        />
+        {!isEnd && (
+          <Skeleton
+            duration={0.8}
+            height={400}
+            borderRadius={16}
+            containerClassName="w-full"
+          />
+        )}
       </>
     );
   }

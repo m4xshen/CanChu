@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { setCookie } from 'cookies-next';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { Field, Formik, FormikValues } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import useLogIn from '@/hooks/useLogIn';
 
@@ -50,44 +50,39 @@ export default function LoginForm() {
         handleSubmit(values);
       }}
     >
-      {(formik) => (
-        <form
-          className="flex w-full flex-col items-center"
-          onSubmit={formik.handleSubmit}
+      <Form className="flex w-full flex-col items-center">
+        <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
+          電子郵件
+          <Field
+            name="email"
+            type="text"
+            placeholder="例: shirney@appworks.tw"
+            className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
+          />
+          <div className="text-sm text-red-500">
+            <ErrorMessage name="email" />
+          </div>
+        </label>
+        <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
+          密碼
+          <Field
+            name="password"
+            type="password"
+            className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
+          />
+          <div className="text-sm text-red-500">
+            <ErrorMessage name="password" />
+          </div>
+        </label>
+        <button
+          type="submit"
+          className={`mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white ${
+            isLoading && 'cursor-wait brightness-75'
+          }`}
         >
-          <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
-            電子郵件
-            <Field
-              name="email"
-              type="text"
-              placeholder="例: shirney@appworks.tw"
-              className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
-            />
-            <div className="text-sm text-red-500">
-              {formik.touched.email && formik.errors.email}
-            </div>
-          </label>
-          <label className="mt-8 flex w-4/5 max-w-xs flex-col gap-2">
-            密碼
-            <Field
-              name="password"
-              type="password"
-              className="h-10 w-full rounded-md border border-[#5458F7] px-3 outline-none"
-            />
-            <div className="text-sm text-red-500">
-              {formik.touched.password && formik.errors.password}
-            </div>
-          </label>
-          <button
-            type="submit"
-            className={`mt-6 h-10 w-36 rounded-md bg-[#7763FB] text-white ${
-              isLoading && 'cursor-wait brightness-75'
-            }`}
-          >
-            {isLoading ? '登入中...' : '登入'}
-          </button>
-        </form>
-      )}
+          {isLoading ? '登入中...' : '登入'}
+        </button>
+      </Form>
     </Formik>
   );
 }
