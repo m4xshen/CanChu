@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import Navbar from '@/components/navbar';
 import Profilebar from '@/components/profilebar';
 import ProfileEditor from '@/components/profileEditor';
-import Footer from '@/components/footer';
 import Feed from '@/components/feed';
 
 import useRelation from '@/hooks/useRelation';
@@ -36,9 +35,6 @@ export default function ProfilePage({ id, userId }: Props) {
       <div className="flex justify-center gap-8">
         <div className="hidden w-96 flex-col items-center gap-3 xl:flex">
           <ProfileEditor profile={profile} relation={relation} />
-          <div className="w-64">
-            <Footer />
-          </div>
         </div>
         <div className="mx-3 flex w-full max-w-[48rem] flex-col items-center gap-5">
           <div className="w-full xl:hidden">
