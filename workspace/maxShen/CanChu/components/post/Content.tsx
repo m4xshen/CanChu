@@ -81,7 +81,7 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
   const lines = post.context?.split('\n') ?? [];
 
   const showReadMore =
-    (words.length >= 200 || lines.length >= 3) &&
+    (words.length > 200 || lines.length > 3) &&
     router.pathname !== '/posts/[id]';
 
   return (
@@ -89,7 +89,7 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
       {showReadMore ? (
         <ReactMarkdown className="markdown-editor">
           {`${
-            lines.length >= 3
+            lines.length > 3
               ? lines.slice(0, 3).join('\n')
               : words.slice(0, 200)
           }...**[查看更多](${`/posts/${post.id}`})**` ?? ''}
