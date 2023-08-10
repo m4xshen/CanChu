@@ -1,7 +1,7 @@
+import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import { useRouter } from 'next/router';
 import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
 import usePosts from '@/hooks/usePosts';

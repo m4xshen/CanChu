@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
+import { useDropzone } from 'react-dropzone';
 import useGetPicture from '@/hooks/useGetPicture';
 import { ProfileType } from '@/types';
 import Modal from './Modal';
@@ -16,82 +17,71 @@ interface Props {
 function Profilebar({ profile, edit }: Props) {
   const router = useRouter();
   const picture = useGetPicture(profile);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<File>();
+  const [showModal, setShowModal] = useState(false);
+
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    maxFiles: 1,
+  });
 
   // toggle modal
   useEffect(() => {
-    if (file) {
+    if (acceptedFiles[0]) {
+      setShowModal(true);
+    }
+  }, [acceptedFiles]);
+
+  useEffect(() => {
+    if (showModal) {
       document.body.classList.add('modal-open');
     } else {
       document.body.classList.remove('modal-open');
     }
-  }, [file]);
+  }, [showModal]);
 
   return (
     <>
-      {file && (
+      {showModal && (
         <Modal
           userId={profile?.id}
-          file={file}
-          setFile={setFile}
+          file={acceptedFiles[0]}
+          setShowModal={setShowModal}
           router={router}
         />
       )}
       <div className="mb-6 flex h-[23rem] flex-col bg-white px-3 lg:px-20 xl:px-32">
         <div className="flex h-72 items-center gap-11 border-b border-[#C8C8C8]">
-          <form
-            onSubmit={(ev) => {
-              ev.preventDefault();
-
-              if (!edit) {
-                return;
-              }
-
-              // trigger the file browser
-              inputRef.current?.click();
-              if (inputRef.current?.value) {
-                inputRef.current.value = '';
-              }
-            }}
+          <div
+            {...(edit ? getRootProps({ className: 'dropzone' }) : {})}
+            className="group relative ml-7 h-32 w-32 shrink-0 overflow-hidden
+              rounded-full sm:h-44 sm:w-44"
           >
             <input
-              ref={inputRef}
+              {...(edit ? getInputProps() : {})}
               type="file"
               accept="image/png, image/jpeg, image/jpg"
               className="hidden"
-              onChange={(e) => {
-                const target = e.target as HTMLInputElement;
-                const { files } = target;
-
-                if (files === null || files.length === 0) {
-                  return;
-                }
-
-                setFile(files[0]);
-              }}
             />
-            <button type="submit" className={`group ${!edit && 'cursor-auto'}`}>
-              <div className="relative ml-7 h-32 w-32 shrink-0 overflow-hidden rounded-full sm:h-44 sm:w-44">
-                <Image
-                  src={picture}
-                  fill
-                  sizes="11rem"
-                  alt="user avatar"
-                  className={`object-cover ${
-                    edit && 'hover:brightness-50 group-hover:brightness-50'
-                  }`}
-                />
-                <div
-                  className={`absolute left-1/2 top-1/2 hidden
-                    -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-lg text-white
-                    underline ${edit && 'hover:block group-hover:block'}`}
-                >
-                  編輯大頭貼
-                </div>
-              </div>
-            </button>
-          </form>
+            <Image
+              src={picture}
+              fill
+              sizes="11rem"
+              alt="user avatar"
+              className={`object-cover ${
+                edit &&
+                'hover:brightness-50 group-hover:cursor-pointer group-hover:brightness-50'
+              }`}
+            />
+            <div
+              className={`absolute left-1/2 top-1/2 hidden -translate-x-1/2
+                -translate-y-1/2 whitespace-nowrap text-lg text-white z-50
+                underline ${
+                  edit &&
+                  'hover:block group-hover:block group-hover:cursor-pointer'
+                }`}
+            >
+              編輯大頭貼
+            </div>
+          </div>
           <div className="flex flex-col justify-around">
             <div>
               <div className="text-4xl font-bold">

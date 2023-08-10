@@ -74,9 +74,9 @@ ul ol {
 
 .markdown-editor blockquote {
   background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 0 10px;
-  padding: 0 10px;
+  border-left: 0.5rem solid #ccc;
+  margin: 1rem 0.5rem;
+  padding: 1rem 0.5rem;
 }
 
 .markdown-editor code {
