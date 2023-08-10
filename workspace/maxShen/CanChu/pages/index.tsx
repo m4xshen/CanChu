@@ -8,6 +8,9 @@ import Sidebar from '@/components/sidebar';
 import Feed from '@/components/feed';
 import Footer from '@/components/footer';
 import useProfile from '@/hooks/useProfile';
+import usePosts from '@/hooks/usePosts';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useRelation from '@/hooks/useRelation';
 
 interface Props {
   userId: number;
@@ -15,7 +18,11 @@ interface Props {
 
 function Home({ userId }: Props) {
   const profile = useProfile(userId);
+  const relation = useRelation(userId, profile);
   const router = useRouter();
+
+  const { mutate, isLoading, isEnd, size, setSize, posts } = usePosts(null);
+  useInfiniteScroll(async () => setSize(size + 1), 500);
 
   return (
     <SWRConfig
@@ -27,13 +34,20 @@ function Home({ userId }: Props) {
     >
       <Navbar userId={userId} />
       <div className="mt-6 flex justify-center gap-8">
-        <div className="hidden xl:flex flex-col items-center gap-3">
+        <div className="hidden flex-col items-center gap-3 xl:flex">
           <Sidebar userId={userId} />
           <div className="w-64">
             <Footer />
           </div>
         </div>
-        <Feed profile={profile} userId={userId} />
+        <Feed
+          posts={posts}
+          isLoading={isLoading}
+          isEnd={isEnd}
+          mutate={mutate}
+          userId={userId}
+          relation={relation}
+        />
       </div>
     </SWRConfig>
   );

@@ -1,21 +1,21 @@
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-
 import { useDropzone } from 'react-dropzone';
+import { KeyedMutator } from 'swr';
+
 import useGetPicture from '@/hooks/useGetPicture';
 import { ProfileType } from '@/types';
 import Modal from './Modal';
 import LargeVerifiedIcon from '../icons/LargeVerifiedIcon';
 
 interface Props {
+  mutate: KeyedMutator<any[]>;
   profile: ProfileType | undefined;
   edit: boolean;
 }
 
-function Profilebar({ profile, edit }: Props) {
-  const router = useRouter();
+function Profilebar({ mutate, profile, edit }: Props) {
   const picture = useGetPicture(profile);
   const [showModal, setShowModal] = useState(false);
 
@@ -44,8 +44,8 @@ function Profilebar({ profile, edit }: Props) {
         <Modal
           userId={profile?.id}
           file={acceptedFiles[0]}
+          customMutate={mutate}
           setShowModal={setShowModal}
-          router={router}
         />
       )}
       <div className="mb-6 flex h-[23rem] flex-col bg-white px-3 lg:px-20 xl:px-32">

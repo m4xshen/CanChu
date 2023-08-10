@@ -11,6 +11,8 @@ import Feed from '@/components/feed';
 import useRelation from '@/hooks/useRelation';
 import useProfile from '@/hooks/useProfile';
 import { Relation } from '@/types';
+import usePosts from '@/hooks/usePosts';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 
 interface Props {
   id: string;
@@ -22,6 +24,12 @@ export default function ProfilePage({ id, userId }: Props) {
   const relation = useRelation(userId, profile);
   const router = useRouter();
 
+  const isHomePage = router.query.id === undefined;
+  const { mutate, isLoading, isEnd, size, setSize, posts } = usePosts(
+    isHomePage ? null : profile?.id,
+  );
+  useInfiniteScroll(async () => setSize(size + 1), 500);
+
   return (
     <SWRConfig
       value={{
@@ -31,7 +39,11 @@ export default function ProfilePage({ id, userId }: Props) {
       }}
     >
       <Navbar userId={userId} />
-      <Profilebar profile={profile} edit={relation === Relation.Self} />
+      <Profilebar
+        mutate={mutate}
+        profile={profile}
+        edit={relation === Relation.Self}
+      />
       <div className="flex justify-center gap-8">
         <div className="hidden w-96 flex-col items-center gap-3 xl:flex">
           <ProfileEditor profile={profile} relation={relation} />
@@ -40,7 +52,14 @@ export default function ProfilePage({ id, userId }: Props) {
           <div className="w-full xl:hidden">
             <ProfileEditor profile={profile} relation={relation} />
           </div>
-          <Feed profile={profile} userId={userId} />
+          <Feed
+            posts={posts}
+            isLoading={isLoading}
+            isEnd={isEnd}
+            mutate={mutate}
+            userId={userId}
+            relation={relation}
+          />
         </div>
       </div>
     </SWRConfig>

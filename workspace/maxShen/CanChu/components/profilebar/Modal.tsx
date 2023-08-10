@@ -1,5 +1,4 @@
-import { NextRouter } from 'next/router';
-import { useSWRConfig } from 'swr';
+import { KeyedMutator, useSWRConfig } from 'swr';
 import { useRef } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import Swal from 'sweetalert2';
@@ -10,11 +9,16 @@ import useUpdatePicture from '@/hooks/useUpdatePicture';
 interface Props {
   userId: number | null | undefined;
   file: File;
+  customMutate: KeyedMutator<any[]>;
   setShowModal: (value: React.SetStateAction<boolean>) => void;
-  router: NextRouter;
 }
 
-export default function Modal({ userId, file, setShowModal, router }: Props) {
+export default function Modal({
+  userId,
+  file,
+  customMutate,
+  setShowModal,
+}: Props) {
   const updatePicture = useUpdatePicture();
   const editor = useRef<AvatarEditor>(null);
   const { mutate } = useSWRConfig();
@@ -75,11 +79,7 @@ export default function Modal({ userId, file, setShowModal, router }: Props) {
 
               const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
               mutate(`${apiDomain}/users/${userId}/profile`);
-              if (router.query.id) {
-                mutate(`${apiDomain}/posts/search?user_id=${router.query.id}`);
-              } else {
-                mutate(`${apiDomain}/posts/search`);
-              }
+              customMutate();
               setShowModal(false);
             });
           }}

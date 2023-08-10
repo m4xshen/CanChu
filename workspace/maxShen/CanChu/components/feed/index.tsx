@@ -1,29 +1,21 @@
-import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
+import { KeyedMutator } from 'swr';
 import PostCreator from '@/components/postCreator';
 import Post from '@/components/post';
-import usePosts from '@/hooks/usePosts';
-import useRelation from '@/hooks/useRelation';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { ProfileType } from '@/types';
+import { PostType, Relation } from '@/types';
 
 interface Props {
-  profile: ProfileType | null;
+  posts: PostType[];
+  isLoading: boolean;
+  isEnd: boolean;
+  mutate: KeyedMutator<any[]>;
   userId: number;
+  relation: Relation | undefined;
 }
 
-function Feed({ profile, userId }: Props) {
-  const relation = useRelation(userId, profile);
-  const router = useRouter();
-
-  const isHomePage = router.query.id === undefined;
-  const { mutate, isLoading, isEnd, size, setSize, posts } = usePosts(
-    isHomePage ? null : profile?.id,
-  );
-  useInfiniteScroll(async () => setSize(size + 1), 500);
-
+function Feed({ posts, isLoading, isEnd, mutate, userId, relation }: Props) {
   const noPosts = posts === null || posts.length === 0;
 
   let content;
