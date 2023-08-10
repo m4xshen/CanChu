@@ -1,3 +1,4 @@
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import useUpdateHeight from '@/hooks/useUpdateHeight';
 import { ProfileType } from '@/types';
 
@@ -26,7 +27,9 @@ export default function Introduction({
           defaultValue={profile?.introduction ? profile.introduction : ''}
         />
       ) : (
-        <p>{profile?.introduction ? profile.introduction : ''}</p>
+        <ReactMarkdown className="markdown-editor">
+          {profile?.introduction ?? ''}
+        </ReactMarkdown>
       )}
     </div>
   );

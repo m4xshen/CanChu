@@ -91,7 +91,7 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
     router.pathname !== '/posts/[id]';
 
   return (
-    <pre className="my-4 min-h-[83px] whitespace-pre-wrap text-lg leading-6">
+    <div className="my-4 min-h-[83px]">
       {showReadMore ? (
         <ReactMarkdown className="markdown-editor">
           {`${
@@ -105,7 +105,7 @@ function Content({ post, edit, setEdit, customMutate }: Props) {
           {post.context ?? ''}
         </ReactMarkdown>
       )}
-    </pre>
+    </div>
   );
 }
 

@@ -17,7 +17,7 @@ body.modal-open {
 
 .markdown-editor h1 {
   display: block;
-  font-size: 2em;
+  font-size: 2.5em;
   margin-top: 0.67em;
   margin-bottom: 0.67em;
   font-weight: bold;
@@ -25,7 +25,7 @@ body.modal-open {
 
 .markdown-editor h2 {
   display: block;
-  font-size: 1.5em;
+  font-size: 2em;
   margin-top: 0.83em;
   margin-bottom: 0.83em;
   font-weight: bold;
@@ -33,7 +33,7 @@ body.modal-open {
 
 .markdown-editor h3 {
   display: block;
-  font-size: 1.17em;
+  font-size: 1.5em;
   margin-top: 1em;
   margin-bottom: 1em;
   font-weight: bold;
@@ -49,13 +49,13 @@ body.modal-open {
 .markdown-editor ul {
   list-style-type: disc;
   list-style-position: inside;
-  line-height: 1rem;
+  line-height: 1.5rem;
 }
 
 .markdown-editor ol {
   list-style-type: decimal;
   list-style-position: inside;
-  line-height: 1rem;
+  line-height: 1.5rem;
 }
 
 .markdown-editor ul ul,
