@@ -3,6 +3,7 @@ import nookies from 'nookies';
 import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';
 
+import Head from 'next/head';
 import Navbar from '@/components/navbar';
 import Profilebar from '@/components/profilebar';
 import ProfileEditor from '@/components/profileEditor';
@@ -38,6 +39,9 @@ export default function ProfilePage({ id, userId }: Props) {
         },
       }}
     >
+      <Head>
+        <title>{profile?.name ?? 'CanChu'}</title>
+      </Head>
       <Navbar userId={userId} />
       <Profilebar
         mutate={mutate}
