@@ -5,6 +5,8 @@ A social media website.
 ## Develop
 
 ```
+git clone https://github.com/m4xshen/CanChu.git
+cd CanChu/
 yarn install
 yarn run dev
 ```
