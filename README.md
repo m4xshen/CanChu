@@ -2,6 +2,13 @@
 
 A social media website.
 
+## Develop
+
+```
+yarn install
+yarn run dev
+```
+
 ## Docker
 
 1. Build the container: `docker build -t nextjs-docker .`
